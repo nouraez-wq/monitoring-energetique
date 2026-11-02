@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SME – Marsa Maroc (Port d'Agadir) · Démo GitHub Pages</title>
+
+    <!-- Bootstrap 5 & Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Chart.js & Apache ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+
+    <style>
+        :root {
+            --couleur-primaire: #1a3a5c;
+            --couleur-secondaire: #e8660d;
+            --couleur-fond: #f0f4f8;
+            --couleur-fond-sombre: #0f2035;
+            --couleur-bordure: #cbd5e1;
+            --rayon-bordure: 0.5rem;
+            --ombre-carte: 0 2px 10px rgba(0, 0, 0, 0.08);
+            --police-principale: 'Segoe UI', Roboto, sans-serif;
+        }
+        body { background-color: var(--couleur-fond); font-family: var(--police-principale); margin: 0; }
+        .sidebar { width: 260px; min-height: 100vh; background-color: var(--couleur-fond-sombre); position: fixed; top: 0; left: 0; z-index: 1000; overflow-y: auto; padding-bottom: 2rem; }
+        .sidebar .brand { padding: 1.2rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 10px; }
+        .sidebar .brand-title { color: #fff; font-size: 1.1rem; font-weight: 700; line-height: 1.2; }
+        .sidebar .brand-sub { color: var(--couleur-secondaire); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; }
+        .sidebar .nav-section { color: rgba(255,255,255,0.4); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; padding: 1rem 1.5rem 0.3rem; }
+        .sidebar a.nav-link { color: #cbd5e1; padding: 0.6rem 1.5rem; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; text-decoration: none; cursor: pointer; transition: 0.2s; }
+        .sidebar a.nav-link:hover, .sidebar a.nav-link.active { color: #fff; background: rgba(255,255,255,0.08); border-left: 4px solid var(--couleur-secondaire); }
+        .main-wrapper { margin-left: 260px; min-height: 100vh; display: flex; flex-direction: column; }
+        .top-navbar { height: 60px; background: #fff; border-bottom: 1px solid var(--couleur-bordure); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; position: sticky; top: 0; z-index: 999; }
+        .content-area { padding: 1.5rem; flex: 1; }
+        .badge-notif { background-color: #dc2626; color: white; border-radius: 10px; padding: 2px 7px; font-size: 0.75rem; }
+        .kpi-card { background: #fff; border-radius: var(--rayon-bordure); padding: 1.2rem; box-shadow: var(--ombre-carte); border-left: 4px solid var(--couleur-primaire); }
+        .tab-content-panel { display: none; }
+        .tab-content-panel.active { display: block; }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Gauche -->
+    <aside class="sidebar">
+        <div class="brand">
+            <i class="bi bi-lightning-charge-fill text-warning fs-3"></i>
+            <div>
+                <div class="brand-title">MARSA MAROC</div>
+                <div class="brand-sub">SME · Port d'Agadir</div>
+            </div>
+        </div>
+
+        <div class="nav flex-column">
+            <div class="nav-section">Supervision Temps Réel</div>
+            <a class="nav-link active" onclick="basculerOnglet('global')"><i class="bi bi-speedometer2"></i> Tableau Global</a>
+            <a class="nav-link" onclick="basculerOnglet('postes')"><i class="bi bi-diagram-3"></i> Postes & Départs</a>
+            <a class="nav-link" onclick="basculerOnglet('qualite')"><i class="bi bi-activity"></i> Qualité & Harmoniques</a>
+
+            <div class="nav-section">Exploitation & Suivi</div>
+            <a class="nav-link" onclick="basculerOnglet('alertes')"><i class="bi bi-bell-fill"></i> Alertes <span id="badge-side-alertes" class="badge-notif ms-auto">1</span></a>
+            <a class="nav-link" onclick="basculerOnglet('inventaire')"><i class="bi bi-cpu"></i> 58 Points Mesure</a>
+            <a class="nav-link" onclick="basculerOnglet('cmm61')"><i class="bi bi-hdd-network"></i> MEIER CMM61 (PT1)</a>
+            <a class="nav-link" onclick="basculerOnglet('modbus')"><i class="bi bi-table"></i> Registres Modbus</a>
+
+            <div class="nav-section">Analyses & Performance</div>
+            <a class="nav-link" onclick="basculerOnglet('sankey')"><i class="bi bi-bezier2"></i> Flux Sankey</a>
+            <a class="nav-link" onclick="basculerOnglet('pareto')"><i class="bi bi-bar-chart-fill"></i> Analyse Pareto</a>
+            <a class="nav-link" onclick="basculerOnglet('regression')"><i class="bi bi-graph-up-arrow"></i> Régression Linéaire</a>
+
+            <div class="nav-section">Conformité ISO 50001</div>
+            <a class="nav-link" onclick="basculerOnglet('iso')"><i class="bi bi-shield-check"></i> SER & IPE Cibles</a>
+            <a class="nav-link" onclick="basculerOnglet('rapports')"><i class="bi bi-file-earmark-excel-fill"></i> Rapports & Exports</a>
+
+            <div class="nav-section">Maintenance & Garantie</div>
+            <a class="nav-link" onclick="basculerOnglet('maintenance')"><i class="bi bi-calendar-check"></i> Planning 4 Visites/An</a>
+            <a class="nav-link" onclick="basculerOnglet('correctif')"><i class="bi bi-tools"></i> Délais 48h / 7 Jours</a>
+            <a class="nav-link" onclick="basculerOnglet('reception')"><i class="bi bi-award-fill"></i> Réception & PV</a>
+
+            <div class="nav-section">Système & Aide</div>
+            <a class="nav-link" onclick="basculerOnglet('doc')"><i class="bi bi-book-half"></i> Documentation</a>
+        </div>
+    </aside>
+
+    <!-- Wrapper Principal -->
+    <div class="main-wrapper">
+        <!-- Top Navbar -->
+        <header class="top-navbar">
+            <div class="d-flex align-items-center gap-3">
+                <span class="badge bg-primary px-3 py-2"><i class="bi bi-broadcast"></i> Simulateur 58 Centrales (5s)</span>
+                <span class="badge bg-success px-3 py-2"><i class="bi bi-check-circle"></i> ISO 50001:2018</span>
+                <span class="text-muted small d-none d-md-inline">Marsa Maroc · AOO 12/DEPA/2026 (GitHub Pages Standalone)</span>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-outline-danger btn-sm position-relative" onclick="basculerOnglet('alertes')">
+                    <i class="bi bi-bell-fill"></i>
+                    <span id="badge-top-alertes" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">1</span>
+                </button>
+
+                <div class="dropdown">
+                    <button class="btn btn-light btn-sm dropdown-toggle d-flex align-items-center gap-2 border" type="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle fs-5 text-primary"></i>
+                        <span id="nom-utilisateur-courant"><b>admin</b> (ADMINISTRATEUR)</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+                        <li><h6 class="dropdown-header">Changer de profil démo</h6></li>
+                        <li><a class="dropdown-item" onclick="changerRole('admin')"><i class="bi bi-shield-lock text-danger"></i> Administrateur</a></li>
+                        <li><a class="dropdown-item" onclick="changerRole('exploitant')"><i class="bi bi-tools text-primary"></i> Exploitant</a></li>
+                        <li><a class="dropdown-item" onclick="changerRole('lecteur')"><i class="bi bi-eye text-info"></i> Lecteur</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <!-- Contenu des Panneaux -->
+        <main class="content-area">
+
+            <!-- 1. TABLEAU DE BORD GLOBAL -->
+            <div id="panel-global" class="tab-content-panel active">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h3 class="fw-bold text-primary mb-1"><i class="bi bi-speedometer2 me-2"></i>Tableau de Bord Global Multi-Sites</h3>
+                        <p class="text-muted small mb-0">Supervision en direct des 6 postes de transformation et 58 points de mesure – Port d'Agadir</p>
+                    </div>
+                    <span class="badge bg-success py-2 px-3"><i class="bi bi-activity animate-pulse me-1"></i> Remontée Live (5s)</span>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <div class="kpi-card border-primary">
+                            <div class="text-muted small fw-semibold">PUISSANCE TOTALE APPELÉE</div>
+                            <div class="fs-3 fw-bold text-primary" id="live-puissance-totale">2 840 kW</div>
+                            <div class="small text-muted mt-2"><i class="bi bi-activity text-success"></i> Fréquence : 50.02 Hz</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="kpi-card border-success">
+                            <div class="text-muted small fw-semibold">ÉNERGIE CUMULÉE JOUR</div>
+                            <div class="fs-3 fw-bold text-success" id="live-energie-jour">34 120 kWh</div>
+                            <div class="small text-muted mt-2"><i class="bi bi-clock-history"></i> Depuis 00h00 UTC</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="kpi-card border-danger">
+                            <div class="text-muted small fw-semibold">ALARMES ACTIVES</div>
+                            <div class="fs-3 fw-bold text-danger" id="live-nb-alarmes">1 active</div>
+                            <div class="small text-muted mt-2"><a onclick="basculerOnglet('alertes')" class="text-danger text-decoration-none" role="button">Voir événements &rarr;</a></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="kpi-card border-warning">
+                            <div class="text-muted small fw-semibold">COMMUNICATION MODBUS</div>
+                            <div class="fs-3 fw-bold text-warning">58 / 58 OK</div>
+                            <div class="small text-muted mt-2"><span class="badge bg-success">100% Remontées Actives</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6 Postes -->
+                <h5 class="fw-bold text-dark mb-3"><i class="bi bi-diagram-3-fill me-2 text-primary"></i>État des 6 Postes de Transformation</h5>
+                <div class="row g-3 mb-4" id="cards-postes-grid"></div>
+
+                <!-- Courbe 24h & Alertes -->
+                <div class="row g-3">
+                    <div class="col-lg-8">
+                        <div class="card border-0 shadow-sm p-3 h-100">
+                            <h6 class="fw-bold text-dark mb-3"><i class="bi bi-graph-up text-primary me-2"></i>Courbe de Charge Globale 24h (kW)</h6>
+                            <div style="height: 260px;"><canvas id="canvasCourbeGlobale"></canvas></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card border-0 shadow-sm p-3 h-100">
+                            <h6 class="fw-bold text-dark mb-3"><i class="bi bi-bell text-danger me-2"></i>Dernier Événement</h6>
+                            <div class="alert alert-warning py-2 small mb-2">
+                                <b>THD_U_ELEVE :</b> THD tension à 8.4% &gt; 8.0% sur Portique 1 (PT Y).
+                            </div>
+                            <div class="alert alert-info py-2 small mb-0">
+                                <b>INFO :</b> Synchronisation NTP réussie sur l'ensemble des 58 automates.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. QUALITÉ & HARMONIQUES -->
+            <div id="panel-qualite" class="tab-content-panel">
+                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-activity me-2"></i>Qualité d'Énergie & Harmoniques (Art. 47.1, 51-1.1)</h3>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <div class="kpi-card border-info">
+                            <div class="text-muted small fw-semibold">THD-U MOYEN DU SITE</div>
+                            <div class="fs-3 fw-bold text-info">2.41 %</div>
+                            <div class="small text-success mt-1"><i class="bi bi-check-circle"></i> Conforme (&lt; 8.0%)</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="kpi-card border-warning">
+                            <div class="text-muted small fw-semibold">THD-I MOYEN DU SITE</div>
+                            <div class="fs-3 fw-bold text-warning">14.85 %</div>
+                            <div class="small text-muted mt-1"><i class="bi bi-info-circle"></i> Tolérance industrielle (&lt; 30%)</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="kpi-card border-danger">
+                            <div class="text-muted small fw-semibold">CREUX DE TENSION (24H)</div>
+                            <div class="fs-3 fw-bold text-danger">0 détecté</div>
+                            <div class="small text-muted mt-1"><i class="bi bi-shield-check text-success"></i> Réseau stable</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm p-3 mb-4">
+                    <h6 class="fw-bold text-dark mb-2"><i class="bi bi-bar-chart-steps text-primary me-2"></i>Histogramme du Spectre Harmonique Rangs 1 à 40 (Tension & Courant)</h6>
+                    <div id="echart-harm-static" style="height: 340px; width: 100%;"></div>
+                </div>
+            </div>
+
+            <!-- 3. FLUX SANKEY -->
+            <div id="panel-sankey" class="tab-content-panel">
+                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-bezier2 me-2"></i>Diagramme de Sankey – Flux Énergétiques (Art. 47.3)</h3>
+                <p class="text-muted small">Visualisation interactive des flux d'énergie active : Réseau HT &rarr; 6 Postes &rarr; Principaux Départs</p>
+                <div class="card border-0 shadow-sm p-3 mb-4">
+                    <div id="echart-sankey-static" style="height: 520px; width: 100%;"></div>
+                </div>
+            </div>
+
+            <!-- 4. ANALYSE PARETO -->
+            <div id="panel-pareto" class="tab-content-panel">
+                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-bar-chart-fill me-2"></i>Analyse de Pareto – Consommations UES (80/20)</h3>
+                <p class="text-muted small">Identification des Usages Énergétiques Significatifs selon la norme ISO 50001</p>
+                <div class="card border-0 shadow-sm p-3 mb-4">
+                    <div id="echart-pareto-static" style="height: 380px; width: 100%;"></div>
+                </div>
+            </div>
+
+            <!-- 5. RÉGRESSION LINÉAIRE -->
+            <div id="panel-regression" class="tab-content-panel">
+                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-graph-up-arrow me-2"></i>Régression Linéaire & Normalisation (Art. 47.3)</h3>
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <div class="kpi-card border-primary">
+                            <div class="text-muted small fw-semibold">ÉQUATION DE LA DROITE</div>
+                            <div class="fs-4 fw-bold text-primary">y = 0.482 &times; Tonnage + 12 400</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="kpi-card border-success">
+                            <div class="text-muted small fw-semibold">COEFFICIENT DE DÉTERMINATION</div>
+                            <div class="fs-4 fw-bold text-success">R&sup2; = 0.874 (Forte Corrélation)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-0 shadow-sm p-3 mb-4">
+                    <div id="echart-regression-static" style="height: 400px; width: 100%;"></div>
+                </div>
+            </div>
+
+            <!-- 6. 58 POINTS DE COMPTAGE -->
+            <div id="panel-inventaire" class="tab-content-panel">
+                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-cpu me-2"></i>Inventaire Complet des 58 Points de Comptage (Art. 51-1)</h3>
+                <div class="card border-0 shadow-sm p-3">
+                    <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+                        <table class="table table-sm table-hover align-middle small mb-0">
+                            <thead class="table-light sticky-top">
+                                <tr><th>#</th><th>Poste</th><th>Départ</th><th>Classe</th><th>Calibre TC</th><th>Type Compteur</th><th>État</th><th>IP Modbus</th><th>Statut</th></tr>
+                            </thead>
+                            <tbody id="tbody-inventaire-static"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. MEIER CMM61 -->
+            <div id="panel-cmm61" class="tab-content-panel">
+                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-hdd-network me-2"></i>12 Compteurs Existants MEIER CMM61 – PT 1 (Prix n°2)</h3>
+                <div class="card border-0 shadow-sm p-3 mb-4">
+                    <div class="alert alert-success py-2 small mb-3">
+                        <i class="bi bi-check-circle-fill me-1"></i> Intégration Modbus TCP/IP native 100% opérationnelle sans passerelle à remplacer (Prix n°2 validé).
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle small mb-0">
+                            <thead class="table-light">
+                                <tr><th>#</th><th>Circuit</th><th>Désignation</th><th>Modèle</th><th>IP:Port</th><th>TC</th><th>Conformité</th><th>Statut</th></tr>
+                            </thead>
+                            <tbody id="tbody-cmm61-static"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. CARTOGRAPHIE MODBUS -->
+            <div id="panel-modbus" class="tab-content-panel">
+                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-table me-2"></i>Cartographie des Registres Modbus (DOE Art. 50)</h3>
+                <div class="card border-0 shadow-sm p-3 mb-4">
+                    <button class="btn btn-success btn-sm mb-3" onclick="exporterCSVModbus()"><i class="bi bi-download me-1"></i> Exporter Cartographie CSV</button>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-striped small mb-0">
+                            <thead class="table-dark">
+                                <tr><th>Adresses Registres</th><th>Grandeur</th><th>Format</th><th>Unité</th><th>Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>30001 - 30006</td><td>Tensions Simples V1, V2, V3</td><td>Float32</td><td>Volts (V)</td><td>Tensions phase-neutre RMS</td></tr>
+                                <tr><td>30007 - 30012</td><td>Tensions Composées U12, U23, U31</td><td>Float32</td><td>Volts (V)</td><td>Tensions entre phases RMS</td></tr>
+                                <tr><td>30013 - 30018</td><td>Courants I1, I2, I3</td><td>Float32</td><td>Ampères (A)</td><td>Courants efficaces de ligne</td></tr>
+                                <tr><td>30019 - 30024</td><td>Puissances Active, Réactive, Apparente</td><td>Float32</td><td>kW / kVAR / kVA</td><td>Puissances triphasées totales</td></tr>
+                                <tr><td>30025 - 30026</td><td>Facteur de Puissance (Cos &phi;)</td><td>Float32</td><td>-</td><td>Rapport P / S</td></tr>
+                                <tr><td>30027 - 30028</td><td>Fréquence</td><td>Float32</td><td>Hz</td><td>Fréquence fondamentale</td></tr>
+                                <tr><td>30029 - 30032</td><td>Énergie Active Importée</td><td>Int64</td><td>kWh</td><td>Compteur d'énergie cumulé</td></tr>
+                                <tr><td>30033 - 30036</td><td>THD Tension & Courant</td><td>Float32</td><td>%</td><td>Distorsion harmonique totale</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. ALERTES -->
+            <div id="panel-alertes" class="tab-content-panel">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="fw-bold text-primary mb-0"><i class="bi bi-bell-fill text-danger me-2"></i>Alertes & Notifications (Art. 47.3)</h3>
+                    <button class="btn btn-warning btn-sm text-dark fw-semibold" onclick="declencherAlerteTest()"><i class="bi bi-play-circle me-1"></i> Bouton Test Scénario Alerte</button>
+                </div>
+                <div class="card border-0 shadow-sm p-3 mb-4">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle small mb-0">
+                            <thead class="table-light">
+                                <tr><th>Horodatage</th><th>Poste / Départ</th><th>Type</th><th>Gravité</th><th>Message</th><th>Statut</th><th>Action</th></tr>
+                            </thead>
+                            <tbody id="tbody-alertes-static"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. ISO 50001 (SER / IPE) -->
+            <div id="panel-iso" class="tab-content-panel">
+                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-shield-check me-2"></i>Conformité ISO 50001 – SER & IPE</h3>
+                <div class="card border-0 shadow-sm p-3 mb-4">
+                    <h6 class="fw-bold text-dark mb-2">Suivi Mensuel de l'Indicateur IPE (kWh / tonne) vs SER de Référence</h6>
+                    <div style="height: 280px;"><canvas id="canvasIPE"></canvas></div>
+                </div>
+            </div>
+
+            <!-- 11. RAPPORTS -->
+            <div id="panel-rapports" class="tab-content-panel">
+                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-file-earmark-excel-fill text-success me-2"></i>Rapports Périodiques & Exports (Art. 47.3)</h3>
+                <div class="card border-0 shadow-sm p-4 mb-4">
+                    <h6 class="fw-bold text-dark mb-3">Télécharger un Rapport d'Exploitation Périodique (ISO 50001)</h6>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <button class="btn btn-outline-success w-100 py-3" onclick="telechargerFauxExcel('Quotidien')">
+                                <i class="bi bi-file-earmark-excel fs-3 d-block mb-1"></i><b>Rapport Quotidien (CSV)</b>
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-outline-primary w-100 py-3" onclick="telechargerFauxExcel('Mensuel')">
+                                <i class="bi bi-file-earmark-spreadsheet fs-3 d-block mb-1"></i><b>Revue Mensuelle ISO 50001</b>
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-outline-dark w-100 py-3" onclick="telechargerFauxExcel('Annuel')">
+                                <i class="bi bi-archive fs-3 d-block mb-1"></i><b>Bilan Annuel Consolidé</b>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 12. MAINTENANCE & PV -->
+            <div id="panel-maintenance" class="tab-content-panel">
+                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-calendar-check me-2"></i>Maintenance Préventive (4 Visites/An – Art. 49)</h3>
+                <div class="card border-0 shadow-sm p-3 mb-4">
+                    <table class="table table-hover align-middle small mb-0">
+                        <thead class="table-light"><tr><th>Trimestre</th><th>Poste</th><th>Date Planifiée</th><th>Statut</th><th>Procès-Verbal</th></tr></thead>
+                        <tbody>
+                            <tr><td><b>T1 2026</b></td><td>Poste PT Y</td><td>15/01/2026</td><td><span class="badge bg-success">Réalisé</span></td><td><button class="btn btn-sm btn-outline-primary py-0" onclick="alert('Téléchargement PV Visite T1 (Conforme)')"><i class="bi bi-file-pdf"></i> PV T1 Signé</button></td></tr>
+                            <tr><td><b>T2 2026</b></td><td>Poste PT X</td><td>15/04/2026</td><td><span class="badge bg-primary">Planifié</span></td><td><button class="btn btn-sm btn-outline-secondary py-0" onclick="alert('PV à générer après réalisation.')">Générer PV</button></td></tr>
+                            <tr><td><b>T3 2026</b></td><td>Poste PT Z</td><td>15/07/2026</td><td><span class="badge bg-primary">Planifié</span></td><td>-</td></tr>
+                            <tr><td><b>T4 2026</b></td><td>Poste PT 1</td><td>15/10/2026</td><td><span class="badge bg-primary">Planifié</span></td><td>-</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 13. CORRECTIF SLA -->
+            <div id="panel-correctif" class="tab-content-panel">
+                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-tools text-danger me-2"></i>Délais Contractuels Correctifs (Art. 49)</h3>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <div class="card border-danger border-start border-4 p-3 shadow-sm">
+                            <h6 class="fw-bold text-danger">Défaut Bloquant : Délai 48h</h6>
+                            <p class="text-muted small mb-0">Perte totale de remontée d'un poste. Astreinte d'intervention immédiate.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-warning border-start border-4 p-3 shadow-sm">
+                            <h6 class="fw-bold text-warning">Défaut Non-Bloquant : Délai 7 Jours</h6>
+                            <p class="text-muted small mb-0">Défaillance d'un départ secondaire ou dérive isolée.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 14. RÉCEPTION & PV OFFICIEL -->
+            <div id="panel-reception" class="tab-content-panel">
+                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-award-fill text-warning me-2"></i>Essais de Réception & PV Officiel (Art. 47.4, 50)</h3>
+                <div class="card border-0 shadow-sm p-4 mb-4">
+                    <h5 class="fw-bold text-dark mb-2">Commission Technique DEPA Marsa Maroc – Port d'Agadir</h5>
+                    <p class="text-muted small mb-3">Contrôle métrologique contradictoire avec appareil étalonné classe 0,1S &bull; 100% des 58 points validés.</p>
+                    <button class="btn btn-success btn-sm" onclick="alert('Procès-Verbal officiel de réception provisoire validé et contresigné.')">
+                        <i class="bi bi-file-earmark-pdf me-1"></i> Télécharger PV de Réception Provisoire Officiel
+                    </button>
+                </div>
+            </div>
+
+            <!-- 15. DOCUMENTATION -->
+            <div id="panel-doc" class="tab-content-panel">
+                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-book-half me-2"></i>Documentation Technique & Manuels (Art. 50)</h3>
+                <div class="card border-0 shadow-sm p-4">
+                    <h6 class="fw-bold text-primary">Manuel Utilisateur & Exploitation</h6>
+                    <p class="text-muted small">Ce prototype répond aux clauses du marché AOO 12/DEPA/2026. L'architecture supporte Modbus TCP/IP, BACnet et M-Bus.</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script SPA & Simulateur JS en Direct -->
+    <script>
+        const POSTES = [
+            { id: 1, code: "PT_Y", nom: "Poste PT Y", ip: "192.168.1.10", nb: 11, p: 620, e: 7440, statut: "OK" },
+            { id: 2, code: "PT_X", nom: "Poste PT X", ip: "192.168.1.30", nb: 11, p: 580, e: 6960, statut: "OK" },
+            { id: 3, code: "PT_Z", nom: "Poste PT Z", ip: "192.168.1.50", nb: 10, p: 490, e: 5880, statut: "OK" },
+            { id: 4, code: "PT_4", nom: "Poste PT 4", ip: "192.168.1.70", nb: 10, p: 440, e: 5280, statut: "OK" },
+            { id: 5, code: "PT_1", nom: "Poste PT 1", ip: "192.168.1.90", nb: 12, p: 590, e: 7080, statut: "OK" },
+            { id: 6, code: "PT_7", nom: "Poste PT 7", ip: "192.168.1.110", nb: 4, p: 120, e: 1480, statut: "OK" },
+        ];
+
+        let alertesList = [
+            { id: 1, horaire: "Aujourd'hui 08:30", poste: "PT Y", depart: "Portique Manutention 1", type: "THD_U_ELEVE", gravite: "ALERTE", message: "THD-U à 8.4% (> 8.0%)", statut: "ACTIVE" }
+        ];
+
+        function basculerOnglet(nom) {
+            document.querySelectorAll('.tab-content-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.sidebar .nav-link').forEach(l => l.classList.remove('active'));
+            const p = document.getElementById('panel-' + nom);
+            if (p) p.classList.add('active');
+
+            // Ajustement ECharts au changement d'onglet
+            setTimeout(() => {
+                if (nom === 'qualite' && chartHarm) chartHarm.resize();
+                if (nom === 'sankey' && chartSankey) chartSankey.resize();
+                if (nom === 'pareto' && chartPareto) chartPareto.resize();
+                if (nom === 'regression' && chartReg) chartReg.resize();
+            }, 100);
+        }
+
+        function changerRole(role) {
+            const span = document.getElementById('nom-utilisateur-courant');
+            if (role === 'admin') span.innerHTML = '<b>admin</b> (ADMINISTRATEUR)';
+            else if (role === 'exploitant') span.innerHTML = '<b>exploitant</b> (EXPLOITANT)';
+            else span.innerHTML = '<b>lecteur</b> (LECTEUR)';
+        }
+
+        // Rendu des Cards de Postes
+        function afficherPostes() {
+            const grid = document.getElementById('cards-postes-grid');
+            grid.innerHTML = '';
+            POSTES.forEach(p => {
+                const col = document.createElement('div');
+                col.className = 'col-md-4 col-sm-6';
+                col.innerHTML = `
+                    <div class="card border-0 shadow-sm h-100" style="border-left: 5px solid #16a34a !important;">
+                        <div class="card-body p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <h6 class="fw-bold mb-0 text-dark">${p.nom}</h6>
+                                <span class="badge bg-success">NORMAL</span>
+                            </div>
+                            <div class="text-muted small mb-2"><i class="bi bi-hdd-network"></i> IP : ${p.ip} · ${p.nb} Départs</div>
+                            <div class="row g-1 text-center bg-light rounded p-2 mb-2">
+                                <div class="col-6 border-end">
+                                    <div class="text-muted small" style="font-size:0.75rem;">PUISSANCE</div>
+                                    <div class="fw-bold text-primary">${p.p} kW</div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-muted small" style="font-size:0.75rem;">ÉNERGIE JOUR</div>
+                                    <div class="fw-bold text-success">${p.e} kWh</div>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button class="btn btn-sm btn-outline-primary py-0" onclick="basculerOnglet('inventaire')">Voir Départs &rarr;</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(col);
+            });
+        }
+
+        // Courbe de Charge Globale Chart.js
+        let chartCourbe = null;
+        function initCourbe() {
+            const ctx = document.getElementById('canvasCourbeGlobale').getContext('2d');
+            const labels = ["00h", "02h", "04h", "06h", "08h", "10h", "12h", "14h", "16h", "18h", "20h", "22h"];
+            const data = [1200, 1050, 980, 1600, 2450, 2800, 2600, 2750, 2900, 2700, 2200, 1500];
+
+            chartCourbe = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Puissance Active Totale (kW)',
+                        data: data,
+                        borderColor: '#1a3a5c',
+                        backgroundColor: 'rgba(26, 58, 92, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        // ECharts : Harmoniques 1 à 40
+        let chartHarm = null;
+        function initHarmoniques() {
+            chartHarm = echarts.init(document.getElementById('echart-harm-static'));
+            const rangs = Array.from({length: 40}, (_, i) => `H${i+1}`);
+            const tens = [100, 0.3, 2.5, 0.2, 3.8, 0.1, 2.9, 0.1, 0.8, 0.1, 1.8, 0.1, 1.5, 0.1, 0.4, 0.1, 0.9, 0.1, 0.7, 0.1, 0.2, 0.1, 0.5, 0.1, 0.4, 0.1, 0.2, 0.1, 0.3, 0.1, 0.2, 0.1, 0.2, 0.1, 0.2, 0.1, 0.1, 0.1, 0.1, 0.1];
+            const cour = [100, 0.5, 8.2, 0.3, 12.5, 0.2, 8.8, 0.2, 2.5, 0.2, 5.8, 0.2, 4.2, 0.2, 1.2, 0.2, 2.8, 0.2, 2.0, 0.2, 0.5, 0.2, 1.5, 0.2, 1.2, 0.2, 0.5, 0.2, 0.8, 0.2, 0.6, 0.2, 0.4, 0.2, 0.5, 0.2, 0.3, 0.2, 0.3, 0.2];
+
+            chartHarm.setOption({
+                tooltip: { trigger: 'axis' },
+                legend: { data: ['Tension U (%)', 'Courant I (%)'] },
+                xAxis: { type: 'category', data: rangs.slice(1), axisLabel: { interval: 1, rotate: 45, fontSize: 10 } },
+                yAxis: { type: 'value', name: '% Fondamentale' },
+                series: [
+                    { name: 'Tension U (%)', type: 'bar', data: tens.slice(1), itemStyle: { color: '#1a3a5c' } },
+                    { name: 'Courant I (%)', type: 'bar', data: cour.slice(1), itemStyle: { color: '#e8660d' } }
+                ]
+            });
+        }
+
+        // ECharts : Sankey
+        let chartSankey = null;
+        function initSankey() {
+            chartSankey = echarts.init(document.getElementById('echart-sankey-static'));
+            chartSankey.setOption({
+                tooltip: { trigger: 'item' },
+                series: [{
+                    type: 'sankey',
+                    data: [
+                        { name: 'Réseau HT ONEE' },
+                        { name: 'Poste PT Y' }, { name: 'Poste PT X' }, { name: 'Poste PT Z' },
+                        { name: 'Poste PT 4' }, { name: 'Poste PT 1' }, { name: 'Poste PT 7' },
+                        { name: 'Grues & Portiques' }, { name: 'Entrepôts Frigorifiques' }, { name: 'Niches Multiprises' }, { name: 'Éclairage & Bâtiments' }
+                    ],
+                    links: [
+                        { source: 'Réseau HT ONEE', target: 'Poste PT Y', value: 7440 },
+                        { source: 'Réseau HT ONEE', target: 'Poste PT X', value: 6960 },
+                        { source: 'Réseau HT ONEE', target: 'Poste PT Z', value: 5880 },
+                        { source: 'Réseau HT ONEE', target: 'Poste PT 4', value: 5280 },
+                        { source: 'Réseau HT ONEE', target: 'Poste PT 1', value: 7080 },
+                        { source: 'Réseau HT ONEE', target: 'Poste PT 7', value: 1480 },
+                        { source: 'Poste PT Y', target: 'Grues & Portiques', value: 4200 },
+                        { source: 'Poste PT 1', target: 'Grues & Portiques', value: 4800 },
+                        { source: 'Poste PT 4', target: 'Entrepôts Frigorifiques', value: 3600 },
+                        { source: 'Poste PT X', target: 'Niches Multiprises', value: 2400 },
+                        { source: 'Poste PT Z', target: 'Éclairage & Bâtiments', value: 2800 },
+                    ],
+                    lineStyle: { color: 'gradient', curveness: 0.5 }
+                }]
+            });
+        }
+
+        // ECharts : Pareto
+        let chartPareto = null;
+        function initPareto() {
+            chartPareto = echarts.init(document.getElementById('echart-pareto-static'));
+            chartPareto.setOption({
+                tooltip: { trigger: 'axis' },
+                legend: { data: ['Énergie (kWh)', '% Cumulé'] },
+                xAxis: [{ type: 'category', data: ['Portiques PT Y', 'Grues GP1 PT 1', 'Frigo PT 4', 'Convoyeur PT Z', 'GE Secours', 'Éclairage Quai', 'Ateliers'], axisLabel: { interval: 0, rotate: 20 } }],
+                yAxis: [{ type: 'value', name: 'kWh' }, { type: 'value', name: '%', max: 100, axisLabel: { formatter: '{value}%' } }],
+                series: [
+                    { name: 'Énergie (kWh)', type: 'bar', data: [9800, 8900, 6200, 4100, 2300, 1500, 1320], itemStyle: { color: '#1a3a5c' } },
+                    { name: '% Cumulé', type: 'line', yAxisIndex: 1, data: [28.7, 54.8, 73.0, 85.0, 91.7, 96.1, 100], itemStyle: { color: '#e8660d' }, markLine: { data: [{ yAxis: 80, name: 'Seuil 80% UES' }] } }
+                ]
+            });
+        }
+
+        // ECharts : Régression
+        let chartReg = null;
+        function initRegression() {
+            chartReg = echarts.init(document.getElementById('echart-regression-static'));
+            const pts = [[80000, 50800], [92000, 56400], [105000, 63100], [115000, 67900], [125000, 72500], [140000, 80100], [150000, 84700]];
+            chartReg.setOption({
+                tooltip: { trigger: 'item' },
+                legend: { data: ['Observations Réelles', 'Modèle Normalisé (Droite)'] },
+                xAxis: { type: 'value', name: 'Tonnage Manutentionné (t)', scale: true },
+                yAxis: { type: 'value', name: 'Énergie (kWh)', scale: true },
+                series: [
+                    { name: 'Observations Réelles', type: 'scatter', data: pts, symbolSize: 12, itemStyle: { color: '#1a3a5c' } },
+                    { name: 'Modèle Normalisé (Droite)', type: 'line', data: [[80000, 50960], [150000, 84700]], itemStyle: { color: '#e8660d' }, lineStyle: { width: 3 } }
+                ]
+            });
+        }
+
+        // Chart.js : IPE
+        let chartIPE = null;
+        function initIPE() {
+            const ctx = document.getElementById('canvasIPE').getContext('2d');
+            chartIPE = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'],
+                    datasets: [
+                        { label: 'IPE Réel (kWh/t)', data: [0.53, 0.51, 0.49, 0.52, 0.50, 0.48, 0.47, 0.51, 0.49, 0.50, 0.48, 0.49], backgroundColor: '#1a3a5c' },
+                        { type: 'line', label: 'Cible SER (0.52 kWh/t)', data: Array(12).fill(0.52), borderColor: '#dc2626', borderDash: [5, 5], pointRadius: 0 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        // Table 58 Points
+        function remplirInventaire() {
+            const tbody = document.getElementById('tbody-inventaire-static');
+            tbody.innerHTML = '';
+            for (let i = 1; i <= 58; i++) {
+                const tr = document.createElement('tr');
+                const isPT1 = i >= 43 && i <= 54;
+                const poste = i <= 11 ? "PT Y" : (i <= 22 ? "PT X" : (i <= 32 ? "PT Z" : (i <= 42 ? "PT 4" : (isPT1 ? "PT 1" : "PT 7"))));
+                const classe = isPT1 ? "0.5S" : (i % 2 === 0 ? "0.2S" : "0.5S");
+                const tc = i <= 2 ? 2000 : (i % 3 === 0 ? 630 : 250);
+
+                tr.innerHTML = `
+                    <td>${i}</td>
+                    <td><b>${poste}</b></td>
+                    <td>Départ #${i}</td>
+                    <td><span class="badge ${classe === '0.2S' ? 'bg-primary' : 'bg-light text-dark border'}">${classe}</span></td>
+                    <td><b>${tc} A</b></td>
+                    <td>${isPT1 ? 'MEIER CMM61' : 'Centrale Modbus'}</td>
+                    <td><span class="badge ${isPT1 ? 'bg-secondary' : 'bg-success'}">${isPT1 ? 'Existant PT1' : 'Neuf Fourni'}</span></td>
+                    <td><code>192.168.1.${10 + i}:502</code></td>
+                    <td><span class="badge bg-success">En Ligne</span></td>
+                `;
+                tbody.appendChild(tr);
+            }
+
+            // Table CMM61
+            const tbodyCMM = document.getElementById('tbody-cmm61-static');
+            tbodyCMM.innerHTML = '';
+            for (let j = 1; j <= 12; j++) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b>${j}</b></td>
+                    <td><code>PT_1_D${j}</code></td>
+                    <td>Départ Principal Quai #${j}</td>
+                    <td><span class="badge bg-info text-dark">MEIER CMM61</span></td>
+                    <td><code>192.168.1.${90 + j}:502</code></td>
+                    <td>800 A</td>
+                    <td><span class="badge bg-success">Registres Validés</span></td>
+                    <td><span class="badge bg-success">100% OK</span></td>
+                `;
+                tbodyCMM.appendChild(tr);
+            }
+        }
+
+        // Table Alertes
+        function afficherAlertes() {
+            const tbody = document.getElementById('tbody-alertes-static');
+            tbody.innerHTML = '';
+            alertesList.forEach(a => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><code>${a.horaire}</code></td>
+                    <td><b>${a.poste}</b> &bull; ${a.depart}</td>
+                    <td><b>${a.type}</b></td>
+                    <td><span class="badge bg-danger">${a.gravite}</span></td>
+                    <td>${a.message}</td>
+                    <td><span class="badge ${a.statut === 'ACTIVE' ? 'bg-danger' : 'bg-secondary'}">${a.statut}</span></td>
+                    <td>${a.statut === 'ACTIVE' ? `<button class="btn btn-sm btn-outline-danger py-0" onclick="acquitterAlerte(${a.id})">Acquitter</button>` : '<span class="text-muted">Acquittée</span>'}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+            document.getElementById('badge-top-alertes').textContent = alertesList.filter(a => a.statut === 'ACTIVE').length;
+            document.getElementById('badge-side-alertes').textContent = alertesList.filter(a => a.statut === 'ACTIVE').length;
+            document.getElementById('live-nb-alarmes').textContent = alertesList.filter(a => a.statut === 'ACTIVE').length + ' active(s)';
+        }
+
+        function acquitterAlerte(id) {
+            const al = alertesList.find(a => a.id === id);
+            if (al) {
+                al.statut = 'ACQUITTEE';
+                afficherAlertes();
+                alert(`Alerte #${id} acquittée avec succès par l'opérateur.`);
+            }
+        }
+
+        function declencherAlerteTest() {
+            alertesList.unshift({
+                id: alertesList.length + 1,
+                horaire: "À l'instant",
+                poste: "PT Y",
+                depart: "TGBT T1",
+                type: "SURCHARGE",
+                gravite: "CRITIQUE",
+                message: "[TEST VALIDÉ] Surcharge simulée de 2 150A (> 2 000A) sur TGBT T1",
+                statut: "ACTIVE"
+            });
+            afficherAlertes();
+            alert("Scénario de test d'alerte déclenché avec succès !");
+        }
+
+        function telechargerFauxExcel(type) {
+            const csv = `Rapport;${type};Marsa Maroc;Port d'Agadir;AOO 12/DEPA/2026\nPoste;Départ;Puissance_kW;Energie_kWh;Cos_Phi;THD_U\nPT Y;TGBT T1;620;7440;0.96;2.1\nPT X;TGBT T1;580;6960;0.95;2.3\nPT 1;Grue GP1;590;7080;0.94;2.8\nTOTAL;;2840;34120;0.95;2.4`;
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `Rapport_${type}_MarsaMaroc_Agadir.csv`;
+            link.click();
+        }
+
+        function exporterCSVModbus() {
+            telechargerFauxExcel('Cartographie_Modbus');
+        }
+
+        // Initialisation de toute l'application
+        afficherPostes();
+        initCourbe();
+        initHarmoniques();
+        initSankey();
+        initPareto();
+        initRegression();
+        initIPE();
+        remplirInventaire();
+        afficherAlertes();
+
+        // Simulateur de variation temps réel toutes les 5 secondes
+        setInterval(() => {
+            const deltaP = Math.floor(Math.random() * 40 - 20);
+            const valP = 2840 + deltaP;
+            document.getElementById('live-puissance-totale').textContent = valP.toLocaleString('fr-FR') + " kW";
+        }, 5000);
+    </script>
+</body>
+</html>
+
