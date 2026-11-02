@@ -130,8 +130,8 @@
         
         /* Panneaux */
         .tab-panel { display: none; }
-        .tab-panel.active { display: block; animation: fadeIn 0.25s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-panel.active { display: block; animation: fadeIn 0.2s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
         
         /* Cards SCADA */
         .scada-card {
@@ -269,30 +269,30 @@
 
         <div class="py-2">
             <div class="nav-section-title">Supervision Portuaire</div>
-            <a class="sidebar-link active" onclick="ouvrirOnglet('global')"><i class="bi bi-grid-1x2-fill"></i> Vue Globale Multi-Sites</a>
-            <a class="sidebar-link" onclick="ouvrirOnglet('postes')"><i class="bi bi-diagram-3-fill"></i> Postes & Départs (Unifilaire)</a>
-            <a class="sidebar-link" onclick="ouvrirOnglet('qualite')"><i class="bi bi-activity"></i> Qualité & Harmoniques (1-40)</a>
+            <a class="sidebar-link active" id="nav-global" onclick="ouvrirOnglet('global')"><i class="bi bi-grid-1x2-fill"></i> Vue Globale Multi-Sites</a>
+            <a class="sidebar-link" id="nav-postes" onclick="ouvrirOnglet('postes')"><i class="bi bi-diagram-3-fill"></i> Postes & Départs (Unifilaire)</a>
+            <a class="sidebar-link" id="nav-qualite" onclick="ouvrirOnglet('qualite')"><i class="bi bi-activity"></i> Qualité & Harmoniques (1-40)</a>
 
             <div class="nav-section-title">Comptage & Registres</div>
-            <a class="sidebar-link" onclick="ouvrirOnglet('inventaire')"><i class="bi bi-cpu-fill"></i> 58 Points de Mesure & TC</a>
-            <a class="sidebar-link" onclick="ouvrirOnglet('cmm61')"><i class="bi bi-hdd-network-fill"></i> MEIER CMM61 (PT 1)</a>
-            <a class="sidebar-link" onclick="ouvrirOnglet('modbus')"><i class="bi bi-table"></i> Cartographie Modbus</a>
+            <a class="sidebar-link" id="nav-inventaire" onclick="ouvrirOnglet('inventaire')"><i class="bi bi-cpu-fill"></i> 58 Points de Mesure & TC</a>
+            <a class="sidebar-link" id="nav-cmm61" onclick="ouvrirOnglet('cmm61')"><i class="bi bi-hdd-network-fill"></i> MEIER CMM61 (PT 1)</a>
+            <a class="sidebar-link" id="nav-modbus" onclick="ouvrirOnglet('modbus')"><i class="bi bi-table"></i> Cartographie Modbus</a>
 
             <div class="nav-section-title">Analyses Avancées</div>
-            <a class="sidebar-link" onclick="ouvrirOnglet('sankey')"><i class="bi bi-bezier2"></i> Flux Énergétique Sankey</a>
-            <a class="sidebar-link" onclick="ouvrirOnglet('pareto')"><i class="bi bi-bar-chart-steps"></i> Analyse Pareto 80/20</a>
-            <a class="sidebar-link" onclick="ouvrirOnglet('regression')"><i class="bi bi-graph-up-arrow"></i> Régression Linéaire ISO</a>
+            <a class="sidebar-link" id="nav-sankey" onclick="ouvrirOnglet('sankey')"><i class="bi bi-bezier2"></i> Flux Énergétique Sankey</a>
+            <a class="sidebar-link" id="nav-pareto" onclick="ouvrirOnglet('pareto')"><i class="bi bi-bar-chart-steps"></i> Analyse Pareto 80/20</a>
+            <a class="sidebar-link" id="nav-regression" onclick="ouvrirOnglet('regression')"><i class="bi bi-graph-up-arrow"></i> Régression Linéaire ISO</a>
 
             <div class="nav-section-title">Conformité ISO 50001</div>
-            <a class="sidebar-link" onclick="ouvrirOnglet('iso')"><i class="bi bi-shield-check"></i> SER & IPE Cibles (-5%)</a>
-            <a class="sidebar-link" onclick="ouvrirOnglet('rapports')"><i class="bi bi-file-earmark-excel-fill"></i> Rapports & Exports CSV</a>
+            <a class="sidebar-link" id="nav-iso" onclick="ouvrirOnglet('iso')"><i class="bi bi-shield-check"></i> SER & IPE Cibles (-5%)</a>
+            <a class="sidebar-link" id="nav-rapports" onclick="ouvrirOnglet('rapports')"><i class="bi bi-file-earmark-excel-fill"></i> Rapports & Exports CSV</a>
 
             <div class="nav-section-title">Exploitation & Garantie</div>
-            <a class="sidebar-link" onclick="ouvrirOnglet('alertes')"><i class="bi bi-bell-fill"></i> Alertes <span id="side-alert-badge" class="badge bg-danger ms-auto" style="font-size: 0.65rem;">1</span></a>
-            <a class="sidebar-link" onclick="ouvrirOnglet('maintenance')"><i class="bi bi-calendar-check-fill"></i> Maintenance 4 Visites/An</a>
-            <a class="sidebar-link" onclick="ouvrirOnglet('correctif')"><i class="bi bi-clock-history"></i> Délais SLA 48h / 7 Jours</a>
-            <a class="sidebar-link" onclick="ouvrirOnglet('reception')"><i class="bi bi-patch-check-fill"></i> PV Réception (Art. 47.4)</a>
-            <a class="sidebar-link" onclick="ouvrirOnglet('doc')"><i class="bi bi-book-half"></i> Documentation</a>
+            <a class="sidebar-link" id="nav-alertes" onclick="ouvrirOnglet('alertes')"><i class="bi bi-bell-fill"></i> Alertes <span id="side-alert-badge" class="badge bg-danger ms-auto" style="font-size: 0.65rem;">1</span></a>
+            <a class="sidebar-link" id="nav-maintenance" onclick="ouvrirOnglet('maintenance')"><i class="bi bi-calendar-check-fill"></i> Maintenance 4 Visites/An</a>
+            <a class="sidebar-link" id="nav-correctif" onclick="ouvrirOnglet('correctif')"><i class="bi bi-clock-history"></i> Délais SLA 48h / 7 Jours</a>
+            <a class="sidebar-link" id="nav-reception" onclick="ouvrirOnglet('reception')"><i class="bi bi-patch-check-fill"></i> PV Réception (Art. 47.4)</a>
+            <a class="sidebar-link" id="nav-doc" onclick="ouvrirOnglet('doc')"><i class="bi bi-book-half"></i> Documentation</a>
         </div>
     </aside>
 
@@ -339,7 +339,7 @@
             <!-- ============================================================== -->
             <!-- 1. VUE GLOBALE MULTI-SITES -->
             <!-- ============================================================== -->
-            <div id="panel-global" class="tab-panel active">
+            <div id="panel-global" class="tab-panel active" style="display: block;">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="fw-bold mb-1"><i class="bi bi-grid-1x2-fill text-info me-2"></i>Supervision Globale Multi-Sites</h4>
@@ -390,15 +390,249 @@
                                 <i class="bi bi-activity text-purple"></i>
                             </div>
                             <div class="kpi-value">1.82<span class="kpi-unit">% THD-U</span></div>
-                            <div class="small text-muted mt-2"><i class="bi bi-check-circle text-success"></i> Conforme CEI 61000-2-4 (< 5%)</div>
+                            <div class="small text-muted mt-2"><i class="bi bi-check-circle text-success"></i> Conforme CEI 61000-2-4 (&lt; 5%)</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 6 Cartes Postes -->
+                <!-- 6 Cartes Postes (ÉCRITES DIRECTEMENT EN DUR DANS LE HTML) -->
                 <h5 class="fw-bold mb-3"><i class="bi bi-building text-info me-2"></i>État des 6 Postes de Transformation MT/BT</h5>
                 <div class="row g-3 mb-4" id="postes-grid-global">
-                    <!-- Généré dynamiquement par JS -->
+                    
+    <div class="col-md-4">
+        <div class="scada-card h-100" style="cursor: pointer;" onclick="selectionnerPoste('PT_Y'); ouvrirOnglet('postes');">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <h6 class="fw-bold text-white mb-0">Poste PT Y</h6>
+                    <span class="text-info small font-mono">Quai Nord / Terminal Conteneurs</span>
+                </div>
+                <span class="badge bg-success bg-opacity-25 text-success font-mono"><span class="pulse-led me-1"></span> OK</span>
+            </div>
+            <div class="text-muted small mb-3">Alimentation portiques de quai et grues mobiles Nord</div>
+            
+            <div class="row g-2 mb-3 text-center">
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">P ACTIVE</div>
+                        <div class="fw-bold font-mono text-warning" id="card-p-PT_Y">845 kW</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">TENSION</div>
+                        <div class="fw-bold font-mono text-success">401 V</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">DÉPARTS</div>
+                        <div class="fw-bold font-mono text-white">11</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center text-muted small pt-2 border-top border-secondary border-opacity-25">
+                <span class="font-mono">Puissance max: 2000 kVA</span>
+                <span class="text-info fw-semibold">Accéder au poste <i class="bi bi-arrow-right"></i></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="scada-card h-100" style="cursor: pointer;" onclick="selectionnerPoste('PT_X'); ouvrirOnglet('postes');">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <h6 class="fw-bold text-white mb-0">Poste PT X</h6>
+                    <span class="text-info small font-mono">Quai Sud / Manutention Polyvalente</span>
+                </div>
+                <span class="badge bg-success bg-opacity-25 text-success font-mono"><span class="pulse-led me-1"></span> OK</span>
+            </div>
+            <div class="text-muted small mb-3">Grues mobiles Sud, trémies d'ensachage et terre-plein</div>
+            
+            <div class="row g-2 mb-3 text-center">
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">P ACTIVE</div>
+                        <div class="fw-bold font-mono text-warning" id="card-p-PT_X">607 kW</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">TENSION</div>
+                        <div class="fw-bold font-mono text-success">400 V</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">DÉPARTS</div>
+                        <div class="fw-bold font-mono text-white">11</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center text-muted small pt-2 border-top border-secondary border-opacity-25">
+                <span class="font-mono">Puissance max: 1600 kVA</span>
+                <span class="text-info fw-semibold">Accéder au poste <i class="bi bi-arrow-right"></i></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="scada-card h-100" style="cursor: pointer;" onclick="selectionnerPoste('PT_Z'); ouvrirOnglet('postes');">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <h6 class="fw-bold text-white mb-0">Poste PT Z</h6>
+                    <span class="text-info small font-mono">Zone Outillage & Hangars</span>
+                </div>
+                <span class="badge bg-success bg-opacity-25 text-success font-mono"><span class="pulse-led me-1"></span> OK</span>
+            </div>
+            <div class="text-muted small mb-3">Ateliers centraux de maintenance, ponts roulants et hangars</div>
+            
+            <div class="row g-2 mb-3 text-center">
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">P ACTIVE</div>
+                        <div class="fw-bold font-mono text-warning" id="card-p-PT_Z">365 kW</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">TENSION</div>
+                        <div class="fw-bold font-mono text-success">401 V</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">DÉPARTS</div>
+                        <div class="fw-bold font-mono text-white">10</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center text-muted small pt-2 border-top border-secondary border-opacity-25">
+                <span class="font-mono">Puissance max: 1280 kVA</span>
+                <span class="text-info fw-semibold">Accéder au poste <i class="bi bi-arrow-right"></i></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="scada-card h-100" style="cursor: pointer;" onclick="selectionnerPoste('PT_4'); ouvrirOnglet('postes');">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <h6 class="fw-bold text-white mb-0">Poste PT 4</h6>
+                    <span class="text-info small font-mono">Terminal Vrac & Silos Portuaires</span>
+                </div>
+                <span class="badge bg-success bg-opacity-25 text-success font-mono"><span class="pulse-led me-1"></span> OK</span>
+            </div>
+            <div class="text-muted small mb-3">Élévateurs à godets, aspiration et tours d'ensachage de céréales</div>
+            
+            <div class="row g-2 mb-3 text-center">
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">P ACTIVE</div>
+                        <div class="fw-bold font-mono text-warning" id="card-p-PT_4">750 kW</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">TENSION</div>
+                        <div class="fw-bold font-mono text-success">401 V</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">DÉPARTS</div>
+                        <div class="fw-bold font-mono text-white">10</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center text-muted small pt-2 border-top border-secondary border-opacity-25">
+                <span class="font-mono">Puissance max: 2000 kVA</span>
+                <span class="text-info fw-semibold">Accéder au poste <i class="bi bi-arrow-right"></i></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="scada-card h-100" style="cursor: pointer;" onclick="selectionnerPoste('PT_1'); ouvrirOnglet('postes');">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <h6 class="fw-bold text-white mb-0">Poste PT 1</h6>
+                    <span class="text-info small font-mono">Direction & Ateliers Principaux</span>
+                </div>
+                <span class="badge bg-success bg-opacity-25 text-success font-mono"><span class="pulse-led me-1"></span> OK</span>
+            </div>
+            <div class="text-muted small mb-3">Comprend les 12 compteurs existants MEIER CMM61 intégrés (Prix n°2)</div>
+            
+            <div class="row g-2 mb-3 text-center">
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">P ACTIVE</div>
+                        <div class="fw-bold font-mono text-warning" id="card-p-PT_1">435 kW</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">TENSION</div>
+                        <div class="fw-bold font-mono text-success">401 V</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">DÉPARTS</div>
+                        <div class="fw-bold font-mono text-white">12</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center text-muted small pt-2 border-top border-secondary border-opacity-25">
+                <span class="font-mono">Puissance max: 1600 kVA</span>
+                <span class="text-info fw-semibold">Accéder au poste <i class="bi bi-arrow-right"></i></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="scada-card h-100" style="cursor: pointer;" onclick="selectionnerPoste('PT_7'); ouvrirOnglet('postes');">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <h6 class="fw-bold text-white mb-0">Poste PT 7</h6>
+                    <span class="text-info small font-mono">Poste Ro-Ro / Quai de Pêche</span>
+                </div>
+                <span class="badge bg-success bg-opacity-25 text-success font-mono"><span class="pulse-led me-1"></span> OK</span>
+            </div>
+            <div class="text-muted small mb-3">Passerelle Ro-Ro hydraulique, niche multiprises et quai</div>
+            
+            <div class="row g-2 mb-3 text-center">
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">P ACTIVE</div>
+                        <div class="fw-bold font-mono text-warning" id="card-p-PT_7">173 kW</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">TENSION</div>
+                        <div class="fw-bold font-mono text-success">401 V</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="bg-dark p-2 rounded border border-secondary border-opacity-25">
+                        <div class="text-muted" style="font-size: 0.68rem;">DÉPARTS</div>
+                        <div class="fw-bold font-mono text-white">4</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center text-muted small pt-2 border-top border-secondary border-opacity-25">
+                <span class="font-mono">Puissance max: 630 kVA</span>
+                <span class="text-info fw-semibold">Accéder au poste <i class="bi bi-arrow-right"></i></span>
+            </div>
+        </div>
+    </div>
+    
                 </div>
 
                 <!-- Graphique Courbe de charge globale 24h -->
@@ -414,9 +648,9 @@
             </div>
 
             <!-- ============================================================== -->
-            <!-- 2. POSTES & DÉPARTS (SCHÉMA UNIFILAIRE) - LA FENÊTRE PRINCIPALE -->
+            <!-- 2. POSTES & DÉPARTS (SCHÉMA UNIFILAIRE) -->
             <!-- ============================================================== -->
-            <div id="panel-postes" class="tab-panel">
+            <div id="panel-postes" class="tab-panel" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div>
                         <h4 class="fw-bold mb-1"><i class="bi bi-diagram-3-fill text-info me-2"></i>Supervision Détaillée & Schéma Unifilaire</h4>
@@ -429,7 +663,55 @@
 
                 <!-- Sélecteur de Poste (6 Onglets Pilules) -->
                 <div class="d-flex flex-wrap gap-2 mb-4" id="selecteur-postes-container">
-                    <!-- Rempli par JS -->
+                    
+    <div class="poste-pill active" id="pill-PT_Y" onclick="selectionnerPoste('PT_Y')">
+        <i class="bi bi-diagram-3"></i>
+        <div>
+            <div>Poste PT Y</div>
+            <div style="font-size: 0.7rem; opacity: 0.8;">11 départs</div>
+        </div>
+    </div>
+    
+    <div class="poste-pill" id="pill-PT_X" onclick="selectionnerPoste('PT_X')">
+        <i class="bi bi-diagram-3"></i>
+        <div>
+            <div>Poste PT X</div>
+            <div style="font-size: 0.7rem; opacity: 0.8;">11 départs</div>
+        </div>
+    </div>
+    
+    <div class="poste-pill" id="pill-PT_Z" onclick="selectionnerPoste('PT_Z')">
+        <i class="bi bi-diagram-3"></i>
+        <div>
+            <div>Poste PT Z</div>
+            <div style="font-size: 0.7rem; opacity: 0.8;">10 départs</div>
+        </div>
+    </div>
+    
+    <div class="poste-pill" id="pill-PT_4" onclick="selectionnerPoste('PT_4')">
+        <i class="bi bi-diagram-3"></i>
+        <div>
+            <div>Poste PT 4</div>
+            <div style="font-size: 0.7rem; opacity: 0.8;">10 départs</div>
+        </div>
+    </div>
+    
+    <div class="poste-pill" id="pill-PT_1" onclick="selectionnerPoste('PT_1')">
+        <i class="bi bi-diagram-3"></i>
+        <div>
+            <div>Poste PT 1</div>
+            <div style="font-size: 0.7rem; opacity: 0.8;">12 départs</div>
+        </div>
+    </div>
+    
+    <div class="poste-pill" id="pill-PT_7" onclick="selectionnerPoste('PT_7')">
+        <i class="bi bi-diagram-3"></i>
+        <div>
+            <div>Poste PT 7</div>
+            <div style="font-size: 0.7rem; opacity: 0.8;">4 départs</div>
+        </div>
+    </div>
+    
                 </div>
 
                 <!-- En-tête du Poste Sélectionné -->
@@ -485,7 +767,7 @@
                         <span class="text-muted small"><i class="bi bi-info-circle me-1"></i> Cliquez sur un départ pour voir sa forme d'onde et ses harmoniques</span>
                     </div>
                     <div class="unifilaire-box" id="unifilaire-content">
-                        <!-- Schéma SVG unifilaire dynamique généré par JS -->
+                        <!-- Schéma SVG unifilaire dynamique -->
                     </div>
                 </div>
 
@@ -513,7 +795,205 @@
                                 </tr>
                             </thead>
                             <tbody id="poste-sel-table-departs">
-                                <!-- Rempli dynamiquement -->
+                                
+    <tr>
+        <td class="font-mono fw-bold text-info">PT_Y_D1</td>
+        <td class="fw-semibold text-white">T1 - Arrivée Transformateur 1</td>
+        <td><span class="text-muted small">TGBT T1</span></td>
+        <td class="font-mono text-warning">2000/5A</td>
+        <td><span class="badge-sub badge-ok">0.5S</span></td>
+        <td class="font-mono fw-bold text-warning">435</td>
+        <td class="font-mono text-info">135</td>
+        <td class="font-mono text-white">648</td>
+        <td class="font-mono text-success">0.95</td>
+        <td><span class="badge-sub badge-ok">OK</span></td>
+        <td>
+            <button class="btn btn-xs btn-outline-info btn-sm" onclick="ouvrirDetailDepart('PT_Y_D1')">
+                <i class="bi bi-eye"></i> Détails
+            </button>
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono fw-bold text-info">PT_Y_D2</td>
+        <td class="fw-semibold text-white">T2 - Arrivée Transformateur 2</td>
+        <td><span class="text-muted small">TGBT T2</span></td>
+        <td class="font-mono text-warning">2000/5A</td>
+        <td><span class="badge-sub badge-ok">0.5S</span></td>
+        <td class="font-mono fw-bold text-warning">410</td>
+        <td class="font-mono text-info">128</td>
+        <td class="font-mono text-white">612</td>
+        <td class="font-mono text-success">0.95</td>
+        <td><span class="badge-sub badge-ok">OK</span></td>
+        <td>
+            <button class="btn btn-xs btn-outline-info btn-sm" onclick="ouvrirDetailDepart('PT_Y_D2')">
+                <i class="bi bi-eye"></i> Détails
+            </button>
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono fw-bold text-info">PT_Y_D3</td>
+        <td class="fw-semibold text-white">Portique de Quai PQ-01</td>
+        <td><span class="text-muted small">Force motrice</span></td>
+        <td class="font-mono text-warning">800/5A</td>
+        <td><span class="badge-sub badge-critique">0.2S</span></td>
+        <td class="font-mono fw-bold text-warning">245</td>
+        <td class="font-mono text-info">85</td>
+        <td class="font-mono text-white">376</td>
+        <td class="font-mono text-success">0.94</td>
+        <td><span class="badge-sub badge-ok">OK</span></td>
+        <td>
+            <button class="btn btn-xs btn-outline-info btn-sm" onclick="ouvrirDetailDepart('PT_Y_D3')">
+                <i class="bi bi-eye"></i> Détails
+            </button>
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono fw-bold text-info">PT_Y_D4</td>
+        <td class="fw-semibold text-white">Portique de Quai PQ-02</td>
+        <td><span class="text-muted small">Force motrice</span></td>
+        <td class="font-mono text-warning">800/5A</td>
+        <td><span class="badge-sub badge-critique">0.2S</span></td>
+        <td class="font-mono fw-bold text-warning">218</td>
+        <td class="font-mono text-info">76</td>
+        <td class="font-mono text-white">334</td>
+        <td class="font-mono text-success">0.94</td>
+        <td><span class="badge-sub badge-ok">OK</span></td>
+        <td>
+            <button class="btn btn-xs btn-outline-info btn-sm" onclick="ouvrirDetailDepart('PT_Y_D4')">
+                <i class="bi bi-eye"></i> Détails
+            </button>
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono fw-bold text-info">PT_Y_D5</td>
+        <td class="fw-semibold text-white">Grue Mobile Gottwald GM-1</td>
+        <td><span class="text-muted small">Force motrice</span></td>
+        <td class="font-mono text-warning">630/5A</td>
+        <td><span class="badge-sub badge-critique">0.2S</span></td>
+        <td class="font-mono fw-bold text-warning">175</td>
+        <td class="font-mono text-info">62</td>
+        <td class="font-mono text-white">268</td>
+        <td class="font-mono text-success">0.94</td>
+        <td><span class="badge-sub badge-ok">OK</span></td>
+        <td>
+            <button class="btn btn-xs btn-outline-info btn-sm" onclick="ouvrirDetailDepart('PT_Y_D5')">
+                <i class="bi bi-eye"></i> Détails
+            </button>
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono fw-bold text-info">PT_Y_D6</td>
+        <td class="fw-semibold text-white">Niche Reefers Nord (Frigo 40 prises)</td>
+        <td><span class="text-muted small">Frigorifique</span></td>
+        <td class="font-mono text-warning">630/5A</td>
+        <td><span class="badge-sub badge-critique">0.2S</span></td>
+        <td class="font-mono fw-bold text-warning">138</td>
+        <td class="font-mono text-info">42</td>
+        <td class="font-mono text-white">208</td>
+        <td class="font-mono text-success">0.96</td>
+        <td><span class="badge-sub badge-ok">OK</span></td>
+        <td>
+            <button class="btn btn-xs btn-outline-info btn-sm" onclick="ouvrirDetailDepart('PT_Y_D6')">
+                <i class="bi bi-eye"></i> Détails
+            </button>
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono fw-bold text-info">PT_Y_D7</td>
+        <td class="fw-semibold text-white">Éclairage Mâts Haute Portée Nord</td>
+        <td><span class="text-muted small">Éclairage</span></td>
+        <td class="font-mono text-warning">250/5A</td>
+        <td><span class="badge-sub badge-ok">0.5S</span></td>
+        <td class="font-mono fw-bold text-warning">44</td>
+        <td class="font-mono text-info">12</td>
+        <td class="font-mono text-white">66</td>
+        <td class="font-mono text-success">0.96</td>
+        <td><span class="badge-sub badge-ok">OK</span></td>
+        <td>
+            <button class="btn btn-xs btn-outline-info btn-sm" onclick="ouvrirDetailDepart('PT_Y_D7')">
+                <i class="bi bi-eye"></i> Détails
+            </button>
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono fw-bold text-info">PT_Y_D8</td>
+        <td class="fw-semibold text-white">Bâtiment Exploitation & TOS</td>
+        <td><span class="text-muted small">Tertiaire</span></td>
+        <td class="font-mono text-warning">250/5A</td>
+        <td><span class="badge-sub badge-ok">0.5S</span></td>
+        <td class="font-mono fw-bold text-warning">36</td>
+        <td class="font-mono text-info">9</td>
+        <td class="font-mono text-white">54</td>
+        <td class="font-mono text-success">0.97</td>
+        <td><span class="badge-sub badge-ok">OK</span></td>
+        <td>
+            <button class="btn btn-xs btn-outline-info btn-sm" onclick="ouvrirDetailDepart('PT_Y_D8')">
+                <i class="bi bi-eye"></i> Détails
+            </button>
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono fw-bold text-info">PT_Y_D9</td>
+        <td class="fw-semibold text-white">Groupe Électrogène Secours Nord</td>
+        <td><span class="text-muted small">Secours</span></td>
+        <td class="font-mono text-warning">630/5A</td>
+        <td><span class="badge-sub badge-ok">0.5S</span></td>
+        <td class="font-mono fw-bold text-warning">0</td>
+        <td class="font-mono text-info">0</td>
+        <td class="font-mono text-white">0</td>
+        <td class="font-mono text-success">1.0</td>
+        <td><span class="badge-sub badge-alert">Veille</span></td>
+        <td>
+            <button class="btn btn-xs btn-outline-info btn-sm" onclick="ouvrirDetailDepart('PT_Y_D9')">
+                <i class="bi bi-eye"></i> Détails
+            </button>
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono fw-bold text-info">PT_Y_D11</td>
+        <td class="fw-semibold text-white">Station Pompage Eaux Pluviales</td>
+        <td><span class="text-muted small">Auxiliaires</span></td>
+        <td class="font-mono text-warning">160/5A</td>
+        <td><span class="badge-sub badge-ok">0.5S</span></td>
+        <td class="font-mono fw-bold text-warning">21</td>
+        <td class="font-mono text-info">7</td>
+        <td class="font-mono text-white">32</td>
+        <td class="font-mono text-success">0.95</td>
+        <td><span class="badge-sub badge-ok">OK</span></td>
+        <td>
+            <button class="btn btn-xs btn-outline-info btn-sm" onclick="ouvrirDetailDepart('PT_Y_D11')">
+                <i class="bi bi-eye"></i> Détails
+            </button>
+        </td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono fw-bold text-info">PT_Y_D12</td>
+        <td class="fw-semibold text-white">Atelier Maintenance Électrique</td>
+        <td><span class="text-muted small">Atelier</span></td>
+        <td class="font-mono text-warning">250/5A</td>
+        <td><span class="badge-sub badge-ok">0.5S</span></td>
+        <td class="font-mono fw-bold text-warning">18</td>
+        <td class="font-mono text-info">5</td>
+        <td class="font-mono text-white">27</td>
+        <td class="font-mono text-success">0.96</td>
+        <td><span class="badge-sub badge-ok">OK</span></td>
+        <td>
+            <button class="btn btn-xs btn-outline-info btn-sm" onclick="ouvrirDetailDepart('PT_Y_D12')">
+                <i class="bi bi-eye"></i> Détails
+            </button>
+        </td>
+    </tr>
+    
                             </tbody>
                         </table>
                     </div>
@@ -523,7 +1003,7 @@
             <!-- ============================================================== -->
             <!-- 3. QUALITÉ DE L'ÉNERGIE (HARMONIQUES 1-40 & CREUX DE TENSION) -->
             <!-- ============================================================== -->
-            <div id="panel-qualite" class="tab-panel">
+            <div id="panel-qualite" class="tab-panel" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="fw-bold mb-1"><i class="bi bi-activity text-info me-2"></i>Qualité de l'Énergie & Analyse Harmonique</h4>
@@ -620,7 +1100,7 @@
             <!-- ============================================================== -->
             <!-- 4. 58 POINTS DE MESURE & TC (INVENTAIRE) -->
             <!-- ============================================================== -->
-            <div id="panel-inventaire" class="tab-panel">
+            <div id="panel-inventaire" class="tab-panel" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div>
                         <h4 class="fw-bold mb-1"><i class="bi bi-cpu-fill text-info me-2"></i>Inventaire des 58 Points de Comptage & TC</h4>
@@ -675,7 +1155,703 @@
                                 </tr>
                             </thead>
                             <tbody id="table-58-points-body">
-                                <!-- Généré dynamiquement -->
+                                
+        <tr class="point-row" data-poste="PT_Y" data-classe="0.5S" data-search="pt_y_d1 t1 - arrivée transformateur 1 poste pt y 2000/5a">
+            <td class="font-mono text-info fw-bold">PT_Y_D1</td>
+            <td>Poste PT Y</td>
+            <td class="fw-semibold text-white">T1 - Arrivée Transformateur 1</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">2000/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.10</td>
+            <td class="font-mono fw-bold text-warning">435 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Y" data-classe="0.5S" data-search="pt_y_d2 t2 - arrivée transformateur 2 poste pt y 2000/5a">
+            <td class="font-mono text-info fw-bold">PT_Y_D2</td>
+            <td>Poste PT Y</td>
+            <td class="fw-semibold text-white">T2 - Arrivée Transformateur 2</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">2000/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.10</td>
+            <td class="font-mono fw-bold text-warning">410 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Y" data-classe="0.2S" data-search="pt_y_d3 portique de quai pq-01 poste pt y 800/5a">
+            <td class="font-mono text-info fw-bold">PT_Y_D3</td>
+            <td>Poste PT Y</td>
+            <td class="fw-semibold text-white">Portique de Quai PQ-01</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">800/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.10</td>
+            <td class="font-mono fw-bold text-warning">245 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Y" data-classe="0.2S" data-search="pt_y_d4 portique de quai pq-02 poste pt y 800/5a">
+            <td class="font-mono text-info fw-bold">PT_Y_D4</td>
+            <td>Poste PT Y</td>
+            <td class="fw-semibold text-white">Portique de Quai PQ-02</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">800/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.10</td>
+            <td class="font-mono fw-bold text-warning">218 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Y" data-classe="0.2S" data-search="pt_y_d5 grue mobile gottwald gm-1 poste pt y 630/5a">
+            <td class="font-mono text-info fw-bold">PT_Y_D5</td>
+            <td>Poste PT Y</td>
+            <td class="fw-semibold text-white">Grue Mobile Gottwald GM-1</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">630/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.10</td>
+            <td class="font-mono fw-bold text-warning">175 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Y" data-classe="0.2S" data-search="pt_y_d6 niche reefers nord (frigo 40 prises) poste pt y 630/5a">
+            <td class="font-mono text-info fw-bold">PT_Y_D6</td>
+            <td>Poste PT Y</td>
+            <td class="fw-semibold text-white">Niche Reefers Nord (Frigo 40 prises)</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">630/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.10</td>
+            <td class="font-mono fw-bold text-warning">138 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Y" data-classe="0.5S" data-search="pt_y_d7 éclairage mâts haute portée nord poste pt y 250/5a">
+            <td class="font-mono text-info fw-bold">PT_Y_D7</td>
+            <td>Poste PT Y</td>
+            <td class="fw-semibold text-white">Éclairage Mâts Haute Portée Nord</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">250/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.10</td>
+            <td class="font-mono fw-bold text-warning">44 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Y" data-classe="0.5S" data-search="pt_y_d8 bâtiment exploitation & tos poste pt y 250/5a">
+            <td class="font-mono text-info fw-bold">PT_Y_D8</td>
+            <td>Poste PT Y</td>
+            <td class="fw-semibold text-white">Bâtiment Exploitation & TOS</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">250/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.10</td>
+            <td class="font-mono fw-bold text-warning">36 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Y" data-classe="0.5S" data-search="pt_y_d9 groupe électrogène secours nord poste pt y 630/5a">
+            <td class="font-mono text-info fw-bold">PT_Y_D9</td>
+            <td>Poste PT Y</td>
+            <td class="fw-semibold text-white">Groupe Électrogène Secours Nord</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">630/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.10</td>
+            <td class="font-mono fw-bold text-warning">0 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Y" data-classe="0.5S" data-search="pt_y_d11 station pompage eaux pluviales poste pt y 160/5a">
+            <td class="font-mono text-info fw-bold">PT_Y_D11</td>
+            <td>Poste PT Y</td>
+            <td class="fw-semibold text-white">Station Pompage Eaux Pluviales</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">160/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.10</td>
+            <td class="font-mono fw-bold text-warning">21 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Y" data-classe="0.5S" data-search="pt_y_d12 atelier maintenance électrique poste pt y 250/5a">
+            <td class="font-mono text-info fw-bold">PT_Y_D12</td>
+            <td>Poste PT Y</td>
+            <td class="fw-semibold text-white">Atelier Maintenance Électrique</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">250/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.10</td>
+            <td class="font-mono fw-bold text-warning">18 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_X" data-classe="0.5S" data-search="pt_x_d1 t1 - arrivée transformateur 1 poste pt x 1600/5a">
+            <td class="font-mono text-info fw-bold">PT_X_D1</td>
+            <td>Poste PT X</td>
+            <td class="fw-semibold text-white">T1 - Arrivée Transformateur 1</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">1600/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.20</td>
+            <td class="font-mono fw-bold text-warning">315 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_X" data-classe="0.5S" data-search="pt_x_d2 t2 - arrivée transformateur 2 poste pt x 1600/5a">
+            <td class="font-mono text-info fw-bold">PT_X_D2</td>
+            <td>Poste PT X</td>
+            <td class="fw-semibold text-white">T2 - Arrivée Transformateur 2</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">1600/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.20</td>
+            <td class="font-mono fw-bold text-warning">292 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_X" data-classe="0.2S" data-search="pt_x_d3 grue mobile sud gm-2 poste pt x 630/5a">
+            <td class="font-mono text-info fw-bold">PT_X_D3</td>
+            <td>Poste PT X</td>
+            <td class="fw-semibold text-white">Grue Mobile Sud GM-2</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">630/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.20</td>
+            <td class="font-mono fw-bold text-warning">162 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_X" data-classe="0.2S" data-search="pt_x_d4 trémies dépoussiérées 1 & 2 poste pt x 400/5a">
+            <td class="font-mono text-info fw-bold">PT_X_D4</td>
+            <td>Poste PT X</td>
+            <td class="fw-semibold text-white">Trémies Dépoussiérées 1 & 2</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">400/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.20</td>
+            <td class="font-mono fw-bold text-warning">96 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_X" data-classe="0.2S" data-search="pt_x_d5 bande transporteuse quai sud poste pt x 400/5a">
+            <td class="font-mono text-info fw-bold">PT_X_D5</td>
+            <td>Poste PT X</td>
+            <td class="fw-semibold text-white">Bande Transporteuse Quai Sud</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">400/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.20</td>
+            <td class="font-mono fw-bold text-warning">86 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_X" data-classe="0.2S" data-search="pt_x_d6 niche reefers sud (20 prises) poste pt x 400/5a">
+            <td class="font-mono text-info fw-bold">PT_X_D6</td>
+            <td>Poste PT X</td>
+            <td class="fw-semibold text-white">Niche Reefers Sud (20 prises)</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">400/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.20</td>
+            <td class="font-mono fw-bold text-warning">74 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_X" data-classe="0.5S" data-search="pt_x_d7 éclairage quai & terre-plein sud poste pt x 200/5a">
+            <td class="font-mono text-info fw-bold">PT_X_D7</td>
+            <td>Poste PT X</td>
+            <td class="fw-semibold text-white">Éclairage Quai & Terre-Plein Sud</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">200/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.20</td>
+            <td class="font-mono fw-bold text-warning">33 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_X" data-classe="0.5S" data-search="pt_x_d8 poste garde & douane sud poste pt x 100/5a">
+            <td class="font-mono text-info fw-bold">PT_X_D8</td>
+            <td>Poste PT X</td>
+            <td class="fw-semibold text-white">Poste Garde & Douane Sud</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">100/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.20</td>
+            <td class="font-mono fw-bold text-warning">14 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_X" data-classe="0.5S" data-search="pt_x_d9 groupe électrogène secours pt x poste pt x 400/5a">
+            <td class="font-mono text-info fw-bold">PT_X_D9</td>
+            <td>Poste PT X</td>
+            <td class="fw-semibold text-white">Groupe Électrogène Secours PT X</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">400/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.20</td>
+            <td class="font-mono fw-bold text-warning">0 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_X" data-classe="0.5S" data-search="pt_x_d10 pompe de relevage sud poste pt x 100/5a">
+            <td class="font-mono text-info fw-bold">PT_X_D10</td>
+            <td>Poste PT X</td>
+            <td class="fw-semibold text-white">Pompe de Relevage Sud</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">100/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.20</td>
+            <td class="font-mono fw-bold text-warning">11 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_X" data-classe="0.5S" data-search="pt_x_d11 atelier soudure & mécanique x poste pt x 200/5a">
+            <td class="font-mono text-info fw-bold">PT_X_D11</td>
+            <td>Poste PT X</td>
+            <td class="fw-semibold text-white">Atelier Soudure & Mécanique X</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">200/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.20</td>
+            <td class="font-mono fw-bold text-warning">25 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Z" data-classe="0.5S" data-search="pt_z_d1 t1 - arrivée transformateur 1 poste pt z 1250/5a">
+            <td class="font-mono text-info fw-bold">PT_Z_D1</td>
+            <td>Poste PT Z</td>
+            <td class="fw-semibold text-white">T1 - Arrivée Transformateur 1</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">1250/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.30</td>
+            <td class="font-mono fw-bold text-warning">190 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Z" data-classe="0.5S" data-search="pt_z_d2 t2 - arrivée transformateur 2 poste pt z 1250/5a">
+            <td class="font-mono text-info fw-bold">PT_Z_D2</td>
+            <td>Poste PT Z</td>
+            <td class="fw-semibold text-white">T2 - Arrivée Transformateur 2</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">1250/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.30</td>
+            <td class="font-mono fw-bold text-warning">175 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Z" data-classe="0.2S" data-search="pt_z_d3 hangar stockage h1 (engrais/vrac) poste pt z 400/5a">
+            <td class="font-mono text-info fw-bold">PT_Z_D3</td>
+            <td>Poste PT Z</td>
+            <td class="fw-semibold text-white">Hangar Stockage H1 (Engrais/Vrac)</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">400/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.30</td>
+            <td class="font-mono fw-bold text-warning">66 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Z" data-classe="0.2S" data-search="pt_z_d4 hangar stockage h2 (marchandises) poste pt z 400/5a">
+            <td class="font-mono text-info fw-bold">PT_Z_D4</td>
+            <td>Poste PT Z</td>
+            <td class="fw-semibold text-white">Hangar Stockage H2 (Marchandises)</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">400/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.30</td>
+            <td class="font-mono fw-bold text-warning">59 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Z" data-classe="0.2S" data-search="pt_z_d5 pont roulant atelier outillage poste pt z 250/5a">
+            <td class="font-mono text-info fw-bold">PT_Z_D5</td>
+            <td>Poste PT Z</td>
+            <td class="fw-semibold text-white">Pont Roulant Atelier Outillage</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">250/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.30</td>
+            <td class="font-mono fw-bold text-warning">44 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Z" data-classe="0.2S" data-search="pt_z_d6 station recharge chariots poste pt z 400/5a">
+            <td class="font-mono text-info fw-bold">PT_Z_D6</td>
+            <td>Poste PT Z</td>
+            <td class="fw-semibold text-white">Station Recharge Chariots</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">400/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.30</td>
+            <td class="font-mono fw-bold text-warning">91 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Z" data-classe="0.2S" data-search="pt_z_d7 compresseurs d'air atelier poste pt z 250/5a">
+            <td class="font-mono text-info fw-bold">PT_Z_D7</td>
+            <td>Poste PT Z</td>
+            <td class="fw-semibold text-white">Compresseurs d'Air Atelier</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">250/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.30</td>
+            <td class="font-mono fw-bold text-warning">37 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Z" data-classe="0.5S" data-search="pt_z_d8 éclairage voies de circulation z poste pt z 160/5a">
+            <td class="font-mono text-info fw-bold">PT_Z_D8</td>
+            <td>Poste PT Z</td>
+            <td class="fw-semibold text-white">Éclairage Voies de Circulation Z</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">160/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.30</td>
+            <td class="font-mono fw-bold text-warning">23 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Z" data-classe="0.5S" data-search="pt_z_d9 bâtiment maîtrise & vestiaires poste pt z 100/5a">
+            <td class="font-mono text-info fw-bold">PT_Z_D9</td>
+            <td>Poste PT Z</td>
+            <td class="fw-semibold text-white">Bâtiment Maîtrise & Vestiaires</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">100/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.30</td>
+            <td class="font-mono fw-bold text-warning">16 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_Z" data-classe="0.5S" data-search="pt_z_d10 groupe électrogène secours pt z poste pt z 315/5a">
+            <td class="font-mono text-info fw-bold">PT_Z_D10</td>
+            <td>Poste PT Z</td>
+            <td class="fw-semibold text-white">Groupe Électrogène Secours PT Z</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">315/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.30</td>
+            <td class="font-mono fw-bold text-warning">0 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_4" data-classe="0.5S" data-search="pt_4_d1 t1 - arrivée transformateur 1 poste pt 4 2000/5a">
+            <td class="font-mono text-info fw-bold">PT_4_D1</td>
+            <td>Poste PT 4</td>
+            <td class="fw-semibold text-white">T1 - Arrivée Transformateur 1</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">2000/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.40</td>
+            <td class="font-mono fw-bold text-warning">385 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_4" data-classe="0.5S" data-search="pt_4_d2 t2 - arrivée transformateur 2 poste pt 4 2000/5a">
+            <td class="font-mono text-info fw-bold">PT_4_D2</td>
+            <td>Poste PT 4</td>
+            <td class="fw-semibold text-white">T2 - Arrivée Transformateur 2</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">2000/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.40</td>
+            <td class="font-mono fw-bold text-warning">365 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_4" data-classe="0.2S" data-search="pt_4_d3 élévateur principal silo céréales poste pt 4 630/5a">
+            <td class="font-mono text-info fw-bold">PT_4_D3</td>
+            <td>Poste PT 4</td>
+            <td class="fw-semibold text-white">Élévateur Principal Silo Céréales</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">630/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.40</td>
+            <td class="font-mono fw-bold text-warning">218 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_4" data-classe="0.2S" data-search="pt_4_d4 ligne convoyeur bande aérienne poste pt 4 500/5a">
+            <td class="font-mono text-info fw-bold">PT_4_D4</td>
+            <td>Poste PT 4</td>
+            <td class="fw-semibold text-white">Ligne Convoyeur Bande Aérienne</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">500/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.40</td>
+            <td class="font-mono fw-bold text-warning">142 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_4" data-classe="0.2S" data-search="pt_4_d5 aspiration & dépoussiérage silos poste pt 4 400/5a">
+            <td class="font-mono text-info fw-bold">PT_4_D5</td>
+            <td>Poste PT 4</td>
+            <td class="fw-semibold text-white">Aspiration & Dépoussiérage Silos</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">400/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.40</td>
+            <td class="font-mono fw-bold text-warning">97 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_4" data-classe="0.2S" data-search="pt_4_d6 atelier ensachage automatique poste pt 4 400/5a">
+            <td class="font-mono text-info fw-bold">PT_4_D6</td>
+            <td>Poste PT 4</td>
+            <td class="fw-semibold text-white">Atelier Ensachage Automatique</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">400/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.40</td>
+            <td class="font-mono fw-bold text-warning">84 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_4" data-classe="0.2S" data-search="pt_4_d7 station pompage hydrocarbures poste pt 4 400/5a">
+            <td class="font-mono text-info fw-bold">PT_4_D7</td>
+            <td>Poste PT 4</td>
+            <td class="fw-semibold text-white">Station Pompage Hydrocarbures</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">400/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.40</td>
+            <td class="font-mono fw-bold text-warning">69 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_4" data-classe="0.5S" data-search="pt_4_d8 éclairage silos & voies ferrées poste pt 4 200/5a">
+            <td class="font-mono text-info fw-bold">PT_4_D8</td>
+            <td>Poste PT 4</td>
+            <td class="fw-semibold text-white">Éclairage Silos & Voies Ferrées</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">200/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.40</td>
+            <td class="font-mono fw-bold text-warning">29 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_4" data-classe="0.5S" data-search="pt_4_d9 bâtiment bascule & contrôle silo poste pt 4 125/5a">
+            <td class="font-mono text-info fw-bold">PT_4_D9</td>
+            <td>Poste PT 4</td>
+            <td class="fw-semibold text-white">Bâtiment Bascule & Contrôle Silo</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">125/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.40</td>
+            <td class="font-mono fw-bold text-warning">20 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_4" data-classe="0.5S" data-search="pt_4_d10 secours groupe électrogène pt 4 poste pt 4 630/5a">
+            <td class="font-mono text-info fw-bold">PT_4_D10</td>
+            <td>Poste PT 4</td>
+            <td class="fw-semibold text-white">Secours Groupe Électrogène PT 4</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">630/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.40</td>
+            <td class="font-mono fw-bold text-warning">0 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_1" data-classe="0.5S" data-search="pt_1_d1 cmm61 - t1 arrivée transformateur 1 poste pt 1 1600/5a">
+            <td class="font-mono text-info fw-bold">PT_1_D1</td>
+            <td>Poste PT 1</td>
+            <td class="fw-semibold text-white">CMM61 - T1 Arrivée Transformateur 1</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">1600/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.50</td>
+            <td class="font-mono fw-bold text-warning">225 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_1" data-classe="0.5S" data-search="pt_1_d2 cmm61 - t2 arrivée transformateur 2 poste pt 1 1600/5a">
+            <td class="font-mono text-info fw-bold">PT_1_D2</td>
+            <td>Poste PT 1</td>
+            <td class="fw-semibold text-white">CMM61 - T2 Arrivée Transformateur 2</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">1600/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.50</td>
+            <td class="font-mono fw-bold text-warning">210 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_1" data-classe="0.5S" data-search="pt_1_d3 cmm61 - siège depa marsa maroc poste pt 1 400/5a">
+            <td class="font-mono text-info fw-bold">PT_1_D3</td>
+            <td>Poste PT 1</td>
+            <td class="fw-semibold text-white">CMM61 - Siège DEPA Marsa Maroc</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">400/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.50</td>
+            <td class="font-mono fw-bold text-warning">79 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_1" data-classe="0.5S" data-search="pt_1_d4 cmm61 - centre données & tos poste pt 1 250/5a">
+            <td class="font-mono text-info fw-bold">PT_1_D4</td>
+            <td>Poste PT 1</td>
+            <td class="fw-semibold text-white">CMM61 - Centre Données & TOS</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">250/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.50</td>
+            <td class="font-mono fw-bold text-warning">46 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_1" data-classe="0.5S" data-search="pt_1_d5 cmm61 - climatisation centrale siège poste pt 1 315/5a">
+            <td class="font-mono text-info fw-bold">PT_1_D5</td>
+            <td>Poste PT 1</td>
+            <td class="fw-semibold text-white">CMM61 - Climatisation Centrale Siège</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">315/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.50</td>
+            <td class="font-mono fw-bold text-warning">64 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_1" data-classe="0.5S" data-search="pt_1_d6 cmm61 - atelier chaudronnerie poste pt 1 400/5a">
+            <td class="font-mono text-info fw-bold">PT_1_D6</td>
+            <td>Poste PT 1</td>
+            <td class="fw-semibold text-white">CMM61 - Atelier Chaudronnerie</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">400/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.50</td>
+            <td class="font-mono fw-bold text-warning">55 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_1" data-classe="0.5S" data-search="pt_1_d7 cmm61 - magasin central pièces poste pt 1 200/5a">
+            <td class="font-mono text-info fw-bold">PT_1_D7</td>
+            <td>Poste PT 1</td>
+            <td class="fw-semibold text-white">CMM61 - Magasin Central Pièces</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">200/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.50</td>
+            <td class="font-mono fw-bold text-warning">26 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_1" data-classe="0.5S" data-search="pt_1_d8 cmm61 - éclairage enceinte & boulevard poste pt 1 250/5a">
+            <td class="font-mono text-info fw-bold">PT_1_D8</td>
+            <td>Poste PT 1</td>
+            <td class="fw-semibold text-white">CMM61 - Éclairage Enceinte & Boulevard</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">250/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.50</td>
+            <td class="font-mono fw-bold text-warning">37 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_1" data-classe="0.5S" data-search="pt_1_d9 cmm61 - recharge engins électriques poste pt 1 315/5a">
+            <td class="font-mono text-info fw-bold">PT_1_D9</td>
+            <td>Poste PT 1</td>
+            <td class="fw-semibold text-white">CMM61 - Recharge Engins Électriques</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">315/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.50</td>
+            <td class="font-mono fw-bold text-warning">49 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_1" data-classe="0.5S" data-search="pt_1_d10 cmm61 - poste garde principale poste pt 1 100/5a">
+            <td class="font-mono text-info fw-bold">PT_1_D10</td>
+            <td>Poste PT 1</td>
+            <td class="fw-semibold text-white">CMM61 - Poste Garde Principale</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">100/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.50</td>
+            <td class="font-mono fw-bold text-warning">13 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_1" data-classe="0.5S" data-search="pt_1_d11 cmm61 - cantine & foyer poste pt 1 160/5a">
+            <td class="font-mono text-info fw-bold">PT_1_D11</td>
+            <td>Poste PT 1</td>
+            <td class="fw-semibold text-white">CMM61 - Cantine & Foyer</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">160/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.50</td>
+            <td class="font-mono fw-bold text-warning">27 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_1" data-classe="0.5S" data-search="pt_1_d12 cmm61 - secours ondulé serveurs poste pt 1 200/5a">
+            <td class="font-mono text-info fw-bold">PT_1_D12</td>
+            <td>Poste PT 1</td>
+            <td class="fw-semibold text-white">CMM61 - Secours Ondulé Serveurs</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">200/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.50</td>
+            <td class="font-mono fw-bold text-warning">19 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_7" data-classe="0.5S" data-search="pt_7_d1 t1 - arrivée transformateur 1 poste pt 7 1000/5a">
+            <td class="font-mono text-info fw-bold">PT_7_D1</td>
+            <td>Poste PT 7</td>
+            <td class="fw-semibold text-white">T1 - Arrivée Transformateur 1</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">1000/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.70</td>
+            <td class="font-mono fw-bold text-warning">142 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_7" data-classe="0.5S" data-search="pt_7_d2 t2 - arrivée transformateur 2 (réserve) poste pt 7 1000/5a">
+            <td class="font-mono text-info fw-bold">PT_7_D2</td>
+            <td>Poste PT 7</td>
+            <td class="fw-semibold text-white">T2 - Arrivée Transformateur 2 (Réserve)</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">1000/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.70</td>
+            <td class="font-mono fw-bold text-warning">31 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_7" data-classe="0.2S" data-search="pt_7_d3 rampe & passerelle ro-ro hydraulique poste pt 7 315/5a">
+            <td class="font-mono text-info fw-bold">PT_7_D3</td>
+            <td>Poste PT 7</td>
+            <td class="fw-semibold text-white">Rampe & Passerelle Ro-Ro Hydraulique</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">315/5A</td>
+            <td><span class="badge-sub badge-critique">0.2S</span></td>
+            <td class="font-mono text-muted">192.168.10.70</td>
+            <td class="font-mono fw-bold text-warning">57 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
+        <tr class="point-row" data-poste="PT_7" data-classe="0.5S" data-search="pt_7_d4 éclairage terre-plein & niche multiprises poste pt 7 200/5a">
+            <td class="font-mono text-info fw-bold">PT_7_D4</td>
+            <td>Poste PT 7</td>
+            <td class="fw-semibold text-white">Éclairage Terre-Plein & Niche Multiprises</td>
+            <td><span class="badge-sub badge-critique">Neuf Modbus</span></td>
+            <td class="font-mono text-warning">200/5A</td>
+            <td><span class="badge-sub badge-ok">0.5S</span></td>
+            <td class="font-mono text-muted">192.168.10.70</td>
+            <td class="font-mono fw-bold text-warning">25 kW</td>
+            <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+        </tr>
+        
                             </tbody>
                         </table>
                     </div>
@@ -685,7 +1861,7 @@
             <!-- ============================================================== -->
             <!-- 5. MEIER CMM61 (PRIX N°2 DU CPS) -->
             <!-- ============================================================== -->
-            <div id="panel-cmm61" class="tab-panel">
+            <div id="panel-cmm61" class="tab-panel" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="fw-bold mb-1"><i class="bi bi-hdd-network-fill text-purple me-2"></i>Vérification des 12 Compteurs Existants MEIER CMM61</h4>
@@ -737,7 +1913,139 @@
                                 </tr>
                             </thead>
                             <tbody id="table-cmm61-body">
-                                <!-- Généré dynamiquement -->
+                                
+    <tr>
+        <td class="font-mono text-purple fw-bold">PT_1_D1</td>
+        <td class="fw-semibold text-white">CMM61 - T1 Arrivée Transformateur 1</td>
+        <td class="font-mono text-info">Slave #1</td>
+        <td class="font-mono text-warning">1600/5A</td>
+        <td class="font-mono text-success">401 V</td>
+        <td class="font-mono fw-bold text-warning">225 kW</td>
+        <td class="font-mono text-white">319500 kWh</td>
+        <td><span class="badge-sub badge-ok"><i class="bi bi-broadcast"></i> OK (15 ms)</span></td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono text-purple fw-bold">PT_1_D2</td>
+        <td class="fw-semibold text-white">CMM61 - T2 Arrivée Transformateur 2</td>
+        <td class="font-mono text-info">Slave #2</td>
+        <td class="font-mono text-warning">1600/5A</td>
+        <td class="font-mono text-success">400 V</td>
+        <td class="font-mono fw-bold text-warning">210 kW</td>
+        <td class="font-mono text-white">298200 kWh</td>
+        <td><span class="badge-sub badge-ok"><i class="bi bi-broadcast"></i> OK (15 ms)</span></td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono text-purple fw-bold">PT_1_D3</td>
+        <td class="fw-semibold text-white">CMM61 - Siège DEPA Marsa Maroc</td>
+        <td class="font-mono text-info">Slave #3</td>
+        <td class="font-mono text-warning">400/5A</td>
+        <td class="font-mono text-success">401 V</td>
+        <td class="font-mono fw-bold text-warning">79 kW</td>
+        <td class="font-mono text-white">112180 kWh</td>
+        <td><span class="badge-sub badge-ok"><i class="bi bi-broadcast"></i> OK (15 ms)</span></td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono text-purple fw-bold">PT_1_D4</td>
+        <td class="fw-semibold text-white">CMM61 - Centre Données & TOS</td>
+        <td class="font-mono text-info">Slave #4</td>
+        <td class="font-mono text-warning">250/5A</td>
+        <td class="font-mono text-success">401 V</td>
+        <td class="font-mono fw-bold text-warning">46 kW</td>
+        <td class="font-mono text-white">65320 kWh</td>
+        <td><span class="badge-sub badge-ok"><i class="bi bi-broadcast"></i> OK (15 ms)</span></td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono text-purple fw-bold">PT_1_D5</td>
+        <td class="fw-semibold text-white">CMM61 - Climatisation Centrale Siège</td>
+        <td class="font-mono text-info">Slave #5</td>
+        <td class="font-mono text-warning">315/5A</td>
+        <td class="font-mono text-success">400 V</td>
+        <td class="font-mono fw-bold text-warning">64 kW</td>
+        <td class="font-mono text-white">90880 kWh</td>
+        <td><span class="badge-sub badge-ok"><i class="bi bi-broadcast"></i> OK (15 ms)</span></td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono text-purple fw-bold">PT_1_D6</td>
+        <td class="fw-semibold text-white">CMM61 - Atelier Chaudronnerie</td>
+        <td class="font-mono text-info">Slave #6</td>
+        <td class="font-mono text-warning">400/5A</td>
+        <td class="font-mono text-success">400 V</td>
+        <td class="font-mono fw-bold text-warning">55 kW</td>
+        <td class="font-mono text-white">78100 kWh</td>
+        <td><span class="badge-sub badge-ok"><i class="bi bi-broadcast"></i> OK (15 ms)</span></td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono text-purple fw-bold">PT_1_D7</td>
+        <td class="fw-semibold text-white">CMM61 - Magasin Central Pièces</td>
+        <td class="font-mono text-info">Slave #7</td>
+        <td class="font-mono text-warning">200/5A</td>
+        <td class="font-mono text-success">401 V</td>
+        <td class="font-mono fw-bold text-warning">26 kW</td>
+        <td class="font-mono text-white">36920 kWh</td>
+        <td><span class="badge-sub badge-ok"><i class="bi bi-broadcast"></i> OK (15 ms)</span></td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono text-purple fw-bold">PT_1_D8</td>
+        <td class="fw-semibold text-white">CMM61 - Éclairage Enceinte & Boulevard</td>
+        <td class="font-mono text-info">Slave #8</td>
+        <td class="font-mono text-warning">250/5A</td>
+        <td class="font-mono text-success">402 V</td>
+        <td class="font-mono fw-bold text-warning">37 kW</td>
+        <td class="font-mono text-white">52540 kWh</td>
+        <td><span class="badge-sub badge-ok"><i class="bi bi-broadcast"></i> OK (15 ms)</span></td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono text-purple fw-bold">PT_1_D9</td>
+        <td class="fw-semibold text-white">CMM61 - Recharge Engins Électriques</td>
+        <td class="font-mono text-info">Slave #9</td>
+        <td class="font-mono text-warning">315/5A</td>
+        <td class="font-mono text-success">401 V</td>
+        <td class="font-mono fw-bold text-warning">49 kW</td>
+        <td class="font-mono text-white">69580 kWh</td>
+        <td><span class="badge-sub badge-ok"><i class="bi bi-broadcast"></i> OK (15 ms)</span></td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono text-purple fw-bold">PT_1_D10</td>
+        <td class="fw-semibold text-white">CMM61 - Poste Garde Principale</td>
+        <td class="font-mono text-info">Slave #10</td>
+        <td class="font-mono text-warning">100/5A</td>
+        <td class="font-mono text-success">401 V</td>
+        <td class="font-mono fw-bold text-warning">13 kW</td>
+        <td class="font-mono text-white">18460 kWh</td>
+        <td><span class="badge-sub badge-ok"><i class="bi bi-broadcast"></i> OK (15 ms)</span></td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono text-purple fw-bold">PT_1_D11</td>
+        <td class="fw-semibold text-white">CMM61 - Cantine & Foyer</td>
+        <td class="font-mono text-info">Slave #11</td>
+        <td class="font-mono text-warning">160/5A</td>
+        <td class="font-mono text-success">401 V</td>
+        <td class="font-mono fw-bold text-warning">27 kW</td>
+        <td class="font-mono text-white">38340 kWh</td>
+        <td><span class="badge-sub badge-ok"><i class="bi bi-broadcast"></i> OK (15 ms)</span></td>
+    </tr>
+    
+    <tr>
+        <td class="font-mono text-purple fw-bold">PT_1_D12</td>
+        <td class="fw-semibold text-white">CMM61 - Secours Ondulé Serveurs</td>
+        <td class="font-mono text-info">Slave #12</td>
+        <td class="font-mono text-warning">200/5A</td>
+        <td class="font-mono text-success">401 V</td>
+        <td class="font-mono fw-bold text-warning">19 kW</td>
+        <td class="font-mono text-white">26980 kWh</td>
+        <td><span class="badge-sub badge-ok"><i class="bi bi-broadcast"></i> OK (15 ms)</span></td>
+    </tr>
+    
                             </tbody>
                         </table>
                     </div>
@@ -747,7 +2055,7 @@
             <!-- ============================================================== -->
             <!-- 6. CARTOGRAPHIE DES REGISTRES MODBUS -->
             <!-- ============================================================== -->
-            <div id="panel-modbus" class="tab-panel">
+            <div id="panel-modbus" class="tab-panel" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="fw-bold mb-1"><i class="bi bi-table text-info me-2"></i>Cartographie des Registres Modbus TCP/IP</h4>
@@ -798,7 +2106,7 @@
             <!-- ============================================================== -->
             <!-- 7. ANALYSE SANKEY (FLUX D'ÉNERGIE) -->
             <!-- ============================================================== -->
-            <div id="panel-sankey" class="tab-panel">
+            <div id="panel-sankey" class="tab-panel" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="fw-bold mb-1"><i class="bi bi-bezier2 text-info me-2"></i>Diagramme de Sankey (Flux d'Énergie Portuaire)</h4>
@@ -815,7 +2123,7 @@
             <!-- ============================================================== -->
             <!-- 8. ANALYSE DE PARETO (80/20) -->
             <!-- ============================================================== -->
-            <div id="panel-pareto" class="tab-panel">
+            <div id="panel-pareto" class="tab-panel" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="fw-bold mb-1"><i class="bi bi-bar-chart-steps text-info me-2"></i>Analyse de Pareto (Loi 80/20 des Départs)</h4>
@@ -832,7 +2140,7 @@
             <!-- ============================================================== -->
             <!-- 9. RÉGRESSION LINÉAIRE ISO 50001 -->
             <!-- ============================================================== -->
-            <div id="panel-regression" class="tab-panel">
+            <div id="panel-regression" class="tab-panel" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="fw-bold mb-1"><i class="bi bi-graph-up-arrow text-info me-2"></i>Régression Linéaire & Normalisation ISO 50001</h4>
@@ -873,7 +2181,7 @@
             <!-- ============================================================== -->
             <!-- 10. CONFORMITÉ ISO 50001 (SER & IPE) -->
             <!-- ============================================================== -->
-            <div id="panel-iso" class="tab-panel">
+            <div id="panel-iso" class="tab-panel" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="fw-bold mb-1"><i class="bi bi-shield-check text-success me-2"></i>Module ISO 50001:2018 · SER & IPE Cibles</h4>
@@ -936,7 +2244,7 @@
             <!-- ============================================================== -->
             <!-- 11. CENTRE D'ALERTES & SCÉNARIOS DÉMO -->
             <!-- ============================================================== -->
-            <div id="panel-alertes" class="tab-panel">
+            <div id="panel-alertes" class="tab-panel" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="fw-bold mb-1"><i class="bi bi-bell-fill text-danger me-2"></i>Gestion des Alertes & Notifications</h4>
@@ -1012,7 +2320,7 @@
             <!-- ============================================================== -->
             <!-- 12. RAPPORTS AUTOMATIQUES -->
             <!-- ============================================================== -->
-            <div id="panel-rapports" class="tab-panel">
+            <div id="panel-rapports" class="tab-panel" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="fw-bold mb-1"><i class="bi bi-file-earmark-excel-fill text-success me-2"></i>Rapports Automatiques & Revue Énergétique</h4>
@@ -1059,7 +2367,7 @@
             <!-- ============================================================== -->
             <!-- 13. MAINTENANCE 4 VISITES / AN -->
             <!-- ============================================================== -->
-            <div id="panel-maintenance" class="tab-panel">
+            <div id="panel-maintenance" class="tab-panel" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="fw-bold mb-1"><i class="bi bi-calendar-check-fill text-info me-2"></i>Planning de Maintenance Préventive (4 Visites/An)</h4>
@@ -1132,7 +2440,7 @@
             <!-- ============================================================== -->
             <!-- 14. DÉLAIS CORRECTIFS (SLA 48H / 7 JOURS) -->
             <!-- ============================================================== -->
-            <div id="panel-correctif" class="tab-panel">
+            <div id="panel-correctif" class="tab-panel" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="fw-bold mb-1"><i class="bi bi-clock-history text-warning me-2"></i>Interventions Correctives & Respect des Délais SLA</h4>
@@ -1176,7 +2484,7 @@
             <!-- ============================================================== -->
             <!-- 15. ESSAIS DE RÉCEPTION & PV (ART. 47.4, 50) -->
             <!-- ============================================================== -->
-            <div id="panel-reception" class="tab-panel">
+            <div id="panel-reception" class="tab-panel" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="fw-bold mb-1"><i class="bi bi-patch-check-fill text-success me-2"></i>Essais de Réception & Procès-Verbal (PV)</h4>
@@ -1221,7 +2529,7 @@
             <!-- ============================================================== -->
             <!-- 16. DOCUMENTATION & MANUELS -->
             <!-- ============================================================== -->
-            <div id="panel-doc" class="tab-panel">
+            <div id="panel-doc" class="tab-panel" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="fw-bold mb-1"><i class="bi bi-book-half text-info me-2"></i>Documentation Utilisateur & Exploitation</h4>
@@ -1314,178 +2622,88 @@
     <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- SCRIPT APPLICATION & SIMULATEUR JS -->
+    <!-- CODE APPLICATION & NAVIGATION ULTRA-ROBUSTE -->
     <script>
-        // Données complètes des postes et départs
-        const DONNEES_POSTES = [{"id": "PT_Y", "nom": "Poste PT Y", "zone": "Quai Nord / Terminal Conteneurs", "description": "Alimentation portiques de quai et grues mobiles Nord", "transfos": "2x 1250 kVA (22 kV / 400 V)", "ip": "192.168.10.10", "puissance_max": 2000, "p_active": 845, "q_reactive": 263, "cos_phi": 0.95, "tension": 401, "courant": 1260, "departs": [{"id": "PT_Y_D1", "nom": "T1 - Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "2000/5A", "classe": "0.5S", "p": 435, "q": 135, "u": 401, "i": 648, "cos": 0.95, "statut": "OK"}, {"id": "PT_Y_D2", "nom": "T2 - Arrivée Transformateur 2", "usage": "TGBT T2", "tc": "2000/5A", "classe": "0.5S", "p": 410, "q": 128, "u": 400, "i": 612, "cos": 0.95, "statut": "OK"}, {"id": "PT_Y_D3", "nom": "Portique de Quai PQ-01", "usage": "Force motrice", "tc": "800/5A", "classe": "0.2S", "p": 245, "q": 85, "u": 399, "i": 376, "cos": 0.94, "statut": "OK"}, {"id": "PT_Y_D4", "nom": "Portique de Quai PQ-02", "usage": "Force motrice", "tc": "800/5A", "classe": "0.2S", "p": 218, "q": 76, "u": 399, "i": 334, "cos": 0.94, "statut": "OK"}, {"id": "PT_Y_D5", "nom": "Grue Mobile Gottwald GM-1", "usage": "Force motrice", "tc": "630/5A", "classe": "0.2S", "p": 175, "q": 62, "u": 400, "i": 268, "cos": 0.94, "statut": "OK"}, {"id": "PT_Y_D6", "nom": "Niche Reefers Nord (Frigo 40 prises)", "usage": "Frigorifique", "tc": "630/5A", "classe": "0.2S", "p": 138, "q": 42, "u": 401, "i": 208, "cos": 0.96, "statut": "OK"}, {"id": "PT_Y_D7", "nom": "Éclairage Mâts Haute Portée Nord", "usage": "Éclairage", "tc": "250/5A", "classe": "0.5S", "p": 44, "q": 12, "u": 402, "i": 66, "cos": 0.96, "statut": "OK"}, {"id": "PT_Y_D8", "nom": "Bâtiment Exploitation & TOS", "usage": "Tertiaire", "tc": "250/5A", "classe": "0.5S", "p": 36, "q": 9, "u": 401, "i": 54, "cos": 0.97, "statut": "OK"}, {"id": "PT_Y_D9", "nom": "Groupe Électrogène Secours Nord", "usage": "Secours", "tc": "630/5A", "classe": "0.5S", "p": 0, "q": 0, "u": 400, "i": 0, "cos": 1.0, "statut": "Veille"}, {"id": "PT_Y_D11", "nom": "Station Pompage Eaux Pluviales", "usage": "Auxiliaires", "tc": "160/5A", "classe": "0.5S", "p": 21, "q": 7, "u": 400, "i": 32, "cos": 0.95, "statut": "OK"}, {"id": "PT_Y_D12", "nom": "Atelier Maintenance Électrique", "usage": "Atelier", "tc": "250/5A", "classe": "0.5S", "p": 18, "q": 5, "u": 401, "i": 27, "cos": 0.96, "statut": "OK"}]}, {"id": "PT_X", "nom": "Poste PT X", "zone": "Quai Sud / Manutention Polyvalente", "description": "Grues mobiles Sud, trémies d'ensachage et terre-plein", "transfos": "2x 1000 kVA (22 kV / 400 V)", "ip": "192.168.10.20", "puissance_max": 1600, "p_active": 607, "q_reactive": 189, "cos_phi": 0.95, "tension": 400, "courant": 917, "departs": [{"id": "PT_X_D1", "nom": "T1 - Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "1600/5A", "classe": "0.5S", "p": 315, "q": 98, "u": 401, "i": 476, "cos": 0.95, "statut": "OK"}, {"id": "PT_X_D2", "nom": "T2 - Arrivée Transformateur 2", "usage": "TGBT T2", "tc": "1600/5A", "classe": "0.5S", "p": 292, "q": 91, "u": 400, "i": 441, "cos": 0.95, "statut": "OK"}, {"id": "PT_X_D3", "nom": "Grue Mobile Sud GM-2", "usage": "Force motrice", "tc": "630/5A", "classe": "0.2S", "p": 162, "q": 56, "u": 399, "i": 248, "cos": 0.94, "statut": "OK"}, {"id": "PT_X_D4", "nom": "Trémies Dépoussiérées 1 & 2", "usage": "Force motrice", "tc": "400/5A", "classe": "0.2S", "p": 96, "q": 32, "u": 400, "i": 146, "cos": 0.95, "statut": "OK"}, {"id": "PT_X_D5", "nom": "Bande Transporteuse Quai Sud", "usage": "Convoyage", "tc": "400/5A", "classe": "0.2S", "p": 86, "q": 28, "u": 400, "i": 131, "cos": 0.95, "statut": "OK"}, {"id": "PT_X_D6", "nom": "Niche Reefers Sud (20 prises)", "usage": "Frigorifique", "tc": "400/5A", "classe": "0.2S", "p": 74, "q": 22, "u": 401, "i": 111, "cos": 0.96, "statut": "OK"}, {"id": "PT_X_D7", "nom": "Éclairage Quai & Terre-Plein Sud", "usage": "Éclairage", "tc": "200/5A", "classe": "0.5S", "p": 33, "q": 9, "u": 402, "i": 49, "cos": 0.96, "statut": "OK"}, {"id": "PT_X_D8", "nom": "Poste Garde & Douane Sud", "usage": "Tertiaire", "tc": "100/5A", "classe": "0.5S", "p": 14, "q": 3, "u": 401, "i": 21, "cos": 0.98, "statut": "OK"}, {"id": "PT_X_D9", "nom": "Groupe Électrogène Secours PT X", "usage": "Secours", "tc": "400/5A", "classe": "0.5S", "p": 0, "q": 0, "u": 400, "i": 0, "cos": 1.0, "statut": "Veille"}, {"id": "PT_X_D10", "nom": "Pompe de Relevage Sud", "usage": "Auxiliaires", "tc": "100/5A", "classe": "0.5S", "p": 11, "q": 4, "u": 400, "i": 17, "cos": 0.94, "statut": "OK"}, {"id": "PT_X_D11", "nom": "Atelier Soudure & Mécanique X", "usage": "Atelier", "tc": "200/5A", "classe": "0.5S", "p": 25, "q": 8, "u": 401, "i": 38, "cos": 0.95, "statut": "OK"}]}, {"id": "PT_Z", "nom": "Poste PT Z", "zone": "Zone Outillage & Hangars", "description": "Ateliers centraux de maintenance, ponts roulants et hangars", "transfos": "2x 800 kVA (22 kV / 400 V)", "ip": "192.168.10.30", "puissance_max": 1280, "p_active": 365, "q_reactive": 112, "cos_phi": 0.96, "tension": 401, "courant": 552, "departs": [{"id": "PT_Z_D1", "nom": "T1 - Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "1250/5A", "classe": "0.5S", "p": 190, "q": 58, "u": 401, "i": 287, "cos": 0.96, "statut": "OK"}, {"id": "PT_Z_D2", "nom": "T2 - Arrivée Transformateur 2", "usage": "TGBT T2", "tc": "1250/5A", "classe": "0.5S", "p": 175, "q": 54, "u": 400, "i": 265, "cos": 0.95, "statut": "OK"}, {"id": "PT_Z_D3", "nom": "Hangar Stockage H1 (Engrais/Vrac)", "usage": "Stockage", "tc": "400/5A", "classe": "0.2S", "p": 66, "q": 20, "u": 400, "i": 100, "cos": 0.96, "statut": "OK"}, {"id": "PT_Z_D4", "nom": "Hangar Stockage H2 (Marchandises)", "usage": "Stockage", "tc": "400/5A", "classe": "0.2S", "p": 59, "q": 18, "u": 400, "i": 89, "cos": 0.96, "statut": "OK"}, {"id": "PT_Z_D5", "nom": "Pont Roulant Atelier Outillage", "usage": "Levage", "tc": "250/5A", "classe": "0.2S", "p": 44, "q": 15, "u": 399, "i": 68, "cos": 0.95, "statut": "OK"}, {"id": "PT_Z_D6", "nom": "Station Recharge Chariots", "usage": "Recharge", "tc": "400/5A", "classe": "0.2S", "p": 91, "q": 26, "u": 401, "i": 136, "cos": 0.96, "statut": "OK"}, {"id": "PT_Z_D7", "nom": "Compresseurs d'Air Atelier", "usage": "Pneumatique", "tc": "250/5A", "classe": "0.2S", "p": 37, "q": 12, "u": 400, "i": 56, "cos": 0.95, "statut": "OK"}, {"id": "PT_Z_D8", "nom": "Éclairage Voies de Circulation Z", "usage": "Éclairage", "tc": "160/5A", "classe": "0.5S", "p": 23, "q": 6, "u": 402, "i": 34, "cos": 0.97, "statut": "OK"}, {"id": "PT_Z_D9", "nom": "Bâtiment Maîtrise & Vestiaires", "usage": "Tertiaire", "tc": "100/5A", "classe": "0.5S", "p": 16, "q": 4, "u": 401, "i": 24, "cos": 0.97, "statut": "OK"}, {"id": "PT_Z_D10", "nom": "Groupe Électrogène Secours PT Z", "usage": "Secours", "tc": "315/5A", "classe": "0.5S", "p": 0, "q": 0, "u": 400, "i": 0, "cos": 1.0, "statut": "Veille"}]}, {"id": "PT_4", "nom": "Poste PT 4", "zone": "Terminal Vrac & Silos Portuaires", "description": "Élévateurs à godets, aspiration et tours d'ensachage de céréales", "transfos": "2x 1250 kVA (22 kV / 400 V)", "ip": "192.168.10.40", "puissance_max": 2000, "p_active": 750, "q_reactive": 234, "cos_phi": 0.95, "tension": 401, "courant": 1133, "departs": [{"id": "PT_4_D1", "nom": "T1 - Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "2000/5A", "classe": "0.5S", "p": 385, "q": 120, "u": 401, "i": 582, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D2", "nom": "T2 - Arrivée Transformateur 2", "usage": "TGBT T2", "tc": "2000/5A", "classe": "0.5S", "p": 365, "q": 114, "u": 400, "i": 551, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D3", "nom": "Élévateur Principal Silo Céréales", "usage": "Force motrice", "tc": "630/5A", "classe": "0.2S", "p": 218, "q": 74, "u": 399, "i": 334, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D4", "nom": "Ligne Convoyeur Bande Aérienne", "usage": "Convoyage", "tc": "500/5A", "classe": "0.2S", "p": 142, "q": 46, "u": 400, "i": 216, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D5", "nom": "Aspiration & Dépoussiérage Silos", "usage": "Aspiration", "tc": "400/5A", "classe": "0.2S", "p": 97, "q": 31, "u": 400, "i": 147, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D6", "nom": "Atelier Ensachage Automatique", "usage": "Conditionnement", "tc": "400/5A", "classe": "0.2S", "p": 84, "q": 26, "u": 401, "i": 127, "cos": 0.96, "statut": "OK"}, {"id": "PT_4_D7", "nom": "Station Pompage Hydrocarbures", "usage": "Pompage", "tc": "400/5A", "classe": "0.2S", "p": 69, "q": 22, "u": 400, "i": 105, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D8", "nom": "Éclairage Silos & Voies Ferrées", "usage": "Éclairage", "tc": "200/5A", "classe": "0.5S", "p": 29, "q": 7, "u": 402, "i": 43, "cos": 0.97, "statut": "OK"}, {"id": "PT_4_D9", "nom": "Bâtiment Bascule & Contrôle Silo", "usage": "Tertiaire", "tc": "125/5A", "classe": "0.5S", "p": 20, "q": 5, "u": 401, "i": 30, "cos": 0.97, "statut": "OK"}, {"id": "PT_4_D10", "nom": "Secours Groupe Électrogène PT 4", "usage": "Secours", "tc": "630/5A", "classe": "0.5S", "p": 0, "q": 0, "u": 400, "i": 0, "cos": 1.0, "statut": "Veille"}]}, {"id": "PT_1", "nom": "Poste PT 1", "zone": "Direction & Ateliers Principaux", "description": "Comprend les 12 compteurs existants MEIER CMM61 intégrés (Prix n°2)", "transfos": "2x 1000 kVA (22 kV / 400 V)", "ip": "192.168.10.50", "puissance_max": 1600, "p_active": 435, "q_reactive": 132, "cos_phi": 0.96, "tension": 401, "courant": 658, "cmm61_existant": true, "departs": [{"id": "PT_1_D1", "nom": "CMM61 - T1 Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "1600/5A", "classe": "0.5S", "p": 225, "q": 68, "u": 401, "i": 340, "cos": 0.96, "statut": "OK"}, {"id": "PT_1_D2", "nom": "CMM61 - T2 Arrivée Transformateur 2", "usage": "TGBT T2", "tc": "1600/5A", "classe": "0.5S", "p": 210, "q": 64, "u": 400, "i": 318, "cos": 0.96, "statut": "OK"}, {"id": "PT_1_D3", "nom": "CMM61 - Siège DEPA Marsa Maroc", "usage": "Bâtiment Administratif", "tc": "400/5A", "classe": "0.5S", "p": 79, "q": 20, "u": 401, "i": 118, "cos": 0.97, "statut": "OK"}, {"id": "PT_1_D4", "nom": "CMM61 - Centre Données & TOS", "usage": "Data Center", "tc": "250/5A", "classe": "0.5S", "p": 46, "q": 10, "u": 401, "i": 68, "cos": 0.98, "statut": "OK"}, {"id": "PT_1_D5", "nom": "CMM61 - Climatisation Centrale Siège", "usage": "CVC", "tc": "315/5A", "classe": "0.5S", "p": 64, "q": 19, "u": 400, "i": 97, "cos": 0.96, "statut": "OK"}, {"id": "PT_1_D6", "nom": "CMM61 - Atelier Chaudronnerie", "usage": "Atelier", "tc": "400/5A", "classe": "0.5S", "p": 55, "q": 16, "u": 400, "i": 83, "cos": 0.96, "statut": "OK"}, {"id": "PT_1_D7", "nom": "CMM61 - Magasin Central Pièces", "usage": "Logistique", "tc": "200/5A", "classe": "0.5S", "p": 26, "q": 7, "u": 401, "i": 39, "cos": 0.97, "statut": "OK"}, {"id": "PT_1_D8", "nom": "CMM61 - Éclairage Enceinte & Boulevard", "usage": "Éclairage", "tc": "250/5A", "classe": "0.5S", "p": 37, "q": 9, "u": 402, "i": 55, "cos": 0.97, "statut": "OK"}, {"id": "PT_1_D9", "nom": "CMM61 - Recharge Engins Électriques", "usage": "Recharge", "tc": "315/5A", "classe": "0.5S", "p": 49, "q": 14, "u": 401, "i": 74, "cos": 0.96, "statut": "OK"}, {"id": "PT_1_D10", "nom": "CMM61 - Poste Garde Principale", "usage": "Sécurité", "tc": "100/5A", "classe": "0.5S", "p": 13, "q": 3, "u": 401, "i": 19, "cos": 0.98, "statut": "OK"}, {"id": "PT_1_D11", "nom": "CMM61 - Cantine & Foyer", "usage": "Restauration", "tc": "160/5A", "classe": "0.5S", "p": 27, "q": 7, "u": 401, "i": 40, "cos": 0.97, "statut": "OK"}, {"id": "PT_1_D12", "nom": "CMM61 - Secours Ondulé Serveurs", "usage": "UPS", "tc": "200/5A", "classe": "0.5S", "p": 19, "q": 4, "u": 401, "i": 28, "cos": 0.98, "statut": "OK"}]}, {"id": "PT_7", "nom": "Poste PT 7", "zone": "Poste Ro-Ro / Quai de Pêche", "description": "Passerelle Ro-Ro hydraulique, niche multiprises et quai", "transfos": "1x 630 kVA (22 kV / 400 V)", "ip": "192.168.10.70", "puissance_max": 630, "p_active": 173, "q_reactive": 51, "cos_phi": 0.96, "tension": 401, "courant": 261, "departs": [{"id": "PT_7_D1", "nom": "T1 - Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "1000/5A", "classe": "0.5S", "p": 142, "q": 42, "u": 401, "i": 214, "cos": 0.96, "statut": "OK"}, {"id": "PT_7_D2", "nom": "T2 - Arrivée Transformateur 2 (Réserve)", "usage": "TGBT T2", "tc": "1000/5A", "classe": "0.5S", "p": 31, "q": 9, "u": 400, "i": 47, "cos": 0.96, "statut": "OK"}, {"id": "PT_7_D3", "nom": "Rampe & Passerelle Ro-Ro Hydraulique", "usage": "Force motrice", "tc": "315/5A", "classe": "0.2S", "p": 57, "q": 18, "u": 399, "i": 87, "cos": 0.95, "statut": "OK"}, {"id": "PT_7_D4", "nom": "Éclairage Terre-Plein & Niche Multiprises", "usage": "Éclairage", "tc": "200/5A", "classe": "0.5S", "p": 25, "q": 7, "u": 402, "i": 37, "cos": 0.96, "statut": "OK"}]}];
+        // Données des postes
+        var DONNEES_POSTES = [{"id": "PT_Y", "nom": "Poste PT Y", "zone": "Quai Nord / Terminal Conteneurs", "description": "Alimentation portiques de quai et grues mobiles Nord", "transfos": "2x 1250 kVA (22 kV / 400 V)", "ip": "192.168.10.10", "puissance_max": 2000, "p_active": 845, "q_reactive": 263, "cos_phi": 0.95, "tension": 401, "courant": 1260, "departs": [{"id": "PT_Y_D1", "nom": "T1 - Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "2000/5A", "classe": "0.5S", "p": 435, "q": 135, "u": 401, "i": 648, "cos": 0.95, "statut": "OK"}, {"id": "PT_Y_D2", "nom": "T2 - Arrivée Transformateur 2", "usage": "TGBT T2", "tc": "2000/5A", "classe": "0.5S", "p": 410, "q": 128, "u": 400, "i": 612, "cos": 0.95, "statut": "OK"}, {"id": "PT_Y_D3", "nom": "Portique de Quai PQ-01", "usage": "Force motrice", "tc": "800/5A", "classe": "0.2S", "p": 245, "q": 85, "u": 399, "i": 376, "cos": 0.94, "statut": "OK"}, {"id": "PT_Y_D4", "nom": "Portique de Quai PQ-02", "usage": "Force motrice", "tc": "800/5A", "classe": "0.2S", "p": 218, "q": 76, "u": 399, "i": 334, "cos": 0.94, "statut": "OK"}, {"id": "PT_Y_D5", "nom": "Grue Mobile Gottwald GM-1", "usage": "Force motrice", "tc": "630/5A", "classe": "0.2S", "p": 175, "q": 62, "u": 400, "i": 268, "cos": 0.94, "statut": "OK"}, {"id": "PT_Y_D6", "nom": "Niche Reefers Nord (Frigo 40 prises)", "usage": "Frigorifique", "tc": "630/5A", "classe": "0.2S", "p": 138, "q": 42, "u": 401, "i": 208, "cos": 0.96, "statut": "OK"}, {"id": "PT_Y_D7", "nom": "Éclairage Mâts Haute Portée Nord", "usage": "Éclairage", "tc": "250/5A", "classe": "0.5S", "p": 44, "q": 12, "u": 402, "i": 66, "cos": 0.96, "statut": "OK"}, {"id": "PT_Y_D8", "nom": "Bâtiment Exploitation & TOS", "usage": "Tertiaire", "tc": "250/5A", "classe": "0.5S", "p": 36, "q": 9, "u": 401, "i": 54, "cos": 0.97, "statut": "OK"}, {"id": "PT_Y_D9", "nom": "Groupe Électrogène Secours Nord", "usage": "Secours", "tc": "630/5A", "classe": "0.5S", "p": 0, "q": 0, "u": 400, "i": 0, "cos": 1.0, "statut": "Veille"}, {"id": "PT_Y_D11", "nom": "Station Pompage Eaux Pluviales", "usage": "Auxiliaires", "tc": "160/5A", "classe": "0.5S", "p": 21, "q": 7, "u": 400, "i": 32, "cos": 0.95, "statut": "OK"}, {"id": "PT_Y_D12", "nom": "Atelier Maintenance Électrique", "usage": "Atelier", "tc": "250/5A", "classe": "0.5S", "p": 18, "q": 5, "u": 401, "i": 27, "cos": 0.96, "statut": "OK"}]}, {"id": "PT_X", "nom": "Poste PT X", "zone": "Quai Sud / Manutention Polyvalente", "description": "Grues mobiles Sud, trémies d'ensachage et terre-plein", "transfos": "2x 1000 kVA (22 kV / 400 V)", "ip": "192.168.10.20", "puissance_max": 1600, "p_active": 607, "q_reactive": 189, "cos_phi": 0.95, "tension": 400, "courant": 917, "departs": [{"id": "PT_X_D1", "nom": "T1 - Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "1600/5A", "classe": "0.5S", "p": 315, "q": 98, "u": 401, "i": 476, "cos": 0.95, "statut": "OK"}, {"id": "PT_X_D2", "nom": "T2 - Arrivée Transformateur 2", "usage": "TGBT T2", "tc": "1600/5A", "classe": "0.5S", "p": 292, "q": 91, "u": 400, "i": 441, "cos": 0.95, "statut": "OK"}, {"id": "PT_X_D3", "nom": "Grue Mobile Sud GM-2", "usage": "Force motrice", "tc": "630/5A", "classe": "0.2S", "p": 162, "q": 56, "u": 399, "i": 248, "cos": 0.94, "statut": "OK"}, {"id": "PT_X_D4", "nom": "Trémies Dépoussiérées 1 & 2", "usage": "Force motrice", "tc": "400/5A", "classe": "0.2S", "p": 96, "q": 32, "u": 400, "i": 146, "cos": 0.95, "statut": "OK"}, {"id": "PT_X_D5", "nom": "Bande Transporteuse Quai Sud", "usage": "Convoyage", "tc": "400/5A", "classe": "0.2S", "p": 86, "q": 28, "u": 400, "i": 131, "cos": 0.95, "statut": "OK"}, {"id": "PT_X_D6", "nom": "Niche Reefers Sud (20 prises)", "usage": "Frigorifique", "tc": "400/5A", "classe": "0.2S", "p": 74, "q": 22, "u": 401, "i": 111, "cos": 0.96, "statut": "OK"}, {"id": "PT_X_D7", "nom": "Éclairage Quai & Terre-Plein Sud", "usage": "Éclairage", "tc": "200/5A", "classe": "0.5S", "p": 33, "q": 9, "u": 402, "i": 49, "cos": 0.96, "statut": "OK"}, {"id": "PT_X_D8", "nom": "Poste Garde & Douane Sud", "usage": "Tertiaire", "tc": "100/5A", "classe": "0.5S", "p": 14, "q": 3, "u": 401, "i": 21, "cos": 0.98, "statut": "OK"}, {"id": "PT_X_D9", "nom": "Groupe Électrogène Secours PT X", "usage": "Secours", "tc": "400/5A", "classe": "0.5S", "p": 0, "q": 0, "u": 400, "i": 0, "cos": 1.0, "statut": "Veille"}, {"id": "PT_X_D10", "nom": "Pompe de Relevage Sud", "usage": "Auxiliaires", "tc": "100/5A", "classe": "0.5S", "p": 11, "q": 4, "u": 400, "i": 17, "cos": 0.94, "statut": "OK"}, {"id": "PT_X_D11", "nom": "Atelier Soudure & Mécanique X", "usage": "Atelier", "tc": "200/5A", "classe": "0.5S", "p": 25, "q": 8, "u": 401, "i": 38, "cos": 0.95, "statut": "OK"}]}, {"id": "PT_Z", "nom": "Poste PT Z", "zone": "Zone Outillage & Hangars", "description": "Ateliers centraux de maintenance, ponts roulants et hangars", "transfos": "2x 800 kVA (22 kV / 400 V)", "ip": "192.168.10.30", "puissance_max": 1280, "p_active": 365, "q_reactive": 112, "cos_phi": 0.96, "tension": 401, "courant": 552, "departs": [{"id": "PT_Z_D1", "nom": "T1 - Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "1250/5A", "classe": "0.5S", "p": 190, "q": 58, "u": 401, "i": 287, "cos": 0.96, "statut": "OK"}, {"id": "PT_Z_D2", "nom": "T2 - Arrivée Transformateur 2", "usage": "TGBT T2", "tc": "1250/5A", "classe": "0.5S", "p": 175, "q": 54, "u": 400, "i": 265, "cos": 0.95, "statut": "OK"}, {"id": "PT_Z_D3", "nom": "Hangar Stockage H1 (Engrais/Vrac)", "usage": "Stockage", "tc": "400/5A", "classe": "0.2S", "p": 66, "q": 20, "u": 400, "i": 100, "cos": 0.96, "statut": "OK"}, {"id": "PT_Z_D4", "nom": "Hangar Stockage H2 (Marchandises)", "usage": "Stockage", "tc": "400/5A", "classe": "0.2S", "p": 59, "q": 18, "u": 400, "i": 89, "cos": 0.96, "statut": "OK"}, {"id": "PT_Z_D5", "nom": "Pont Roulant Atelier Outillage", "usage": "Levage", "tc": "250/5A", "classe": "0.2S", "p": 44, "q": 15, "u": 399, "i": 68, "cos": 0.95, "statut": "OK"}, {"id": "PT_Z_D6", "nom": "Station Recharge Chariots", "usage": "Recharge", "tc": "400/5A", "classe": "0.2S", "p": 91, "q": 26, "u": 401, "i": 136, "cos": 0.96, "statut": "OK"}, {"id": "PT_Z_D7", "nom": "Compresseurs d'Air Atelier", "usage": "Pneumatique", "tc": "250/5A", "classe": "0.2S", "p": 37, "q": 12, "u": 400, "i": 56, "cos": 0.95, "statut": "OK"}, {"id": "PT_Z_D8", "nom": "Éclairage Voies de Circulation Z", "usage": "Éclairage", "tc": "160/5A", "classe": "0.5S", "p": 23, "q": 6, "u": 402, "i": 34, "cos": 0.97, "statut": "OK"}, {"id": "PT_Z_D9", "nom": "Bâtiment Maîtrise & Vestiaires", "usage": "Tertiaire", "tc": "100/5A", "classe": "0.5S", "p": 16, "q": 4, "u": 401, "i": 24, "cos": 0.97, "statut": "OK"}, {"id": "PT_Z_D10", "nom": "Groupe Électrogène Secours PT Z", "usage": "Secours", "tc": "315/5A", "classe": "0.5S", "p": 0, "q": 0, "u": 400, "i": 0, "cos": 1.0, "statut": "Veille"}]}, {"id": "PT_4", "nom": "Poste PT 4", "zone": "Terminal Vrac & Silos Portuaires", "description": "Élévateurs à godets, aspiration et tours d'ensachage de céréales", "transfos": "2x 1250 kVA (22 kV / 400 V)", "ip": "192.168.10.40", "puissance_max": 2000, "p_active": 750, "q_reactive": 234, "cos_phi": 0.95, "tension": 401, "courant": 1133, "departs": [{"id": "PT_4_D1", "nom": "T1 - Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "2000/5A", "classe": "0.5S", "p": 385, "q": 120, "u": 401, "i": 582, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D2", "nom": "T2 - Arrivée Transformateur 2", "usage": "TGBT T2", "tc": "2000/5A", "classe": "0.5S", "p": 365, "q": 114, "u": 400, "i": 551, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D3", "nom": "Élévateur Principal Silo Céréales", "usage": "Force motrice", "tc": "630/5A", "classe": "0.2S", "p": 218, "q": 74, "u": 399, "i": 334, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D4", "nom": "Ligne Convoyeur Bande Aérienne", "usage": "Convoyage", "tc": "500/5A", "classe": "0.2S", "p": 142, "q": 46, "u": 400, "i": 216, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D5", "nom": "Aspiration & Dépoussiérage Silos", "usage": "Aspiration", "tc": "400/5A", "classe": "0.2S", "p": 97, "q": 31, "u": 400, "i": 147, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D6", "nom": "Atelier Ensachage Automatique", "usage": "Conditionnement", "tc": "400/5A", "classe": "0.2S", "p": 84, "q": 26, "u": 401, "i": 127, "cos": 0.96, "statut": "OK"}, {"id": "PT_4_D7", "nom": "Station Pompage Hydrocarbures", "usage": "Pompage", "tc": "400/5A", "classe": "0.2S", "p": 69, "q": 22, "u": 400, "i": 105, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D8", "nom": "Éclairage Silos & Voies Ferrées", "usage": "Éclairage", "tc": "200/5A", "classe": "0.5S", "p": 29, "q": 7, "u": 402, "i": 43, "cos": 0.97, "statut": "OK"}, {"id": "PT_4_D9", "nom": "Bâtiment Bascule & Contrôle Silo", "usage": "Tertiaire", "tc": "125/5A", "classe": "0.5S", "p": 20, "q": 5, "u": 401, "i": 30, "cos": 0.97, "statut": "OK"}, {"id": "PT_4_D10", "nom": "Secours Groupe Électrogène PT 4", "usage": "Secours", "tc": "630/5A", "classe": "0.5S", "p": 0, "q": 0, "u": 400, "i": 0, "cos": 1.0, "statut": "Veille"}]}, {"id": "PT_1", "nom": "Poste PT 1", "zone": "Direction & Ateliers Principaux", "description": "Comprend les 12 compteurs existants MEIER CMM61 intégrés (Prix n°2)", "transfos": "2x 1000 kVA (22 kV / 400 V)", "ip": "192.168.10.50", "puissance_max": 1600, "p_active": 435, "q_reactive": 132, "cos_phi": 0.96, "tension": 401, "courant": 658, "cmm61_existant": true, "departs": [{"id": "PT_1_D1", "nom": "CMM61 - T1 Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "1600/5A", "classe": "0.5S", "p": 225, "q": 68, "u": 401, "i": 340, "cos": 0.96, "statut": "OK"}, {"id": "PT_1_D2", "nom": "CMM61 - T2 Arrivée Transformateur 2", "usage": "TGBT T2", "tc": "1600/5A", "classe": "0.5S", "p": 210, "q": 64, "u": 400, "i": 318, "cos": 0.96, "statut": "OK"}, {"id": "PT_1_D3", "nom": "CMM61 - Siège DEPA Marsa Maroc", "usage": "Bâtiment Administratif", "tc": "400/5A", "classe": "0.5S", "p": 79, "q": 20, "u": 401, "i": 118, "cos": 0.97, "statut": "OK"}, {"id": "PT_1_D4", "nom": "CMM61 - Centre Données & TOS", "usage": "Data Center", "tc": "250/5A", "classe": "0.5S", "p": 46, "q": 10, "u": 401, "i": 68, "cos": 0.98, "statut": "OK"}, {"id": "PT_1_D5", "nom": "CMM61 - Climatisation Centrale Siège", "usage": "CVC", "tc": "315/5A", "classe": "0.5S", "p": 64, "q": 19, "u": 400, "i": 97, "cos": 0.96, "statut": "OK"}, {"id": "PT_1_D6", "nom": "CMM61 - Atelier Chaudronnerie", "usage": "Atelier", "tc": "400/5A", "classe": "0.5S", "p": 55, "q": 16, "u": 400, "i": 83, "cos": 0.96, "statut": "OK"}, {"id": "PT_1_D7", "nom": "CMM61 - Magasin Central Pièces", "usage": "Logistique", "tc": "200/5A", "classe": "0.5S", "p": 26, "q": 7, "u": 401, "i": 39, "cos": 0.97, "statut": "OK"}, {"id": "PT_1_D8", "nom": "CMM61 - Éclairage Enceinte & Boulevard", "usage": "Éclairage", "tc": "250/5A", "classe": "0.5S", "p": 37, "q": 9, "u": 402, "i": 55, "cos": 0.97, "statut": "OK"}, {"id": "PT_1_D9", "nom": "CMM61 - Recharge Engins Électriques", "usage": "Recharge", "tc": "315/5A", "classe": "0.5S", "p": 49, "q": 14, "u": 401, "i": 74, "cos": 0.96, "statut": "OK"}, {"id": "PT_1_D10", "nom": "CMM61 - Poste Garde Principale", "usage": "Sécurité", "tc": "100/5A", "classe": "0.5S", "p": 13, "q": 3, "u": 401, "i": 19, "cos": 0.98, "statut": "OK"}, {"id": "PT_1_D11", "nom": "CMM61 - Cantine & Foyer", "usage": "Restauration", "tc": "160/5A", "classe": "0.5S", "p": 27, "q": 7, "u": 401, "i": 40, "cos": 0.97, "statut": "OK"}, {"id": "PT_1_D12", "nom": "CMM61 - Secours Ondulé Serveurs", "usage": "UPS", "tc": "200/5A", "classe": "0.5S", "p": 19, "q": 4, "u": 401, "i": 28, "cos": 0.98, "statut": "OK"}]}, {"id": "PT_7", "nom": "Poste PT 7", "zone": "Poste Ro-Ro / Quai de Pêche", "description": "Passerelle Ro-Ro hydraulique, niche multiprises et quai", "transfos": "1x 630 kVA (22 kV / 400 V)", "ip": "192.168.10.70", "puissance_max": 630, "p_active": 173, "q_reactive": 51, "cos_phi": 0.96, "tension": 401, "courant": 261, "departs": [{"id": "PT_7_D1", "nom": "T1 - Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "1000/5A", "classe": "0.5S", "p": 142, "q": 42, "u": 401, "i": 214, "cos": 0.96, "statut": "OK"}, {"id": "PT_7_D2", "nom": "T2 - Arrivée Transformateur 2 (Réserve)", "usage": "TGBT T2", "tc": "1000/5A", "classe": "0.5S", "p": 31, "q": 9, "u": 400, "i": 47, "cos": 0.96, "statut": "OK"}, {"id": "PT_7_D3", "nom": "Rampe & Passerelle Ro-Ro Hydraulique", "usage": "Force motrice", "tc": "315/5A", "classe": "0.2S", "p": 57, "q": 18, "u": 399, "i": 87, "cos": 0.95, "statut": "OK"}, {"id": "PT_7_D4", "nom": "Éclairage Terre-Plein & Niche Multiprises", "usage": "Éclairage", "tc": "200/5A", "classe": "0.5S", "p": 25, "q": 7, "u": 402, "i": 37, "cos": 0.96, "statut": "OK"}]}];
+        var posteActifId = "PT_Y";
+        var modalChartOnde = null;
+        var modalChartHarm = null;
+        var chartChargeGlobale = null;
+        var chartHarmoniques40 = null;
+        var echartSankeyInstance = null;
+        var echartParetoInstance = null;
+        var echartRegressionInstance = null;
 
-        let posteActifId = "PT_Y";
-        let modalChartOnde = null;
-        let modalChartHarm = null;
-        let chartChargeGlobale = null;
-        let chartHarmoniques40 = null;
-        let echartSankeyInstance = null;
-        let echartParetoInstance = null;
-        let echartRegressionInstance = null;
-
-        // Navigation entre onglets
+        // Navigation ZÉRO DÉFAILLANCE
         function ouvrirOnglet(idOnglet) {
-            // Masquer tous les panneaux
-            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-            // Déselectionner tous les liens sidebar
-            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            // 1. Masquer tous les panneaux
+            var panels = document.querySelectorAll('.tab-panel');
+            for (var i = 0; i < panels.length; i++) {
+                panels[i].style.display = 'none';
+                panels[i].classList.remove('active');
+            }
             
-            // Activer le panneau visé
-            const panneau = document.getElementById('panel-' + idOnglet);
+            // 2. Afficher le panneau sélectionné
+            var panneau = document.getElementById('panel-' + idOnglet);
             if (panneau) {
+                panneau.style.display = 'block';
                 panneau.classList.add('active');
             }
             
-            // Activer le lien sidebar correspondant
-            const lien = Array.from(document.querySelectorAll('.sidebar-link')).find(l => l.getAttribute('onclick') && l.getAttribute('onclick').includes(idOnglet));
-            if (lien) lien.classList.add('active');
-            
-            // Redimensionner les graphiques ECharts si nécessaire
-            setTimeout(() => {
-                if (idOnglet === 'sankey') initialiserSankey();
-                if (idOnglet === 'pareto') initialiserPareto();
-                if (idOnglet === 'regression') initialiserRegression();
-            }, 150);
+            // 3. Mettre à jour l'état actif dans la barre latérale
+            var links = document.querySelectorAll('.sidebar-link');
+            for (var j = 0; j < links.length; j++) {
+                links[j].classList.remove('active');
+            }
+            var lien = document.getElementById('nav-' + idOnglet);
+            if (lien) {
+                lien.classList.add('active');
+            }
+
+            // 4. Déclencher le rendu des graphiques spécifiques
+            setTimeout(function() {
+                try {
+                    if (idOnglet === 'sankey') initialiserSankey();
+                    if (idOnglet === 'pareto') initialiserPareto();
+                    if (idOnglet === 'regression') initialiserRegression();
+                    if (idOnglet === 'qualite' && !chartHarmoniques40) initialiserHarmoniques40();
+                } catch(e) {
+                    console.warn("Chart resize warning:", e);
+                }
+            }, 100);
         }
 
-        // Profils RBAC
+        // Profils Démo
         function definirProfil(role) {
-            const badge = document.getElementById('nom-role-actuel');
+            var badge = document.getElementById('nom-role-actuel');
+            if (!badge) return;
             if (role === 'admin') badge.innerHTML = '<b>Noura LAAROUSSI</b> (Admin)';
             else if (role === 'exploitant') badge.innerHTML = '<b>Opérateur DEPA</b> (Exploitant)';
             else if (role === 'lecteur') badge.innerHTML = '<b>Visiteur / Auditeur</b> (Lecteur)';
         }
 
-        // Initialisation de la vue globale
-        function initialiserVueGlobale() {
-            const grid = document.getElementById('postes-grid-global');
-            grid.innerHTML = '';
-            
-            DONNEES_POSTES.forEach(p => {
-                const col = document.createElement('div');
-                col.className = 'col-md-4';
-                col.innerHTML = `
-                    <div class="scada-card h-100" style="cursor: pointer;" onclick="selectionnerPoste('${p.id}'); ouvrirOnglet('postes');">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div>
-                                <h6 class="fw-bold text-white mb-0">${p.nom}</h6>
-                                <span class="text-info small font-mono">${p.zone}</span>
-                            </div>
-                            <span class="badge bg-success bg-opacity-25 text-success font-mono"><span class="pulse-led me-1"></span> OK</span>
-                        </div>
-                        <div class="text-muted small mb-3">${p.description}</div>
-                        
-                        <div class="row g-2 mb-3 text-center">
-                            <div class="col-4">
-                                <div class="bg-dark p-2 rounded">
-                                    <div class="text-muted" style="font-size: 0.68rem;">P ACTIVE</div>
-                                    <div class="fw-bold font-mono text-warning">${p.p_active} kW</div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="bg-dark p-2 rounded">
-                                    <div class="text-muted" style="font-size: 0.68rem;">TENSION</div>
-                                    <div class="fw-bold font-mono text-success">${p.tension} V</div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="bg-dark p-2 rounded">
-                                    <div class="text-muted" style="font-size: 0.68rem;">DÉPARTS</div>
-                                    <div class="fw-bold font-mono text-white">${p.departs.length}</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-between align-items-center text-muted small pt-2 border-top border-secondary border-opacity-25">
-                            <span class="font-mono">Capacité: ${p.puissance_max} kVA</span>
-                            <span class="text-info">Voir l'unifilaire <i class="bi bi-arrow-right"></i></span>
-                        </div>
-                    </div>
-                `;
-                grid.appendChild(col);
-            });
-
-            // Courbe globale Chart.js
-            const ctx = document.getElementById('chart-charge-globale').getContext('2d');
-            const labels = [];
-            const dataActive = [];
-            for (let h = 0; h < 24; h++) {
-                for (let m = 0; m < 60; m += 30) {
-                    labels.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`);
-                    // Profil jour/nuit portuaire réaliste (pic à 11h et 16h)
-                    let base = 1800;
-                    if (h >= 8 && h <= 18) base += 900 + Math.sin(h / 3) * 200;
-                    if (h >= 19 && h <= 23) base += 500;
-                    base += (Math.random() - 0.5) * 80;
-                    dataActive.push(Math.round(base));
-                }
-            }
-
-            chartChargeGlobale = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Puissance Active Globale Port d'Agadir (kW)',
-                        data: dataActive,
-                        borderColor: '#38bdf8',
-                        backgroundColor: 'rgba(56, 189, 248, 0.1)',
-                        fill: true,
-                        tension: 0.35,
-                        pointRadius: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', maxTicksLimit: 12 } },
-                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
-                    },
-                    plugins: {
-                        legend: { labels: { color: '#f8fafc' } }
-                    }
-                }
-            });
-        }
-
-        // Sélection et affichage d'un poste
-        function initialiserSelecteurPostes() {
-            const cont = document.getElementById('selecteur-postes-container');
-            cont.innerHTML = '';
-            
-            DONNEES_POSTES.forEach(p => {
-                const btn = document.createElement('div');
-                btn.className = 'poste-pill' + (p.id === posteActifId ? ' active' : '');
-                btn.id = 'pill-' + p.id;
-                btn.onclick = () => selectionnerPoste(p.id);
-                btn.innerHTML = `
-                    <i class="bi bi-diagram-3"></i>
-                    <div>
-                        <div>${p.nom}</div>
-                        <div style="font-size: 0.7rem; opacity: 0.8;">${p.departs.length} départs</div>
-                    </div>
-                `;
-                cont.appendChild(btn);
-            });
-        }
-
+        // Sélection d'un poste
         function selectionnerPoste(idPoste) {
             posteActifId = idPoste;
-            const poste = DONNEES_POSTES.find(p => p.id === idPoste);
+            var poste = null;
+            for (var i = 0; i < DONNEES_POSTES.length; i++) {
+                if (DONNEES_POSTES[i].id === idPoste) {
+                    poste = DONNEES_POSTES[i];
+                    break;
+                }
+            }
             if (!poste) return;
 
-            // Mise à jour des pilules
-            document.querySelectorAll('.poste-pill').forEach(b => b.classList.remove('active'));
-            const activeBtn = document.getElementById('pill-' + idPoste);
-            if (activeBtn) activeBtn.classList.add('active');
+            // Mise à jour visuelle des pilules
+            var pills = document.querySelectorAll('.poste-pill');
+            for (var p = 0; p < pills.length; p++) {
+                pills[p].classList.remove('active');
+            }
+            var activePill = document.getElementById('pill-' + idPoste);
+            if (activePill) activePill.classList.add('active');
 
-            // Mise à jour de l'en-tête
+            // Mise à jour de l'en-tête du poste
             document.getElementById('poste-sel-nom').innerText = poste.nom;
             document.getElementById('poste-sel-zone').innerText = poste.zone;
             document.getElementById('poste-sel-desc').innerText = poste.description;
@@ -1495,312 +2713,440 @@
             document.getElementById('poste-sel-cos').innerText = poste.cos_phi;
             document.getElementById('poste-sel-count').innerText = poste.departs.length;
 
-            // Rendu du Schéma Unifilaire SVG Interactif
+            // Schéma unifilaire SVG
             rendreSchemaUnifilaire(poste);
 
-            // Rendu de la Table des Départs
+            // Table des départs
             rendreTableDeparts(poste);
         }
 
         // Schéma unifilaire SVG dynamique
         function rendreSchemaUnifilaire(poste) {
-            const unifilaire = document.getElementById('unifilaire-content');
-            const departs = poste.departs;
-            const nbDeparts = departs.length;
-            const largeurSvg = Math.max(900, nbDeparts * 125 + 160);
+            var unifilaire = document.getElementById('unifilaire-content');
+            if (!unifilaire) return;
+            var departs = poste.departs;
+            var nbDeparts = departs.length;
+            var largeurSvg = Math.max(900, nbDeparts * 125 + 160);
 
-            let departsSvg = '';
-            departs.forEach((d, idx) => {
-                const x = 140 + idx * 120;
-                const isSecours = d.statut === 'Veille' || d.usage.includes('Secours');
-                const strokeColor = isSecours ? '#94a3b8' : '#38bdf8';
-                const statusColor = isSecours ? '#94a3b8' : '#10b981';
+            var departsSvg = '';
+            for (var idx = 0; idx < departs.length; idx++) {
+                var d = departs[idx];
+                var x = 140 + idx * 120;
+                var isSecours = d.statut === 'Veille' || d.usage.indexOf('Secours') !== -1;
+                var strokeColor = isSecours ? '#94a3b8' : '#38bdf8';
+                var statusColor = isSecours ? '#94a3b8' : '#10b981';
 
-                departsSvg += `
-                    <!-- Ligne verticale vers le départ -->
-                    <line x1="${x}" y1="170" x2="${x}" y2="230" stroke="${strokeColor}" stroke-width="2.5" />
-                    <!-- Disjoncteur / Centrale de mesure -->
-                    <rect x="${x - 16}" y="230" width="32" height="36" rx="4" fill="#1e293b" stroke="${statusColor}" stroke-width="2" style="cursor: pointer;" onclick="ouvrirDetailDepart('${d.id}')" />
-                    <text x="${x}" y="252" font-size="10" fill="${statusColor}" font-family="JetBrains Mono" font-weight="bold" text-anchor="middle">TC</text>
-                    <!-- Ligne vers la charge -->
-                    <line x1="${x}" y1="266" x2="${x}" y2="300" stroke="${strokeColor}" stroke-width="2" />
-                    <circle cx="${x}" cy="305" r="5" fill="${strokeColor}" />
-                    <!-- Étiquette départ -->
-                    <text x="${x}" y="325" font-size="10" fill="#f8fafc" font-family="Inter" font-weight="600" text-anchor="middle">${d.id.split('_').slice(-2).join('_')}</text>
-                    <text x="${x}" y="340" font-size="9" fill="#94a3b8" font-family="Inter" text-anchor="middle">${d.usage.substring(0, 15)}</text>
-                    <text x="${x}" y="358" font-size="11" fill="#f59e0b" font-family="JetBrains Mono" font-weight="bold" text-anchor="middle">${d.p} kW</text>
-                `;
-            });
+                departsSvg += '<line x1="' + x + '" y1="170" x2="' + x + '" y2="230" stroke="' + strokeColor + '" stroke-width="2.5" />' +
+                    '<rect x="' + (x - 16) + '" y="230" width="32" height="36" rx="4" fill="#1e293b" stroke="' + statusColor + '" stroke-width="2" class="depart-rect" data-id="' + d.id + '" style="cursor:pointer;" />' +
+                    '<text x="' + x + '" y="252" font-size="10" fill="' + statusColor + '" font-family="JetBrains Mono" font-weight="bold" text-anchor="middle">TC</text>' +
+                    '<line x1="' + x + '" y1="266" x2="' + x + '" y2="300" stroke="' + strokeColor + '" stroke-width="2" />' +
+                    '<circle cx="' + x + '" cy="305" r="5" fill="' + strokeColor + '" />' +
+                    '<text x="' + x + '" y="325" font-size="10" fill="#f8fafc" font-family="Inter" font-weight="600" text-anchor="middle">' + d.id.split('_').slice(-2).join('_') + '</text>' +
+                    '<text x="' + x + '" y="340" font-size="9" fill="#94a3b8" font-family="Inter" text-anchor="middle">' + d.usage.substring(0, 15) + '</text>' +
+                    '<text x="' + x + '" y="358" font-size="11" fill="#f59e0b" font-family="JetBrains Mono" font-weight="bold" text-anchor="middle">' + d.p + ' kW</text>';
+            }
 
-            unifilaire.innerHTML = `
-                <svg width="${largeurSvg}" height="390" viewBox="0 0 ${largeurSvg} 390" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Arrivée MT 22 kV -->
-                    <text x="80" y="30" font-size="12" fill="#ef4444" font-family="JetBrains Mono" font-weight="bold">ARRIVÉE MT 22 kV</text>
-                    <line x1="80" y1="40" x2="80" y2="70" stroke="#ef4444" stroke-width="3" />
-                    
-                    <!-- Transfos T1 et T2 -->
-                    <circle cx="80" cy="85" r="16" fill="none" stroke="#38bdf8" stroke-width="2.5" />
-                    <circle cx="80" cy="105" r="16" fill="none" stroke="#38bdf8" stroke-width="2.5" />
-                    <text x="110" y="98" font-size="11" fill="#38bdf8" font-family="Inter">${poste.transfos}</text>
-
-                    <!-- Ligne vers jeu de barres -->
-                    <line x1="80" y1="121" x2="80" y2="170" stroke="#38bdf8" stroke-width="3" />
-
-                    <!-- Jeu de Barres TGBT 400 V Principal -->
-                    <rect x="50" y="166" width="${largeurSvg - 100}" height="8" rx="3" fill="#38bdf8" />
-                    <text x="${largeurSvg - 140}" y="160" font-size="11" fill="#38bdf8" font-family="JetBrains Mono" font-weight="bold">JEU DE BARRES TGBT 400 V</text>
-
-                    <!-- Tous les départs -->
-                    ${departsSvg}
-                </svg>
-            `;
+            unifilaire.innerHTML = '<svg width="' + largeurSvg + '" height="390" viewBox="0 0 ' + largeurSvg + ' 390" xmlns="http://www.w3.org/2000/svg">' +
+                '<text x="80" y="30" font-size="12" fill="#ef4444" font-family="JetBrains Mono" font-weight="bold">ARRIVÉE MT 22 kV</text>' +
+                '<line x1="80" y1="40" x2="80" y2="70" stroke="#ef4444" stroke-width="3" />' +
+                '<circle cx="80" cy="85" r="16" fill="none" stroke="#38bdf8" stroke-width="2.5" />' +
+                '<circle cx="80" cy="105" r="16" fill="none" stroke="#38bdf8" stroke-width="2.5" />' +
+                '<text x="110" y="98" font-size="11" fill="#38bdf8" font-family="Inter">' + poste.transfos + '</text>' +
+                '<line x1="80" y1="121" x2="80" y2="170" stroke="#38bdf8" stroke-width="3" />' +
+                '<rect x="50" y="166" width="' + (largeurSvg - 100) + '" height="8" rx="3" fill="#38bdf8" />' +
+                '<text x="' + (largeurSvg - 140) + '" y="160" font-size="11" fill="#38bdf8" font-family="JetBrains Mono" font-weight="bold">JEU DE BARRES TGBT 400 V</text>' +
+                departsSvg +
+                '</svg>';
         }
 
-        // Rendu de la table des départs
+        // Table des départs
         function rendreTableDeparts(poste) {
-            const tbody = document.getElementById('poste-sel-table-departs');
-            tbody.innerHTML = '';
+            var tbody = document.getElementById('poste-sel-table-departs');
+            if (!tbody) return;
+            var html = '';
+            for (var i = 0; i < poste.departs.length; i++) {
+                var d = poste.departs[i];
+                var badgeClasse = d.classe === '0.2S' ? 'badge-critique' : 'badge-ok';
+                var badgeStatut = d.statut === 'OK' ? 'badge-ok' : 'badge-alert';
 
-            poste.departs.forEach(d => {
-                const tr = document.createElement('tr');
-                const badgeClasse = d.classe === '0.2S' ? 'badge-critique' : 'badge-ok';
-                const badgeStatut = d.statut === 'OK' ? 'badge-ok' : 'badge-alert';
-
-                tr.innerHTML = `
-                    <td class="font-mono fw-bold text-info">${d.id}</td>
-                    <td class="fw-semibold text-white">${d.nom}</td>
-                    <td><span class="text-muted small">${d.usage}</span></td>
-                    <td class="font-mono text-warning">${d.tc}</td>
-                    <td><span class="badge-sub ${badgeClasse}">${d.classe}</span></td>
-                    <td class="font-mono fw-bold text-warning">${d.p}</td>
-                    <td class="font-mono text-info">${d.q}</td>
-                    <td class="font-mono text-white">${d.i}</td>
-                    <td class="font-mono text-success">${d.cos}</td>
-                    <td><span class="badge-sub ${badgeStatut}">${d.statut}</span></td>
-                    <td>
-                        <button class="btn btn-xs btn-outline-info btn-sm" onclick="ouvrirDetailDepart('${d.id}')">
-                            <i class="bi bi-eye"></i> Détails
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
+                html += '<tr>' +
+                    '<td class="font-mono fw-bold text-info">' + d.id + '</td>' +
+                    '<td class="fw-semibold text-white">' + d.nom + '</td>' +
+                    '<td><span class="text-muted small">' + d.usage + '</span></td>' +
+                    '<td class="font-mono text-warning">' + d.tc + '</td>' +
+                    '<td><span class="badge-sub ' + badgeClasse + '">' + d.classe + '</span></td>' +
+                    '<td class="font-mono fw-bold text-warning">' + d.p + '</td>' +
+                    '<td class="font-mono text-info">' + d.q + '</td>' +
+                    '<td class="font-mono text-white">' + d.i + '</td>' +
+                    '<td class="font-mono text-success">' + d.cos + '</td>' +
+                    '<td><span class="badge-sub ' + badgeStatut + '">' + d.statut + '</span></td>' +
+                    '<td><button class="btn btn-xs btn-outline-info btn-sm" class="depart-btn" data-id="' + d.id + '"><i class="bi bi-eye"></i> Détails</button></td>' +
+                    '</tr>';
+            }
+            tbody.innerHTML = html;
         }
 
-        // Modal détail d'un départ avec forme d'onde
+        // Modal détail
         function ouvrirDetailDepart(idDepart) {
-            let departTrouve = null;
-            let posteTrouve = null;
-            DONNEES_POSTES.forEach(p => {
-                p.departs.forEach(d => {
-                    if (d.id === idDepart) {
-                        departTrouve = d;
-                        posteTrouve = p;
+            var departTrouve = null;
+            var posteTrouve = null;
+            for (var p = 0; p < DONNEES_POSTES.length; p++) {
+                for (var d = 0; d < DONNEES_POSTES[p].departs.length; d++) {
+                    if (DONNEES_POSTES[p].departs[d].id === idDepart) {
+                        departTrouve = DONNEES_POSTES[p].departs[d];
+                        posteTrouve = DONNEES_POSTES[p];
+                        break;
                     }
-                });
-            });
+                }
+            }
 
             if (!departTrouve) return;
 
-            document.getElementById('modalDepartTitre').innerText = `${departTrouve.id} · ${departTrouve.nom} (${posteTrouve.nom})`;
+            document.getElementById('modalDepartTitre').innerText = departTrouve.id + ' · ' + departTrouve.nom + ' (' + posteTrouve.nom + ')';
             document.getElementById('modal-p').innerText = departTrouve.p + ' kW';
             document.getElementById('modal-i').innerText = departTrouve.i + ' A';
             document.getElementById('modal-u').innerText = departTrouve.u + ' V';
             document.getElementById('modal-tc').innerText = departTrouve.tc;
 
-            // Forme d'onde sinusoïdale 50 Hz avec harmoniques
-            const ctxOnde = document.getElementById('chart-modal-onde').getContext('2d');
-            if (modalChartOnde) modalChartOnde.destroy();
+            // Forme d'onde sinusoïdale
+            try {
+                var ctxOnde = document.getElementById('chart-modal-onde').getContext('2d');
+                if (modalChartOnde) modalChartOnde.destroy();
 
-            const pointsOnde = [];
-            const labelsOnde = [];
-            for (let t = 0; t <= 20; t += 0.5) {
-                labelsOnde.push(t + ' ms');
-                // V(t) = Vmax * sin(wt) + 3% H3 + 4% H5
-                const w = 2 * Math.PI * 50;
-                const sec = t / 1000;
-                const v = 325 * Math.sin(w * sec) + 12 * Math.sin(3 * w * sec) + 15 * Math.sin(5 * w * sec);
-                pointsOnde.push(v);
+                var pointsOnde = [];
+                var labelsOnde = [];
+                for (var t = 0; t <= 20; t += 0.5) {
+                    labelsOnde.push(t + ' ms');
+                    var w = 2 * Math.PI * 50;
+                    var sec = t / 1000;
+                    var v = 325 * Math.sin(w * sec) + 12 * Math.sin(3 * w * sec) + 15 * Math.sin(5 * w * sec);
+                    pointsOnde.push(v);
+                }
+
+                modalChartOnde = new Chart(ctxOnde, {
+                    type: 'line',
+                    data: {
+                        labels: labelsOnde,
+                        datasets: [{
+                            label: 'Tension (V)',
+                            data: pointsOnde,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                        },
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            } catch(e) {
+                console.warn(e);
             }
 
-            modalChartOnde = new Chart(ctxOnde, {
-                type: 'line',
-                data: {
-                    labels: labelsOnde,
-                    datasets: [{
-                        label: 'Tension Instantanée v(t) (V)',
-                        data: pointsOnde,
-                        borderColor: '#10b981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                        borderWidth: 2,
-                        pointRadius: 0,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
-                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+            // Harmoniques modal
+            try {
+                var ctxHarm = document.getElementById('chart-modal-harmoniques').getContext('2d');
+                if (modalChartHarm) modalChartHarm.destroy();
+                var rangs = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25];
+                var amplt = [100, 2.1, 4.3, 3.2, 0.8, 1.9, 1.4, 0.5, 0.9, 0.7, 0.3, 0.4, 0.2];
+
+                modalChartHarm = new Chart(ctxHarm, {
+                    type: 'bar',
+                    data: {
+                        labels: rangs.map(function(r) { return 'H' + r; }),
+                        datasets: [{
+                            label: 'Amplitude (% H1)',
+                            data: amplt,
+                            backgroundColor: rangs.map(function(r) { return r === 1 ? '#38bdf8' : (r === 5 || r === 7 ? '#f59e0b' : '#64748b'); })
+                        }]
                     },
-                    plugins: { legend: { display: false } }
-                }
-            });
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                            y: { max: 10, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                        },
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            } catch(e) {
+                console.warn(e);
+            }
 
-            // Spectre harmonique du départ
-            const ctxHarm = document.getElementById('chart-modal-harmoniques').getContext('2d');
-            if (modalChartHarm) modalChartHarm.destroy();
-
-            const rangs = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25];
-            const amplt = [100, 2.1, 4.3, 3.2, 0.8, 1.9, 1.4, 0.5, 0.9, 0.7, 0.3, 0.4, 0.2];
-
-            modalChartHarm = new Chart(ctxHarm, {
-                type: 'bar',
-                data: {
-                    labels: rangs.map(r => 'H' + r),
-                    datasets: [{
-                        label: 'Amplitude (% H1)',
-                        data: amplt,
-                        backgroundColor: rangs.map(r => r === 1 ? '#38bdf8' : (r === 5 || r === 7 ? '#f59e0b' : '#64748b'))
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
-                        y: { max: 10, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
-                    },
-                    plugins: { legend: { display: false } }
-                }
-            });
-
-            const modal = new bootstrap.Modal(document.getElementById('modalDepart'));
+            var modal = new bootstrap.Modal(document.getElementById('modalDepart'));
             modal.show();
         }
 
-        // Initialisation du spectre 1 à 40
-        function initialiserHarmoniques40() {
-            const ctx = document.getElementById('chart-harmoniques-40').getContext('2d');
-            const labels = [];
-            const dataU = [];
-            const dataI = [];
-            const seuil = [];
-
-            for (let r = 1; r <= 40; r++) {
-                labels.push('H' + r);
-                seuil.push(5.0); // Limite norme
-                if (r === 1) {
-                    dataU.push(100);
-                    dataI.push(100);
-                } else if (r === 3) {
-                    dataU.push(1.4);
-                    dataI.push(2.8);
-                } else if (r === 5) {
-                    dataU.push(2.2);
-                    dataI.push(4.5);
-                } else if (r === 7) {
-                    dataU.push(1.8);
-                    dataI.push(3.6);
-                } else if (r === 11 || r === 13) {
-                    dataU.push(0.9);
-                    dataI.push(1.8);
-                } else if (r % 2 !== 0) {
-                    dataU.push(+(Math.random() * 0.4 + 0.1).toFixed(2));
-                    dataI.push(+(Math.random() * 0.8 + 0.2).toFixed(2));
-                } else {
-                    dataU.push(0.05);
-                    dataI.push(0.08);
-                }
-            }
-
-            chartHarmoniques40 = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Harmoniques Tension THD-U (%)',
-                            data: dataU.slice(1),
-                            backgroundColor: '#38bdf8'
-                        },
-                        {
-                            label: 'Harmoniques Courant THD-I (%)',
-                            data: dataI.slice(1),
-                            backgroundColor: '#f59e0b'
-                        },
-                        {
-                            type: 'line',
-                            label: 'Seuil Limite Norme (5%)',
-                            data: seuil.slice(1),
-                            borderColor: '#ef4444',
-                            borderWidth: 2,
-                            borderDash: [5, 5],
-                            pointRadius: 0,
-                            fill: false
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 9 } } },
-                        y: { max: 8, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
-                    },
-                    plugins: {
-                        legend: { labels: { color: '#f8fafc' } }
+        // Courbe globale 24h
+        function initialiserCourbeGlobale() {
+            try {
+                var canvas = document.getElementById('chart-charge-globale');
+                if (!canvas) return;
+                var ctx = canvas.getContext('2d');
+                var labels = [];
+                var dataActive = [];
+                for (var h = 0; h < 24; h++) {
+                    for (var m = 0; m < 60; m += 30) {
+                        labels.push((h < 10 ? '0' + h : h) + ':' + (m === 0 ? '00' : m));
+                        var base = 1800;
+                        if (h >= 8 && h <= 18) base += 900 + Math.sin(h / 3) * 200;
+                        if (h >= 19 && h <= 23) base += 500;
+                        base += (Math.random() - 0.5) * 80;
+                        dataActive.push(Math.round(base));
                     }
                 }
-            });
-        }
 
-        // Initialisation de la table des 58 points
-        function initialiserTable58Points() {
-            const tbody = document.getElementById('table-58-points-body');
-            tbody.innerHTML = '';
-
-            let compteur = 0;
-            DONNEES_POSTES.forEach(p => {
-                p.departs.forEach(d => {
-                    compteur++;
-                    const isExistant = d.type && d.type.includes('Existant');
-                    const badgeType = isExistant ? '<span class="badge-sub badge-cmm61">Existant (CMM61)</span>' : '<span class="badge-sub badge-critique">Neuf Modbus</span>';
-                    const badgeClasse = d.classe === '0.2S' ? 'badge-critique' : 'badge-ok';
-
-                    const tr = document.createElement('tr');
-                    tr.className = 'point-row';
-                    tr.dataset.poste = p.id;
-                    tr.dataset.classe = d.classe;
-                    tr.dataset.search = (d.id + ' ' + d.nom + ' ' + p.nom + ' ' + d.tc).toLowerCase();
-
-                    tr.innerHTML = `
-                        <td class="font-mono text-info fw-bold">${d.id}</td>
-                        <td>${p.nom}</td>
-                        <td class="fw-semibold text-white">${d.nom}</td>
-                        <td>${badgeType}</td>
-                        <td class="font-mono text-warning">${d.tc}</td>
-                        <td><span class="badge-sub ${badgeClasse}">${d.classe}</span></td>
-                        <td class="font-mono text-muted">${p.ip}</td>
-                        <td class="font-mono fw-bold text-warning">${d.p} kW</td>
-                        <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
-                    `;
-                    tbody.appendChild(tr);
+                chartChargeGlobale = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: "Puissance Active Globale Port d'Agadir (kW)",
+                            data: dataActive,
+                            borderColor: '#38bdf8',
+                            backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                            fill: true,
+                            tension: 0.35,
+                            pointRadius: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', maxTicksLimit: 12 } },
+                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                        },
+                        plugins: {
+                            legend: { labels: { color: '#f8fafc' } }
+                        }
+                    }
                 });
-            });
+            } catch(e) {
+                console.error("Erreur chart-charge-globale:", e);
+            }
         }
 
-        function filtrerPoints() {
-            const search = document.getElementById('filter-search-point').value.toLowerCase();
-            const poste = document.getElementById('filter-poste-point').value;
-            const classe = document.getElementById('filter-classe-point').value;
+        // Harmoniques 1-40
+        function initialiserHarmoniques40() {
+            try {
+                var canvas = document.getElementById('chart-harmoniques-40');
+                if (!canvas) return;
+                var ctx = canvas.getContext('2d');
+                var labels = [];
+                var dataU = [];
+                var dataI = [];
+                var seuil = [];
 
-            let visibleCount = 0;
-            document.querySelectorAll('.point-row').forEach(row => {
-                const matchSearch = !search || row.dataset.search.includes(search);
-                const matchPoste = !poste || row.dataset.poste === poste;
-                const matchClasse = !classe || row.dataset.classe === classe;
+                for (var r = 1; r <= 40; r++) {
+                    labels.push('H' + r);
+                    seuil.push(5.0);
+                    if (r === 1) { dataU.push(100); dataI.push(100); }
+                    else if (r === 3) { dataU.push(1.4); dataI.push(2.8); }
+                    else if (r === 5) { dataU.push(2.2); dataI.push(4.5); }
+                    else if (r === 7) { dataU.push(1.8); dataI.push(3.6); }
+                    else if (r === 11 || r === 13) { dataU.push(0.9); dataI.push(1.8); }
+                    else if (r % 2 !== 0) { dataU.push(0.3); dataI.push(0.5); }
+                    else { dataU.push(0.05); dataI.push(0.08); }
+                }
+
+                chartHarmoniques40 = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels.slice(1),
+                        datasets: [
+                            { label: 'Harmoniques Tension THD-U (%)', data: dataU.slice(1), backgroundColor: '#38bdf8' },
+                            { label: 'Harmoniques Courant THD-I (%)', data: dataI.slice(1), backgroundColor: '#f59e0b' },
+                            { type: 'line', label: 'Seuil Limite Norme (5%)', data: seuil.slice(1), borderColor: '#ef4444', borderWidth: 2, borderDash: [5, 5], pointRadius: 0, fill: false }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 9 } } },
+                            y: { max: 8, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                        },
+                        plugins: { legend: { labels: { color: '#f8fafc' } } }
+                    }
+                });
+            } catch(e) {
+                console.error("Erreur chart-harmoniques-40:", e);
+            }
+        }
+
+        // Sankey
+        function initialiserSankey() {
+            try {
+                var dom = document.getElementById('echart-sankey');
+                if (!dom) return;
+                if (!echartSankeyInstance) {
+                    echartSankeyInstance = echarts.init(dom, 'dark');
+                }
+                var option = {
+                    backgroundColor: 'transparent',
+                    tooltip: { trigger: 'item', triggerOn: 'mousemove' },
+                    series: [{
+                        type: 'sankey',
+                        layout: 'none',
+                        emphasis: { focus: 'adjacency' },
+                        nodeAlign: 'justify',
+                        lineStyle: { color: 'source', opacity: 0.45, curveness: 0.5 },
+                        data: [
+                            { name: 'Réseau 22 kV Agadir' },
+                            { name: 'Poste PT Y' },
+                            { name: 'Poste PT X' },
+                            { name: 'Poste PT Z' },
+                            { name: 'Poste PT 4' },
+                            { name: 'Poste PT 1' },
+                            { name: 'Poste PT 7' },
+                            { name: 'Portiques Quai PQ' },
+                            { name: 'Grues Mobiles Gottwald' },
+                            { name: 'Silos & Élévateurs' },
+                            { name: 'Reefers Frigorifiques' },
+                            { name: 'Ateliers & Pompage' },
+                            { name: 'Bâtiments & TOS' },
+                            { name: 'Éclairage Voies & Quais' }
+                        ],
+                        links: [
+                            { source: 'Réseau 22 kV Agadir', target: 'Poste PT Y', value: 845 },
+                            { source: 'Réseau 22 kV Agadir', target: 'Poste PT X', value: 607 },
+                            { source: 'Réseau 22 kV Agadir', target: 'Poste PT Z', value: 365 },
+                            { source: 'Réseau 22 kV Agadir', target: 'Poste PT 4', value: 750 },
+                            { source: 'Réseau 22 kV Agadir', target: 'Poste PT 1', value: 435 },
+                            { source: 'Réseau 22 kV Agadir', target: 'Poste PT 7', value: 173 },
+                            { source: 'Poste PT Y', target: 'Portiques Quai PQ', value: 463 },
+                            { source: 'Poste PT Y', target: 'Grues Mobiles Gottwald', value: 175 },
+                            { source: 'Poste PT Y', target: 'Reefers Frigorifiques', value: 138 },
+                            { source: 'Poste PT Y', target: 'Éclairage Voies & Quais', value: 44 },
+                            { source: 'Poste PT X', target: 'Grues Mobiles Gottwald', value: 162 },
+                            { source: 'Poste PT X', target: 'Silos & Élévateurs', value: 182 },
+                            { source: 'Poste PT X', target: 'Reefers Frigorifiques', value: 74 },
+                            { source: 'Poste PT X', target: 'Éclairage Voies & Quais', value: 33 },
+                            { source: 'Poste PT 4', target: 'Silos & Élévateurs', value: 444 },
+                            { source: 'Poste PT 4', target: 'Ateliers & Pompage', value: 166 },
+                            { source: 'Poste PT Z', target: 'Ateliers & Pompage', value: 238 },
+                            { source: 'Poste PT 1', target: 'Bâtiments & TOS', value: 189 },
+                            { source: 'Poste PT 1', target: 'Ateliers & Pompage', value: 125 },
+                            { source: 'Poste PT 7', target: 'Grues Mobiles Gottwald', value: 57 }
+                        ]
+                    }]
+                };
+                echartSankeyInstance.setOption(option);
+                echartSankeyInstance.resize();
+            } catch(e) {
+                console.error("Erreur Sankey:", e);
+            }
+        }
+
+        // Pareto
+        function initialiserPareto() {
+            try {
+                var dom = document.getElementById('echart-pareto');
+                if (!dom) return;
+                if (!echartParetoInstance) {
+                    echartParetoInstance = echarts.init(dom, 'dark');
+                }
+                var departsTries = [
+                    { nom: 'Portique PQ-01', p: 245 },
+                    { nom: 'T1 Arrivée PT Y', p: 235 },
+                    { nom: 'Portique PQ-02', p: 218 },
+                    { nom: 'Élévateur Silo PT 4', p: 218 },
+                    { nom: 'Grue GM-1 Gottwald', p: 175 },
+                    { nom: 'Grue GM-2 Sud', p: 162 },
+                    { nom: 'Convoyeur PT 4', p: 142 },
+                    { nom: 'Reefers Nord (Frigo)', p: 138 },
+                    { nom: 'Trémies Sud', p: 96 },
+                    { nom: 'Recharge Chariots PT Z', p: 91 },
+                    { nom: 'Siège Administratif', p: 79 },
+                    { nom: 'Reefers Sud', p: 74 }
+                ];
+                var total = 0;
+                for (var t = 0; t < departsTries.length; t++) total += departsTries[t].p;
+                var cumul = 0;
+                var cumuls = [];
+                for (var c = 0; c < departsTries.length; c++) {
+                    cumul += departsTries[c].p;
+                    cumuls.push(+((cumul / total) * 100).toFixed(1));
+                }
+
+                var option = {
+                    backgroundColor: 'transparent',
+                    tooltip: { trigger: 'axis' },
+                    xAxis: [{ type: 'category', data: departsTries.map(function(d){ return d.nom; }), axisLabel: { color: '#94a3b8', rotate: 25 } }],
+                    yAxis: [
+                        { type: 'value', name: 'Puissance (kW)', axisLabel: { color: '#94a3b8' } },
+                        { type: 'value', name: 'Cumul (%)', min: 0, max: 100, axisLabel: { color: '#f59e0b', formatter: '{value}%' } }
+                    ],
+                    series: [
+                        { name: 'Puissance Active', type: 'bar', data: departsTries.map(function(d){ return d.p; }), itemStyle: { color: '#38bdf8' } },
+                        { name: 'Courbe Cumulative 80/20', type: 'line', yAxisIndex: 1, data: cumuls, itemStyle: { color: '#f59e0b' }, markLine: { data: [{ yAxis: 80, name: 'Seuil 80% Pareto', lineStyle: { color: '#ef4444', type: 'dashed' } }] } }
+                    ]
+                };
+                echartParetoInstance.setOption(option);
+                echartParetoInstance.resize();
+            } catch(e) {
+                console.error("Erreur Pareto:", e);
+            }
+        }
+
+        // Régression
+        function initialiserRegression() {
+            try {
+                var dom = document.getElementById('echart-regression');
+                if (!dom) return;
+                if (!echartRegressionInstance) {
+                    echartRegressionInstance = echarts.init(dom, 'dark');
+                }
+                var rawData = [
+                    [2200, 278], [2450, 290], [2600, 295], [3100, 315],
+                    [3400, 328], [3750, 342], [4100, 358], [4500, 375],
+                    [4900, 391], [5200, 404], [5600, 421], [6000, 437]
+                ];
+                var regressionLine = [
+                    [2000, 0.042 * 2000 + 185.3],
+                    [6200, 0.042 * 6200 + 185.3]
+                ];
+
+                var option = {
+                    backgroundColor: 'transparent',
+                    tooltip: { formatter: function(params) { return 'Activité: ' + params.data[0] + ' kTonnes<br>Énergie: ' + params.data[1] + ' MWh'; } },
+                    xAxis: { name: 'Tonnage Manutentionné (Milliers de Tonnes)', axisLabel: { color: '#94a3b8' } },
+                    yAxis: { name: 'Consommation Électrique (MWh)', axisLabel: { color: '#94a3b8' } },
+                    series: [
+                        { name: 'Historique Mensuel Réel', type: 'scatter', data: rawData, itemStyle: { color: '#38bdf8' } },
+                        { name: 'Droite SER (y = 0.042x + 185.3)', type: 'line', data: regressionLine, itemStyle: { color: '#10b981' }, lineStyle: { width: 3 } }
+                    ]
+                };
+                echartRegressionInstance.setOption(option);
+                echartRegressionInstance.resize();
+            } catch(e) {
+                console.error("Erreur Regression:", e);
+            }
+        }
+
+        // Filtrage 58 points
+        function filtrerPoints() {
+            var search = (document.getElementById('filter-search-point').value || '').toLowerCase();
+            var poste = document.getElementById('filter-poste-point').value;
+            var classe = document.getElementById('filter-classe-point').value;
+            var rows = document.querySelectorAll('.point-row');
+            var visibleCount = 0;
+
+            for (var r = 0; r < rows.length; r++) {
+                var row = rows[r];
+                var matchSearch = !search || row.dataset.search.indexOf(search) !== -1;
+                var matchPoste = !poste || row.dataset.poste === poste;
+                var matchClasse = !classe || row.dataset.classe === classe;
 
                 if (matchSearch && matchPoste && matchClasse) {
                     row.style.display = '';
@@ -1808,235 +3154,35 @@
                 } else {
                     row.style.display = 'none';
                 }
-            });
-
-            document.getElementById('points-count-badge').innerText = `${visibleCount} / 58`;
-        }
-
-        // Initialisation de la table CMM61 (PT 1)
-        function initialiserTableCMM61() {
-            const tbody = document.getElementById('table-cmm61-body');
-            tbody.innerHTML = '';
-
-            const pt1 = DONNEES_POSTES.find(p => p.id === 'PT_1');
-            if (!pt1) return;
-
-            pt1.departs.forEach((d, i) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td class="font-mono text-purple fw-bold">${d.id}</td>
-                    <td class="fw-semibold text-white">${d.nom}</td>
-                    <td class="font-mono text-info">Slave #${i + 1}</td>
-                    <td class="font-mono text-warning">${d.tc}</td>
-                    <td class="font-mono text-success">${d.u} V</td>
-                    <td class="font-mono fw-bold text-warning">${d.p} kW</td>
-                    <td class="font-mono text-white">${Math.round(d.p * 1420)} kWh</td>
-                    <td><span class="badge-sub badge-ok"><i class="bi bi-broadcast"></i> OK (15 ms)</span></td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        // Initialisation du Diagramme Sankey ECharts
-        function initialiserSankey() {
-            const dom = document.getElementById('echart-sankey');
-            if (!dom) return;
-            if (!echartSankeyInstance) {
-                echartSankeyInstance = echarts.init(dom, 'dark');
             }
-
-            const option = {
-                backgroundColor: 'transparent',
-                tooltip: { trigger: 'item', triggerOn: 'mousemove' },
-                series: [{
-                    type: 'sankey',
-                    layout: 'none',
-                    emphasis: { focus: 'adjacency' },
-                    nodeAlign: 'justify',
-                    lineStyle: { color: 'source', opacity: 0.45, curveness: 0.5 },
-                    data: [
-                        { name: 'Réseau 22 kV Agadir' },
-                        { name: 'Poste PT Y' },
-                        { name: 'Poste PT X' },
-                        { name: 'Poste PT Z' },
-                        { name: 'Poste PT 4' },
-                        { name: 'Poste PT 1' },
-                        { name: 'Poste PT 7' },
-                        { name: 'Portiques Quai PQ' },
-                        { name: 'Grues Mobiles Gottwald' },
-                        { name: 'Silos & Élévateurs' },
-                        { name: 'Reefers Frigorifiques' },
-                        { name: 'Ateliers & Pompage' },
-                        { name: 'Bâtiments & TOS' },
-                        { name: 'Éclairage Voies & Quais' }
-                    ],
-                    links: [
-                        { source: 'Réseau 22 kV Agadir', target: 'Poste PT Y', value: 845 },
-                        { source: 'Réseau 22 kV Agadir', target: 'Poste PT X', value: 607 },
-                        { source: 'Réseau 22 kV Agadir', target: 'Poste PT Z', value: 365 },
-                        { source: 'Réseau 22 kV Agadir', target: 'Poste PT 4', value: 750 },
-                        { source: 'Réseau 22 kV Agadir', target: 'Poste PT 1', value: 435 },
-                        { source: 'Réseau 22 kV Agadir', target: 'Poste PT 7', value: 173 },
-                        { source: 'Poste PT Y', target: 'Portiques Quai PQ', value: 463 },
-                        { source: 'Poste PT Y', target: 'Grues Mobiles Gottwald', value: 175 },
-                        { source: 'Poste PT Y', target: 'Reefers Frigorifiques', value: 138 },
-                        { source: 'Poste PT Y', target: 'Éclairage Voies & Quais', value: 44 },
-                        { source: 'Poste PT X', target: 'Grues Mobiles Gottwald', value: 162 },
-                        { source: 'Poste PT X', target: 'Silos & Élévateurs', value: 182 },
-                        { source: 'Poste PT X', target: 'Reefers Frigorifiques', value: 74 },
-                        { source: 'Poste PT X', target: 'Éclairage Voies & Quais', value: 33 },
-                        { source: 'Poste PT 4', target: 'Silos & Élévateurs', value: 444 },
-                        { source: 'Poste PT 4', target: 'Ateliers & Pompage', value: 166 },
-                        { source: 'Poste PT Z', target: 'Ateliers & Pompage', value: 238 },
-                        { source: 'Poste PT 1', target: 'Bâtiments & TOS', value: 189 },
-                        { source: 'Poste PT 1', target: 'Ateliers & Pompage', value: 125 },
-                        { source: 'Poste PT 7', target: 'Grues Mobiles Gottwald', value: 57 }
-                    ]
-                }]
-            };
-            echartSankeyInstance.setOption(option);
-            echartSankeyInstance.resize();
+            document.getElementById('points-count-badge').innerText = visibleCount + ' / 58';
         }
 
-        // Initialisation de Pareto
-        function initialiserPareto() {
-            const dom = document.getElementById('echart-pareto');
-            if (!dom) return;
-            if (!echartParetoInstance) {
-                echartParetoInstance = echarts.init(dom, 'dark');
-            }
-
-            const departsTries = [
-                { nom: 'Portique PQ-01', p: 245 },
-                { nom: 'T1 Arrivée PT Y', p: 235 },
-                { nom: 'Portique PQ-02', p: 218 },
-                { nom: 'Élévateur Silo PT 4', p: 218 },
-                { nom: 'Grue GM-1 Gottwald', p: 175 },
-                { nom: 'Grue GM-2 Sud', p: 162 },
-                { nom: 'Convoyeur PT 4', p: 142 },
-                { nom: 'Reefers Nord (Frigo)', p: 138 },
-                { nom: 'Trémies Sud', p: 96 },
-                { nom: 'Recharge Chariots PT Z', p: 91 },
-                { nom: 'Siège Administratif', p: 79 },
-                { nom: 'Reefers Sud', p: 74 }
-            ];
-
-            const total = departsTries.reduce((acc, cur) => acc + cur.p, 0);
-            let cumul = 0;
-            const cumuls = departsTries.map(d => {
-                cumul += d.p;
-                return +((cumul / total) * 100).toFixed(1);
-            });
-
-            const option = {
-                backgroundColor: 'transparent',
-                tooltip: { trigger: 'axis' },
-                xAxis: [{
-                    type: 'category',
-                    data: departsTries.map(d => d.nom),
-                    axisLabel: { color: '#94a3b8', rotate: 25 }
-                }],
-                yAxis: [
-                    { type: 'value', name: 'Puissance (kW)', axisLabel: { color: '#94a3b8' } },
-                    { type: 'value', name: 'Cumul (%)', min: 0, max: 100, axisLabel: { color: '#f59e0b', formatter: '{value}%' } }
-                ],
-                series: [
-                    {
-                        name: 'Puissance Active',
-                        type: 'bar',
-                        data: departsTries.map(d => d.p),
-                        itemStyle: { color: '#38bdf8' }
-                    },
-                    {
-                        name: 'Courbe Cumulative 80/20',
-                        type: 'line',
-                        yAxisIndex: 1,
-                        data: cumuls,
-                        itemStyle: { color: '#f59e0b' },
-                        markLine: {
-                            data: [{ yAxis: 80, name: 'Seuil 80% Pareto', lineStyle: { color: '#ef4444', type: 'dashed' } }]
-                        }
-                    }
-                ]
-            };
-            echartParetoInstance.setOption(option);
-            echartParetoInstance.resize();
-        }
-
-        // Initialisation de la régression linéaire
-        function initialiserRegression() {
-            const dom = document.getElementById('echart-regression');
-            if (!dom) return;
-            if (!echartRegressionInstance) {
-                echartRegressionInstance = echarts.init(dom, 'dark');
-            }
-
-            const rawData = [
-                [2200, 278], [2450, 290], [2600, 295], [3100, 315],
-                [3400, 328], [3750, 342], [4100, 358], [4500, 375],
-                [4900, 391], [5200, 404], [5600, 421], [6000, 437]
-            ];
-
-            const regressionLine = [
-                [2000, 0.042 * 2000 + 185.3],
-                [6200, 0.042 * 6200 + 185.3]
-            ];
-
-            const option = {
-                backgroundColor: 'transparent',
-                tooltip: { formatter: params => `Activité: ${params.data[0]} kTonnes<br>Énergie: ${params.data[1]} MWh` },
-                xAxis: { name: 'Tonnage Manutentionné (Milliers de Tonnes)', axisLabel: { color: '#94a3b8' } },
-                yAxis: { name: 'Consommation Électrique (MWh)', axisLabel: { color: '#94a3b8' } },
-                series: [
-                    {
-                        name: 'Historique Mensuel Réel',
-                        type: 'scatter',
-                        data: rawData,
-                        itemStyle: { color: '#38bdf8' }
-                    },
-                    {
-                        name: 'Droite SER (y = 0.042x + 185.3)',
-                        type: 'line',
-                        data: regressionLine,
-                        itemStyle: { color: '#10b981' },
-                        lineStyle: { width: 3 }
-                    }
-                ]
-            };
-            echartRegressionInstance.setOption(option);
-            echartRegressionInstance.resize();
-        }
-
-        // Déclencheur de scénario d'alerte pour le professeur
+        // Déclencheur alerte scénario
         function declencherScenarioAlerte() {
-            const table = document.getElementById('table-alertes-body');
-            const now = new Date().toISOString().replace('T', ' ').substring(0, 19);
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td class="font-mono text-danger fw-bold">${now}</td>
-                <td><span class="badge bg-danger animate-pulse">URGENT</span></td>
-                <td>Poste PT Y / Portique PQ-01</td>
-                <td>Creux de tension sévère détecté (U &lt; 70% Unom)</td>
-                <td class="font-mono text-danger">U = 265 V (-33.7 %)</td>
-                <td><span class="badge bg-danger">Active (Live)</span></td>
-                <td><button class="btn btn-xs btn-outline-light btn-sm" onclick="acquitterAlerte(this)"><i class="bi bi-check2"></i> Acquitter</button></td>
-            `;
+            var table = document.getElementById('table-alertes-body');
+            var now = new Date().toISOString().replace('T', ' ').substring(0, 19);
+            var tr = document.createElement('tr');
+            tr.innerHTML = '<td class="font-mono text-danger fw-bold">' + now + '</td>' +
+                '<td><span class="badge bg-danger animate-pulse">URGENT</span></td>' +
+                '<td>Poste PT Y / Portique PQ-01</td>' +
+                '<td>Creux de tension sévère détecté (U &lt; 70% Unom)</td>' +
+                '<td class="font-mono text-danger">U = 265 V (-33.7 %)</td>' +
+                '<td><span class="badge bg-danger">Active (Live)</span></td>' +
+                '<td><button class="btn btn-xs btn-outline-light btn-sm" onclick="acquitterAlerte(this)"><i class="bi bi-check2"></i> Acquitter</button></td>';
             table.insertBefore(tr, table.firstChild);
             
             document.getElementById('side-alert-badge').innerText = '2';
             document.getElementById('nav-alert-count').innerText = '2 Alertes actives';
             document.getElementById('count-actives').innerText = '2';
 
-            alert("🚨 SCÉNARIO DÉMO DÉCLENCHÉ !
-
-Un creux de tension simulé à 265 V vient d'être injecté sur le Portique PQ-01.
-L'événement a été horodaté et consigné dans l'audit trail.");
+            alert("SCENARIO DEMO DECLENCHE : Creux de tension simule a 265 V sur le Portique PQ-01 (consigne dans audit trail).");
         }
 
         function acquitterAlerte(btn) {
-            const row = btn.closest('tr');
+            var row = btn.closest('tr');
             row.querySelector('td:nth-child(6)').innerHTML = '<span class="badge bg-secondary">Acquittée</span>';
-            btn.parentElement.innerHTML = '<span class="text-muted small">Acquittée à l'instant</span>';
+            btn.parentElement.innerHTML = "<span class=\"text-muted small\">Acquittée à l'instant</span>";
             document.getElementById('side-alert-badge').innerText = '1';
             document.getElementById('nav-alert-count').innerText = '1 Alerte active';
             document.getElementById('count-actives').innerText = '1';
@@ -2044,11 +3190,13 @@ L'événement a été horodaté et consigné dans l'audit trail.");
 
         // Exports CSV
         function exporterCSV(nomFichier, lignes) {
-            const contenu = "data:text/csv;charset=utf-8," + lignes.map(e => e.join(";")).join("
-");
-            const encodedUri = encodeURI(contenu);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
+            var csv = "";
+            for (var i = 0; i < lignes.length; i++) {
+                csv += lignes[i].join(";") + "\n";
+            }
+            var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            var link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
             link.setAttribute("download", nomFichier);
             document.body.appendChild(link);
             link.click();
@@ -2056,63 +3204,95 @@ L'événement a été horodaté et consigné dans l'audit trail.");
         }
 
         function exporterDepartsCSV() {
-            const poste = DONNEES_POSTES.find(p => p.id === posteActifId);
+            var poste = null;
+            for (var i = 0; i < DONNEES_POSTES.length; i++) {
+                if (DONNEES_POSTES[i].id === posteActifId) { poste = DONNEES_POSTES[i]; break; }
+            }
             if (!poste) return;
-            const lignes = [["ID", "Nom", "Usage", "TC", "Classe", "P_Active_kW", "Q_kvar", "Courant_A", "CosPhi", "Statut"]];
-            poste.departs.forEach(d => lignes.push([d.id, d.nom, d.usage, d.tc, d.classe, d.p, d.q, d.i, d.cos, d.statut]));
-            exporterCSV(`Departs_${poste.id}_MarsaMaroc.csv`, lignes);
+            var lignes = [["ID", "Nom", "Usage", "TC", "Classe", "P_Active_kW", "Q_kvar", "Courant_A", "CosPhi", "Statut"]];
+            for (var d = 0; d < poste.departs.length; d++) {
+                var x = poste.departs[d];
+                lignes.push([x.id, x.nom, x.usage, x.tc, x.classe, x.p, x.q, x.i, x.cos, x.statut]);
+            }
+            exporterCSV('Departs_' + poste.id + '_MarsaMaroc.csv', lignes);
         }
 
         function exporterPointsCSV() {
-            const lignes = [["ID", "Poste", "Nom", "Usage", "TC", "Classe", "P_kW"]];
-            DONNEES_POSTES.forEach(p => p.departs.forEach(d => lignes.push([d.id, p.nom, d.nom, d.usage, d.tc, d.classe, d.p])));
-            exporterCSV(`Inventaire_58_Points_MarsaMaroc.csv`, lignes);
+            var lignes = [["ID", "Poste", "Nom", "Usage", "TC", "Classe", "P_kW"]];
+            for (var p = 0; p < DONNEES_POSTES.length; p++) {
+                for (var d = 0; d < DONNEES_POSTES[p].departs.length; d++) {
+                    var x = DONNEES_POSTES[p].departs[d];
+                    lignes.push([x.id, DONNEES_POSTES[p].nom, x.nom, x.usage, x.tc, x.classe, x.p]);
+                }
+            }
+            exporterCSV('Inventaire_58_Points_MarsaMaroc.csv', lignes);
         }
 
         function exporterRegistresCSV() {
-            const lignes = [["Adresse_Registre", "Parametre", "Type", "Unite", "Facteur_Echelle"]];
-            lignes.push(["30001-30002", "Tension V1", "Float32", "V", "1.0"]);
-            lignes.push(["30007-30008", "Tension U12", "Float32", "V", "1.0"]);
-            lignes.push(["30013-30014", "Courant I1", "Float32", "A", "1.0"]);
-            lignes.push(["30019-30020", "Puissance P", "Float32", "kW", "1.0"]);
-            lignes.push(["30021-30022", "Puissance Q", "Float32", "kvar", "1.0"]);
-            lignes.push(["30025-30026", "Cos Phi", "Float32", "-", "1.0"]);
-            lignes.push(["30031-30032", "THD-U", "Float32", "%", "0.1"]);
-            exporterCSV("Cartographie_Registres_Modbus_MarsaMaroc.csv", lignes);
+            var lignes = [
+                ["Adresse_Registre", "Parametre", "Type", "Unite", "Facteur_Echelle"],
+                ["30001-30002", "Tension V1", "Float32", "V", "1.0"],
+                ["30007-30008", "Tension U12", "Float32", "V", "1.0"],
+                ["30013-30014", "Courant I1", "Float32", "A", "1.0"],
+                ["30019-30020", "Puissance P", "Float32", "kW", "1.0"],
+                ["30021-30022", "Puissance Q", "Float32", "kvar", "1.0"],
+                ["30025-30026", "Cos Phi", "Float32", "-", "1.0"],
+                ["30031-30032", "THD-U", "Float32", "%", "0.1"]
+            ];
+            exporterCSV('Cartographie_Registres_Modbus_MarsaMaroc.csv', lignes);
         }
 
         function genererRapport(periode) {
-            const lignes = [["Date", "P_Max_kW", "P_Moy_kW", "Energie_kWh", "Cos_Phi_Moy"]];
-            lignes.push(["2026-11-01", "2980", "2410", "57840", "0.95"]);
-            lignes.push(["2026-11-02", "3050", "2480", "59520", "0.96"]);
-            exporterCSV(`Rapport_${periode}_DEPA_MarsaMaroc.csv`, lignes);
+            var lignes = [
+                ["Date", "P_Max_kW", "P_Moy_kW", "Energie_kWh", "Cos_Phi_Moy"],
+                ["2026-11-01", "2980", "2410", "57840", "0.95"],
+                ["2026-11-02", "3050", "2480", "59520", "0.96"]
+            ];
+            exporterCSV('Rapport_' + periode + '_DEPA_MarsaMaroc.csv', lignes);
         }
 
-        function imprimerNoteISO() {
-            window.print();
-        }
+        function imprimerNoteISO() { window.print(); }
+        function imprimerPV() { window.print(); }
 
-        function imprimerPV() {
-            window.print();
-        }
-
-        // Simulation en direct (boucle 3s)
-        setInterval(() => {
-            let delta = (Math.random() - 0.5) * 20;
-            let val = parseInt(document.getElementById('nav-puissance-totale').innerText.replace(/\s/g, '')) + Math.round(delta);
-            document.getElementById('nav-puissance-totale').innerText = val.toLocaleString();
-            document.getElementById('kpi-ptotale').innerText = val.toLocaleString();
+        // Simulation légère de pulsation
+        setInterval(function() {
+            try {
+                var el = document.getElementById('nav-puissance-totale');
+                if (el) {
+                    var delta = (Math.random() - 0.5) * 20;
+                    var val = parseInt(el.innerText.replace(/\s/g, '')) + Math.round(delta);
+                    el.innerText = val.toLocaleString();
+                    var kpi = document.getElementById('kpi-ptotale');
+                    if (kpi) kpi.innerText = val.toLocaleString();
+                }
+            } catch(e) {}
         }, 3000);
 
-        // Lancement au chargement
-        window.onload = function() {
-            initialiserVueGlobale();
-            initialiserSelecteurPostes();
-            selectionnerPoste('PT_Y');
-            initialiserHarmoniques40();
-            initialiserTable58Points();
-            initialiserTableCMM61();
-        };
+        // Lancement au démarrage
+        window.addEventListener('DOMContentLoaded', function() {
+            try {
+                selectionnerPoste('PT_Y');
+                initialiserCourbeGlobale();
+            } catch(e) {
+                console.error("DOM load init err:", e);
+            }
+        });
+
+        // Delegation clics SVG rect et boutons tableau (data-id)
+        document.addEventListener('click', function(e) {
+            var el = e.target;
+            for (var i = 0; i < 6; i++) {
+                if (!el || el === document) break;
+                if (el.dataset && el.dataset.id) {
+                    if (el.classList.contains('depart-rect') || el.classList.contains('depart-btn')) {
+                        ouvrirDetailDepart(el.dataset.id);
+                        return;
+                    }
+                }
+                el = el.parentElement;
+            }
+        });
+
     </script>
 </body>
 </html>
