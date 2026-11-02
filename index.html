@@ -1,754 +1,2118 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SME – Marsa Maroc (Port d'Agadir) · Démo GitHub Pages</title>
-
-    <!-- Bootstrap 5 & Icons -->
+    <title>SME Marsa Maroc · Port d'Agadir (AOO 12/DEPA/2026)</title>
+    
+    <!-- Polices Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS & Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-    <!-- Chart.js & Apache ECharts -->
+    
+    <!-- ECharts & Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
 
     <style>
         :root {
-            --couleur-primaire: #1a3a5c;
-            --couleur-secondaire: #e8660d;
-            --couleur-fond: #f0f4f8;
-            --couleur-fond-sombre: #0f2035;
-            --couleur-bordure: #cbd5e1;
-            --rayon-bordure: 0.5rem;
-            --ombre-carte: 0 2px 10px rgba(0, 0, 0, 0.08);
-            --police-principale: 'Segoe UI', Roboto, sans-serif;
+            --bg-body: #0a0f1d;
+            --bg-sidebar: #060a14;
+            --bg-card: #111827;
+            --bg-card-hover: #162035;
+            --border-card: #1f293d;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --color-primary: #38bdf8;
+            --color-secondary: #f97316;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+            --color-purple: #a855f7;
+            --font-main: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
         }
-        body { background-color: var(--couleur-fond); font-family: var(--police-principale); margin: 0; }
-        .sidebar { width: 260px; min-height: 100vh; background-color: var(--couleur-fond-sombre); position: fixed; top: 0; left: 0; z-index: 1000; overflow-y: auto; padding-bottom: 2rem; }
-        .sidebar .brand { padding: 1.2rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 10px; }
-        .sidebar .brand-title { color: #fff; font-size: 1.1rem; font-weight: 700; line-height: 1.2; }
-        .sidebar .brand-sub { color: var(--couleur-secondaire); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; }
-        .sidebar .nav-section { color: rgba(255,255,255,0.4); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; padding: 1rem 1.5rem 0.3rem; }
-        .sidebar a.nav-link { color: #cbd5e1; padding: 0.6rem 1.5rem; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; text-decoration: none; cursor: pointer; transition: 0.2s; }
-        .sidebar a.nav-link:hover, .sidebar a.nav-link.active { color: #fff; background: rgba(255,255,255,0.08); border-left: 4px solid var(--couleur-secondaire); }
-        .main-wrapper { margin-left: 260px; min-height: 100vh; display: flex; flex-direction: column; }
-        .top-navbar { height: 60px; background: #fff; border-bottom: 1px solid var(--couleur-bordure); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; position: sticky; top: 0; z-index: 999; }
-        .content-area { padding: 1.5rem; flex: 1; }
-        .badge-notif { background-color: #dc2626; color: white; border-radius: 10px; padding: 2px 7px; font-size: 0.75rem; }
-        .kpi-card { background: #fff; border-radius: var(--rayon-bordure); padding: 1.2rem; box-shadow: var(--ombre-carte); border-left: 4px solid var(--couleur-primaire); }
-        .tab-content-panel { display: none; }
-        .tab-content-panel.active { display: block; }
+        
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            margin: 0;
+            overflow-x: hidden;
+        }
+        
+        .font-mono { font-family: var(--font-mono); }
+        
+        /* Sidebar SCADA */
+        .sidebar {
+            width: 270px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-card);
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 1050;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .brand-box {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-card);
+            background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, transparent 100%);
+        }
+        
+        .nav-section-title {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: #64748b;
+            padding: 0.9rem 1.5rem 0.35rem;
+        }
+        
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.55rem 1.5rem;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            transition: all 0.15s ease-in-out;
+            cursor: pointer;
+        }
+        .sidebar-link:hover {
+            background: rgba(56, 189, 248, 0.08);
+            color: #38bdf8;
+        }
+        .sidebar-link.active {
+            background: rgba(56, 189, 248, 0.12);
+            color: #38bdf8;
+            border-left-color: #38bdf8;
+            font-weight: 600;
+        }
+        
+        /* Main Layout */
+        .main-wrapper {
+            margin-left: 270px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .top-navbar {
+            height: 64px;
+            background: rgba(11, 16, 29, 0.92);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-card);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.75rem;
+            position: sticky;
+            top: 0;
+            z-index: 1040;
+        }
+        
+        .content-area {
+            padding: 1.75rem;
+            flex: 1;
+        }
+        
+        /* Panneaux */
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; animation: fadeIn 0.25s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Cards SCADA */
+        .scada-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            transition: all 0.2s ease;
+        }
+        .scada-card:hover {
+            border-color: rgba(56, 189, 248, 0.35);
+        }
+        
+        .kpi-value {
+            font-family: var(--font-mono);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #f8fafc;
+            line-height: 1.1;
+        }
+        .kpi-unit {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            font-weight: 500;
+            margin-left: 4px;
+        }
+        
+        .pulse-led {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background-color: var(--color-success);
+            display: inline-block;
+            box-shadow: 0 0 10px var(--color-success);
+            animation: pulseLed 1.5s infinite;
+        }
+        @keyframes pulseLed {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        
+        /* Tables SCADA */
+        .scada-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        .scada-table th {
+            background: #162035;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-card);
+            font-weight: 600;
+        }
+        .scada-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 0.86rem;
+            vertical-align: middle;
+        }
+        .scada-table tr:hover td {
+            background-color: rgba(56, 189, 248, 0.04);
+        }
+        
+        /* Badges */
+        .badge-sub {
+            font-size: 0.72rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-family: var(--font-mono);
+        }
+        .badge-ok { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-critique { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+        .badge-cmm61 { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+        .badge-alert { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+        
+        /* Unifilaire SVG */
+        .unifilaire-box {
+            background: #0d1527;
+            border: 1px solid var(--border-card);
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+        
+        /* Postes pills */
+        .poste-pill {
+            padding: 0.65rem 1.25rem;
+            border-radius: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            color: var(--text-main);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .poste-pill:hover {
+            border-color: #38bdf8;
+            background: rgba(56, 189, 248, 0.08);
+        }
+        .poste-pill.active {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            border-color: #38bdf8;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+        }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar Gauche -->
+    <!-- Sidebar SCADA -->
     <aside class="sidebar">
-        <div class="brand">
-            <i class="bi bi-lightning-charge-fill text-warning fs-3"></i>
-            <div>
-                <div class="brand-title">MARSA MAROC</div>
-                <div class="brand-sub">SME · Port d'Agadir</div>
+        <div class="brand-box">
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <i class="bi bi-lightning-charge-fill text-warning fs-4"></i>
+                <div>
+                    <div class="fw-bold text-white fs-6">MARSA MAROC</div>
+                    <div style="font-size: 0.7rem; color: #38bdf8; font-weight: 700; letter-spacing: 0.05em;">SME · PORT D'AGADIR</div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between mt-2 pt-2 border-top border-secondary border-opacity-10">
+                <span class="text-muted" style="font-size: 0.7rem;"><span class="pulse-led me-1"></span> Modbus TCP (58/58)</span>
+                <span class="badge bg-primary bg-opacity-25 text-info" style="font-size: 0.65rem;">DEPA 2026</span>
             </div>
         </div>
 
-        <div class="nav flex-column">
-            <div class="nav-section">Supervision Temps Réel</div>
-            <a class="nav-link active" onclick="basculerOnglet('global')"><i class="bi bi-speedometer2"></i> Tableau Global</a>
-            <a class="nav-link" onclick="basculerOnglet('postes')"><i class="bi bi-diagram-3"></i> Postes & Départs</a>
-            <a class="nav-link" onclick="basculerOnglet('qualite')"><i class="bi bi-activity"></i> Qualité & Harmoniques</a>
+        <div class="py-2">
+            <div class="nav-section-title">Supervision Portuaire</div>
+            <a class="sidebar-link active" onclick="ouvrirOnglet('global')"><i class="bi bi-grid-1x2-fill"></i> Vue Globale Multi-Sites</a>
+            <a class="sidebar-link" onclick="ouvrirOnglet('postes')"><i class="bi bi-diagram-3-fill"></i> Postes & Départs (Unifilaire)</a>
+            <a class="sidebar-link" onclick="ouvrirOnglet('qualite')"><i class="bi bi-activity"></i> Qualité & Harmoniques (1-40)</a>
 
-            <div class="nav-section">Exploitation & Suivi</div>
-            <a class="nav-link" onclick="basculerOnglet('alertes')"><i class="bi bi-bell-fill"></i> Alertes <span id="badge-side-alertes" class="badge-notif ms-auto">1</span></a>
-            <a class="nav-link" onclick="basculerOnglet('inventaire')"><i class="bi bi-cpu"></i> 58 Points Mesure</a>
-            <a class="nav-link" onclick="basculerOnglet('cmm61')"><i class="bi bi-hdd-network"></i> MEIER CMM61 (PT1)</a>
-            <a class="nav-link" onclick="basculerOnglet('modbus')"><i class="bi bi-table"></i> Registres Modbus</a>
+            <div class="nav-section-title">Comptage & Registres</div>
+            <a class="sidebar-link" onclick="ouvrirOnglet('inventaire')"><i class="bi bi-cpu-fill"></i> 58 Points de Mesure & TC</a>
+            <a class="sidebar-link" onclick="ouvrirOnglet('cmm61')"><i class="bi bi-hdd-network-fill"></i> MEIER CMM61 (PT 1)</a>
+            <a class="sidebar-link" onclick="ouvrirOnglet('modbus')"><i class="bi bi-table"></i> Cartographie Modbus</a>
 
-            <div class="nav-section">Analyses & Performance</div>
-            <a class="nav-link" onclick="basculerOnglet('sankey')"><i class="bi bi-bezier2"></i> Flux Sankey</a>
-            <a class="nav-link" onclick="basculerOnglet('pareto')"><i class="bi bi-bar-chart-fill"></i> Analyse Pareto</a>
-            <a class="nav-link" onclick="basculerOnglet('regression')"><i class="bi bi-graph-up-arrow"></i> Régression Linéaire</a>
+            <div class="nav-section-title">Analyses Avancées</div>
+            <a class="sidebar-link" onclick="ouvrirOnglet('sankey')"><i class="bi bi-bezier2"></i> Flux Énergétique Sankey</a>
+            <a class="sidebar-link" onclick="ouvrirOnglet('pareto')"><i class="bi bi-bar-chart-steps"></i> Analyse Pareto 80/20</a>
+            <a class="sidebar-link" onclick="ouvrirOnglet('regression')"><i class="bi bi-graph-up-arrow"></i> Régression Linéaire ISO</a>
 
-            <div class="nav-section">Conformité ISO 50001</div>
-            <a class="nav-link" onclick="basculerOnglet('iso')"><i class="bi bi-shield-check"></i> SER & IPE Cibles</a>
-            <a class="nav-link" onclick="basculerOnglet('rapports')"><i class="bi bi-file-earmark-excel-fill"></i> Rapports & Exports</a>
+            <div class="nav-section-title">Conformité ISO 50001</div>
+            <a class="sidebar-link" onclick="ouvrirOnglet('iso')"><i class="bi bi-shield-check"></i> SER & IPE Cibles (-5%)</a>
+            <a class="sidebar-link" onclick="ouvrirOnglet('rapports')"><i class="bi bi-file-earmark-excel-fill"></i> Rapports & Exports CSV</a>
 
-            <div class="nav-section">Maintenance & Garantie</div>
-            <a class="nav-link" onclick="basculerOnglet('maintenance')"><i class="bi bi-calendar-check"></i> Planning 4 Visites/An</a>
-            <a class="nav-link" onclick="basculerOnglet('correctif')"><i class="bi bi-tools"></i> Délais 48h / 7 Jours</a>
-            <a class="nav-link" onclick="basculerOnglet('reception')"><i class="bi bi-award-fill"></i> Réception & PV</a>
-
-            <div class="nav-section">Système & Aide</div>
-            <a class="nav-link" onclick="basculerOnglet('doc')"><i class="bi bi-book-half"></i> Documentation</a>
+            <div class="nav-section-title">Exploitation & Garantie</div>
+            <a class="sidebar-link" onclick="ouvrirOnglet('alertes')"><i class="bi bi-bell-fill"></i> Alertes <span id="side-alert-badge" class="badge bg-danger ms-auto" style="font-size: 0.65rem;">1</span></a>
+            <a class="sidebar-link" onclick="ouvrirOnglet('maintenance')"><i class="bi bi-calendar-check-fill"></i> Maintenance 4 Visites/An</a>
+            <a class="sidebar-link" onclick="ouvrirOnglet('correctif')"><i class="bi bi-clock-history"></i> Délais SLA 48h / 7 Jours</a>
+            <a class="sidebar-link" onclick="ouvrirOnglet('reception')"><i class="bi bi-patch-check-fill"></i> PV Réception (Art. 47.4)</a>
+            <a class="sidebar-link" onclick="ouvrirOnglet('doc')"><i class="bi bi-book-half"></i> Documentation</a>
         </div>
     </aside>
 
-    <!-- Wrapper Principal -->
+    <!-- Main Wrapper -->
     <div class="main-wrapper">
         <!-- Top Navbar -->
         <header class="top-navbar">
             <div class="d-flex align-items-center gap-3">
-                <span class="badge bg-primary px-3 py-2"><i class="bi bi-broadcast"></i> Simulateur 58 Centrales (5s)</span>
-                <span class="badge bg-success px-3 py-2"><i class="bi bi-check-circle"></i> ISO 50001:2018</span>
-                <span class="text-muted small d-none d-md-inline">Marsa Maroc · AOO 12/DEPA/2026 (GitHub Pages Standalone)</span>
+                <span class="badge bg-dark border border-secondary border-opacity-25 px-3 py-2 text-info font-mono">
+                    <i class="bi bi-hdd-rack me-1"></i> 6 Postes MT/BT · 58 Départs Actifs
+                </span>
+                <span class="badge bg-dark border border-secondary border-opacity-25 px-3 py-2 text-warning font-mono">
+                    <i class="bi bi-speedometer me-1"></i> P_Port: <span id="nav-puissance-totale">2 805</span> kW
+                </span>
+                <span class="badge bg-dark border border-secondary border-opacity-25 px-3 py-2 text-success font-mono">
+                    <i class="bi bi-check2-circle me-1"></i> Cos φ: 0.95 · f: 50.01 Hz
+                </span>
             </div>
 
             <div class="d-flex align-items-center gap-3">
-                <button class="btn btn-outline-danger btn-sm position-relative" onclick="basculerOnglet('alertes')">
+                <button class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1" onclick="ouvrirOnglet('alertes')">
                     <i class="bi bi-bell-fill"></i>
-                    <span id="badge-top-alertes" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">1</span>
+                    <span id="nav-alert-count">1 Alerte active</span>
                 </button>
 
                 <div class="dropdown">
-                    <button class="btn btn-light btn-sm dropdown-toggle d-flex align-items-center gap-2 border" type="button" data-bs-toggle="dropdown">
-                        <i class="bi bi-person-circle fs-5 text-primary"></i>
-                        <span id="nom-utilisateur-courant"><b>admin</b> (ADMINISTRATEUR)</span>
+                    <button class="btn btn-sm btn-dark border border-secondary border-opacity-25 dropdown-toggle d-flex align-items-center gap-2" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-fill text-info"></i>
+                        <span id="nom-role-actuel"><b>Noura LAAROUSSI</b> (Admin)</span>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end shadow">
-                        <li><h6 class="dropdown-header">Changer de profil démo</h6></li>
-                        <li><a class="dropdown-item" onclick="changerRole('admin')"><i class="bi bi-shield-lock text-danger"></i> Administrateur</a></li>
-                        <li><a class="dropdown-item" onclick="changerRole('exploitant')"><i class="bi bi-tools text-primary"></i> Exploitant</a></li>
-                        <li><a class="dropdown-item" onclick="changerRole('lecteur')"><i class="bi bi-eye text-info"></i> Lecteur</a></li>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow">
+                        <li><h6 class="dropdown-header">Profil de démonstration</h6></li>
+                        <li><a class="dropdown-item" onclick="definirProfil('admin')"><i class="bi bi-shield-lock-fill text-danger me-2"></i> Administrateur (Total)</a></li>
+                        <li><a class="dropdown-item" onclick="definirProfil('exploitant')"><i class="bi bi-tools text-primary me-2"></i> Exploitant (Acquittements)</a></li>
+                        <li><a class="dropdown-item" onclick="definirProfil('lecteur')"><i class="bi bi-eye-fill text-info me-2"></i> Lecteur (Consultation)</a></li>
                     </ul>
                 </div>
             </div>
         </header>
 
-        <!-- Contenu des Panneaux -->
+        <!-- Zone de Contenu -->
         <main class="content-area">
 
-            <!-- 1. TABLEAU DE BORD GLOBAL -->
-            <div id="panel-global" class="tab-content-panel active">
+            <!-- ============================================================== -->
+            <!-- 1. VUE GLOBALE MULTI-SITES -->
+            <!-- ============================================================== -->
+            <div id="panel-global" class="tab-panel active">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
-                        <h3 class="fw-bold text-primary mb-1"><i class="bi bi-speedometer2 me-2"></i>Tableau de Bord Global Multi-Sites</h3>
-                        <p class="text-muted small mb-0">Supervision en direct des 6 postes de transformation et 58 points de mesure – Port d'Agadir</p>
+                        <h4 class="fw-bold mb-1"><i class="bi bi-grid-1x2-fill text-info me-2"></i>Supervision Globale Multi-Sites</h4>
+                        <p class="text-muted small mb-0">Direction de l'Exploitation du Port d'Agadir (DEPA) · Marché AOO 12/DEPA/2026</p>
                     </div>
-                    <span class="badge bg-success py-2 px-3"><i class="bi bi-activity animate-pulse me-1"></i> Remontée Live (5s)</span>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-info" onclick="ouvrirOnglet('sankey')"><i class="bi bi-bezier2 me-1"></i> Flux Sankey</button>
+                        <button class="btn btn-sm btn-primary" onclick="ouvrirOnglet('postes')"><i class="bi bi-diagram-3-fill me-1"></i> Accéder aux Postes</button>
+                    </div>
                 </div>
 
+                <!-- 4 KPI Cards Port-wide -->
                 <div class="row g-3 mb-4">
                     <div class="col-md-3">
-                        <div class="kpi-card border-primary">
-                            <div class="text-muted small fw-semibold">PUISSANCE TOTALE APPELÉE</div>
-                            <div class="fs-3 fw-bold text-primary" id="live-puissance-totale">2 840 kW</div>
-                            <div class="small text-muted mt-2"><i class="bi bi-activity text-success"></i> Fréquence : 50.02 Hz</div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="kpi-card border-success">
-                            <div class="text-muted small fw-semibold">ÉNERGIE CUMULÉE JOUR</div>
-                            <div class="fs-3 fw-bold text-success" id="live-energie-jour">34 120 kWh</div>
-                            <div class="small text-muted mt-2"><i class="bi bi-clock-history"></i> Depuis 00h00 UTC</div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="kpi-card border-danger">
-                            <div class="text-muted small fw-semibold">ALARMES ACTIVES</div>
-                            <div class="fs-3 fw-bold text-danger" id="live-nb-alarmes">1 active</div>
-                            <div class="small text-muted mt-2"><a onclick="basculerOnglet('alertes')" class="text-danger text-decoration-none" role="button">Voir événements &rarr;</a></div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="kpi-card border-warning">
-                            <div class="text-muted small fw-semibold">COMMUNICATION MODBUS</div>
-                            <div class="fs-3 fw-bold text-warning">58 / 58 OK</div>
-                            <div class="small text-muted mt-2"><span class="badge bg-success">100% Remontées Actives</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 6 Postes -->
-                <h5 class="fw-bold text-dark mb-3"><i class="bi bi-diagram-3-fill me-2 text-primary"></i>État des 6 Postes de Transformation</h5>
-                <div class="row g-3 mb-4" id="cards-postes-grid"></div>
-
-                <!-- Courbe 24h & Alertes -->
-                <div class="row g-3">
-                    <div class="col-lg-8">
-                        <div class="card border-0 shadow-sm p-3 h-100">
-                            <h6 class="fw-bold text-dark mb-3"><i class="bi bi-graph-up text-primary me-2"></i>Courbe de Charge Globale 24h (kW)</h6>
-                            <div style="height: 260px;"><canvas id="canvasCourbeGlobale"></canvas></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card border-0 shadow-sm p-3 h-100">
-                            <h6 class="fw-bold text-dark mb-3"><i class="bi bi-bell text-danger me-2"></i>Dernier Événement</h6>
-                            <div class="alert alert-warning py-2 small mb-2">
-                                <b>THD_U_ELEVE :</b> THD tension à 8.4% &gt; 8.0% sur Portique 1 (PT Y).
+                        <div class="scada-card">
+                            <div class="d-flex justify-content-between text-muted small mb-2">
+                                <span>PUISSANCE ACTIVE TOTALE</span>
+                                <i class="bi bi-lightning text-warning"></i>
                             </div>
-                            <div class="alert alert-info py-2 small mb-0">
-                                <b>INFO :</b> Synchronisation NTP réussie sur l'ensemble des 58 automates.
+                            <div class="kpi-value"><span id="kpi-ptotale">2 805</span><span class="kpi-unit">kW</span></div>
+                            <div class="small text-muted mt-2"><i class="bi bi-arrow-up-right text-success"></i> Appelée en temps réel (15s)</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="scada-card">
+                            <div class="d-flex justify-content-between text-muted small mb-2">
+                                <span>CONSOMMATION JOURNALIÈRE</span>
+                                <i class="bi bi-calendar-event text-info"></i>
+                            </div>
+                            <div class="kpi-value"><span id="kpi-kwh-jour">34 210</span><span class="kpi-unit">kWh</span></div>
+                            <div class="small text-muted mt-2"><i class="bi bi-check-circle text-info"></i> Cumul depuis 00h00</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="scada-card">
+                            <div class="d-flex justify-content-between text-muted small mb-2">
+                                <span>FACTEUR DE PUISSANCE</span>
+                                <i class="bi bi-speedometer2 text-success"></i>
+                            </div>
+                            <div class="kpi-value">0.95<span class="kpi-unit">cos φ</span></div>
+                            <div class="small text-success mt-2"><i class="bi bi-shield-check"></i> Pas de pénalité ONEE (tan φ ≤ 0.4)</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="scada-card">
+                            <div class="d-flex justify-content-between text-muted small mb-2">
+                                <span>QUALITÉ D'ONDE & THD</span>
+                                <i class="bi bi-activity text-purple"></i>
+                            </div>
+                            <div class="kpi-value">1.82<span class="kpi-unit">% THD-U</span></div>
+                            <div class="small text-muted mt-2"><i class="bi bi-check-circle text-success"></i> Conforme CEI 61000-2-4 (< 5%)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6 Cartes Postes -->
+                <h5 class="fw-bold mb-3"><i class="bi bi-building text-info me-2"></i>État des 6 Postes de Transformation MT/BT</h5>
+                <div class="row g-3 mb-4" id="postes-grid-global">
+                    <!-- Généré dynamiquement par JS -->
+                </div>
+
+                <!-- Graphique Courbe de charge globale 24h -->
+                <div class="scada-card mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="fw-bold mb-0"><i class="bi bi-graph-up text-info me-2"></i>Courbe de Charge Portuaire Globale (24h)</h6>
+                        <span class="badge bg-dark border border-secondary text-info font-mono">Pas de 15 minutes</span>
+                    </div>
+                    <div style="height: 320px;">
+                        <canvas id="chart-charge-globale"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- 2. POSTES & DÉPARTS (SCHÉMA UNIFILAIRE) - LA FENÊTRE PRINCIPALE -->
+            <!-- ============================================================== -->
+            <div id="panel-postes" class="tab-panel">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-1"><i class="bi bi-diagram-3-fill text-info me-2"></i>Supervision Détaillée & Schéma Unifilaire</h4>
+                        <p class="text-muted small mb-0">Visualisation par poste, jeu de barres TGBT et départs secondaires</p>
+                    </div>
+                    <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 font-mono py-2 px-3">
+                        <span class="pulse-led me-1"></span> Remontée temps réel
+                    </span>
+                </div>
+
+                <!-- Sélecteur de Poste (6 Onglets Pilules) -->
+                <div class="d-flex flex-wrap gap-2 mb-4" id="selecteur-postes-container">
+                    <!-- Rempli par JS -->
+                </div>
+
+                <!-- En-tête du Poste Sélectionné -->
+                <div class="scada-card mb-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-5">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="bg-primary bg-opacity-20 p-3 rounded-3 border border-primary border-opacity-30">
+                                    <i class="bi bi-lightning-charge-fill text-info fs-2"></i>
+                                </div>
+                                <div>
+                                    <h4 class="fw-bold mb-0 text-white" id="poste-sel-nom">Poste PT Y</h4>
+                                    <div class="text-info small font-mono" id="poste-sel-zone">Quai Nord / Terminal Conteneurs</div>
+                                    <div class="text-muted small mt-1" id="poste-sel-desc">Alimentation portiques de quai et grues mobiles Nord</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="row g-2 text-center">
+                                <div class="col-3">
+                                    <div class="p-2 rounded bg-dark border border-secondary border-opacity-25">
+                                        <div class="text-muted small">P ACTIVE</div>
+                                        <div class="fw-bold font-mono text-warning fs-5" id="poste-sel-p">845 kW</div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="p-2 rounded bg-dark border border-secondary border-opacity-25">
+                                        <div class="text-muted small">Q RÉACTIVE</div>
+                                        <div class="fw-bold font-mono text-info fs-5" id="poste-sel-q">263 kvar</div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="p-2 rounded bg-dark border border-secondary border-opacity-25">
+                                        <div class="text-muted small">TENSION U</div>
+                                        <div class="fw-bold font-mono text-success fs-5" id="poste-sel-u">401 V</div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="p-2 rounded bg-dark border border-secondary border-opacity-25">
+                                        <div class="text-muted small">COS PHI</div>
+                                        <div class="fw-bold font-mono text-white fs-5" id="poste-sel-cos">0.95</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- 2. QUALITÉ & HARMONIQUES -->
-            <div id="panel-qualite" class="tab-content-panel">
-                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-activity me-2"></i>Qualité d'Énergie & Harmoniques (Art. 47.1, 51-1.1)</h3>
-                <div class="row g-3 mb-4">
-                    <div class="col-md-4">
-                        <div class="kpi-card border-info">
-                            <div class="text-muted small fw-semibold">THD-U MOYEN DU SITE</div>
-                            <div class="fs-3 fw-bold text-info">2.41 %</div>
-                            <div class="small text-success mt-1"><i class="bi bi-check-circle"></i> Conforme (&lt; 8.0%)</div>
-                        </div>
+                <!-- Schéma Unifilaire Interactif -->
+                <div class="scada-card mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="fw-bold mb-0"><i class="bi bi-diagram-2 text-info me-2"></i>Synoptique Unifilaire Dynamique (Architecture MT/BT)</h6>
+                        <span class="text-muted small"><i class="bi bi-info-circle me-1"></i> Cliquez sur un départ pour voir sa forme d'onde et ses harmoniques</span>
                     </div>
-                    <div class="col-md-4">
-                        <div class="kpi-card border-warning">
-                            <div class="text-muted small fw-semibold">THD-I MOYEN DU SITE</div>
-                            <div class="fs-3 fw-bold text-warning">14.85 %</div>
-                            <div class="small text-muted mt-1"><i class="bi bi-info-circle"></i> Tolérance industrielle (&lt; 30%)</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="kpi-card border-danger">
-                            <div class="text-muted small fw-semibold">CREUX DE TENSION (24H)</div>
-                            <div class="fs-3 fw-bold text-danger">0 détecté</div>
-                            <div class="small text-muted mt-1"><i class="bi bi-shield-check text-success"></i> Réseau stable</div>
-                        </div>
+                    <div class="unifilaire-box" id="unifilaire-content">
+                        <!-- Schéma SVG unifilaire dynamique généré par JS -->
                     </div>
                 </div>
 
-                <div class="card border-0 shadow-sm p-3 mb-4">
-                    <h6 class="fw-bold text-dark mb-2"><i class="bi bi-bar-chart-steps text-primary me-2"></i>Histogramme du Spectre Harmonique Rangs 1 à 40 (Tension & Courant)</h6>
-                    <div id="echart-harm-static" style="height: 340px; width: 100%;"></div>
-                </div>
-            </div>
-
-            <!-- 3. FLUX SANKEY -->
-            <div id="panel-sankey" class="tab-content-panel">
-                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-bezier2 me-2"></i>Diagramme de Sankey – Flux Énergétiques (Art. 47.3)</h3>
-                <p class="text-muted small">Visualisation interactive des flux d'énergie active : Réseau HT &rarr; 6 Postes &rarr; Principaux Départs</p>
-                <div class="card border-0 shadow-sm p-3 mb-4">
-                    <div id="echart-sankey-static" style="height: 520px; width: 100%;"></div>
-                </div>
-            </div>
-
-            <!-- 4. ANALYSE PARETO -->
-            <div id="panel-pareto" class="tab-content-panel">
-                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-bar-chart-fill me-2"></i>Analyse de Pareto – Consommations UES (80/20)</h3>
-                <p class="text-muted small">Identification des Usages Énergétiques Significatifs selon la norme ISO 50001</p>
-                <div class="card border-0 shadow-sm p-3 mb-4">
-                    <div id="echart-pareto-static" style="height: 380px; width: 100%;"></div>
-                </div>
-            </div>
-
-            <!-- 5. RÉGRESSION LINÉAIRE -->
-            <div id="panel-regression" class="tab-content-panel">
-                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-graph-up-arrow me-2"></i>Régression Linéaire & Normalisation (Art. 47.3)</h3>
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <div class="kpi-card border-primary">
-                            <div class="text-muted small fw-semibold">ÉQUATION DE LA DROITE</div>
-                            <div class="fs-4 fw-bold text-primary">y = 0.482 &times; Tonnage + 12 400</div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="kpi-card border-success">
-                            <div class="text-muted small fw-semibold">COEFFICIENT DE DÉTERMINATION</div>
-                            <div class="fs-4 fw-bold text-success">R&sup2; = 0.874 (Forte Corrélation)</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card border-0 shadow-sm p-3 mb-4">
-                    <div id="echart-regression-static" style="height: 400px; width: 100%;"></div>
-                </div>
-            </div>
-
-            <!-- 6. 58 POINTS DE COMPTAGE -->
-            <div id="panel-inventaire" class="tab-content-panel">
-                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-cpu me-2"></i>Inventaire Complet des 58 Points de Comptage (Art. 51-1)</h3>
-                <div class="card border-0 shadow-sm p-3">
-                    <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
-                        <table class="table table-sm table-hover align-middle small mb-0">
-                            <thead class="table-light sticky-top">
-                                <tr><th>#</th><th>Poste</th><th>Départ</th><th>Classe</th><th>Calibre TC</th><th>Type Compteur</th><th>État</th><th>IP Modbus</th><th>Statut</th></tr>
-                            </thead>
-                            <tbody id="tbody-inventaire-static"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 7. MEIER CMM61 -->
-            <div id="panel-cmm61" class="tab-content-panel">
-                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-hdd-network me-2"></i>12 Compteurs Existants MEIER CMM61 – PT 1 (Prix n°2)</h3>
-                <div class="card border-0 shadow-sm p-3 mb-4">
-                    <div class="alert alert-success py-2 small mb-3">
-                        <i class="bi bi-check-circle-fill me-1"></i> Intégration Modbus TCP/IP native 100% opérationnelle sans passerelle à remplacer (Prix n°2 validé).
+                <!-- Tableau des Départs du Poste -->
+                <div class="scada-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="fw-bold mb-0"><i class="bi bi-list-columns-reverse text-info me-2"></i>Départs Électriques du Poste (<span id="poste-sel-count">11</span> départs instrumentés)</h6>
+                        <button class="btn btn-sm btn-outline-info" onclick="exporterDepartsCSV()"><i class="bi bi-download me-1"></i> Exporter CSV</button>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-hover align-middle small mb-0">
-                            <thead class="table-light">
-                                <tr><th>#</th><th>Circuit</th><th>Désignation</th><th>Modèle</th><th>IP:Port</th><th>TC</th><th>Conformité</th><th>Statut</th></tr>
+                        <table class="scada-table">
+                            <thead>
+                                <tr>
+                                    <th>Identifiant</th>
+                                    <th>Désignation Départ</th>
+                                    <th>Usage / Type</th>
+                                    <th>Calibre TC</th>
+                                    <th>Classe</th>
+                                    <th>P Active (kW)</th>
+                                    <th>Q (kvar)</th>
+                                    <th>Courant (A)</th>
+                                    <th>Cos φ</th>
+                                    <th>Statut</th>
+                                    <th>Action</th>
+                                </tr>
                             </thead>
-                            <tbody id="tbody-cmm61-static"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 8. CARTOGRAPHIE MODBUS -->
-            <div id="panel-modbus" class="tab-content-panel">
-                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-table me-2"></i>Cartographie des Registres Modbus (DOE Art. 50)</h3>
-                <div class="card border-0 shadow-sm p-3 mb-4">
-                    <button class="btn btn-success btn-sm mb-3" onclick="exporterCSVModbus()"><i class="bi bi-download me-1"></i> Exporter Cartographie CSV</button>
-                    <div class="table-responsive">
-                        <table class="table table-sm table-striped small mb-0">
-                            <thead class="table-dark">
-                                <tr><th>Adresses Registres</th><th>Grandeur</th><th>Format</th><th>Unité</th><th>Description</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>30001 - 30006</td><td>Tensions Simples V1, V2, V3</td><td>Float32</td><td>Volts (V)</td><td>Tensions phase-neutre RMS</td></tr>
-                                <tr><td>30007 - 30012</td><td>Tensions Composées U12, U23, U31</td><td>Float32</td><td>Volts (V)</td><td>Tensions entre phases RMS</td></tr>
-                                <tr><td>30013 - 30018</td><td>Courants I1, I2, I3</td><td>Float32</td><td>Ampères (A)</td><td>Courants efficaces de ligne</td></tr>
-                                <tr><td>30019 - 30024</td><td>Puissances Active, Réactive, Apparente</td><td>Float32</td><td>kW / kVAR / kVA</td><td>Puissances triphasées totales</td></tr>
-                                <tr><td>30025 - 30026</td><td>Facteur de Puissance (Cos &phi;)</td><td>Float32</td><td>-</td><td>Rapport P / S</td></tr>
-                                <tr><td>30027 - 30028</td><td>Fréquence</td><td>Float32</td><td>Hz</td><td>Fréquence fondamentale</td></tr>
-                                <tr><td>30029 - 30032</td><td>Énergie Active Importée</td><td>Int64</td><td>kWh</td><td>Compteur d'énergie cumulé</td></tr>
-                                <tr><td>30033 - 30036</td><td>THD Tension & Courant</td><td>Float32</td><td>%</td><td>Distorsion harmonique totale</td></tr>
+                            <tbody id="poste-sel-table-departs">
+                                <!-- Rempli dynamiquement -->
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <!-- 9. ALERTES -->
-            <div id="panel-alertes" class="tab-content-panel">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="fw-bold text-primary mb-0"><i class="bi bi-bell-fill text-danger me-2"></i>Alertes & Notifications (Art. 47.3)</h3>
-                    <button class="btn btn-warning btn-sm text-dark fw-semibold" onclick="declencherAlerteTest()"><i class="bi bi-play-circle me-1"></i> Bouton Test Scénario Alerte</button>
+            <!-- ============================================================== -->
+            <!-- 3. QUALITÉ DE L'ÉNERGIE (HARMONIQUES 1-40 & CREUX DE TENSION) -->
+            <!-- ============================================================== -->
+            <div id="panel-qualite" class="tab-panel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="fw-bold mb-1"><i class="bi bi-activity text-info me-2"></i>Qualité de l'Énergie & Analyse Harmonique</h4>
+                        <p class="text-muted small mb-0">Conforme Art. 47.1 & 51-1.1 (Normes CEI 61000-4-30 Classe A et IEEE 519)</p>
+                    </div>
+                    <span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-50 font-mono py-2 px-3">
+                        Spectre Rangs 1 à 40
+                    </span>
                 </div>
-                <div class="card border-0 shadow-sm p-3 mb-4">
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <div class="scada-card">
+                            <div class="text-muted small mb-1">THD TENSION (THD-U)</div>
+                            <div class="kpi-value text-success">1.82<span class="kpi-unit">%</span></div>
+                            <div class="small text-muted mt-2">Limite norme: 5.0 % (Conforme)</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="scada-card">
+                            <div class="text-muted small mb-1">THD COURANT (THD-I)</div>
+                            <div class="kpi-value text-warning">4.95<span class="kpi-unit">%</span></div>
+                            <div class="small text-muted mt-2">Limite IEEE 519: 8.0 % (Conforme)</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="scada-card">
+                            <div class="text-muted small mb-1">DÉSÉQUILIBRE TENSION</div>
+                            <div class="kpi-value text-info">0.45<span class="kpi-unit">%</span></div>
+                            <div class="small text-muted mt-2">Composante inverse (V2/V1)</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="scada-card">
+                            <div class="text-muted small mb-1">CREUX DE TENSION (30j)</div>
+                            <div class="kpi-value text-white">2<span class="kpi-unit">événements</span></div>
+                            <div class="small text-warning mt-2">Enregistrés et horodatés</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Histogramme Rangs 1 à 40 -->
+                <div class="scada-card mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="fw-bold mb-0"><i class="bi bi-bar-chart-fill text-info me-2"></i>Spectre des Harmoniques de Courant & Tension (Rangs 1 à 40)</h6>
+                        <span class="badge bg-danger bg-opacity-25 text-danger font-mono">Seuil limite max tracé à 5%</span>
+                    </div>
+                    <div style="height: 340px;">
+                        <canvas id="chart-harmoniques-40"></canvas>
+                    </div>
+                </div>
+
+                <!-- Table des Creux de Tension Détectés -->
+                <div class="scada-card">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-exclamation-diamond-fill text-warning me-2"></i>Registre des Creux de Tension (Voltage Sags)</h6>
                     <div class="table-responsive">
-                        <table class="table table-hover align-middle small mb-0">
-                            <thead class="table-light">
-                                <tr><th>Horodatage</th><th>Poste / Départ</th><th>Type</th><th>Gravité</th><th>Message</th><th>Statut</th><th>Action</th></tr>
+                        <table class="scada-table">
+                            <thead>
+                                <tr>
+                                    <th>Horodatage (UTC+1)</th>
+                                    <th>Poste Détecteur</th>
+                                    <th>Phase Affectée</th>
+                                    <th>Profondeur (% Unom)</th>
+                                    <th>Tension Résiduelle (V)</th>
+                                    <th>Durée (ms)</th>
+                                    <th>Conformité CEI 61000-4-11</th>
+                                </tr>
                             </thead>
-                            <tbody id="tbody-alertes-static"></tbody>
+                            <tbody>
+                                <tr>
+                                    <td class="font-mono">2026-11-01 14:22:18</td>
+                                    <td>Poste PT 4 (Silos)</td>
+                                    <td>Phase L2</td>
+                                    <td><span class="badge bg-warning text-dark font-mono">68.5 %</span></td>
+                                    <td class="font-mono">157 V</td>
+                                    <td class="font-mono">180 ms</td>
+                                    <td><span class="badge bg-success">Creux admissible</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-mono">2026-10-28 09:14:02</td>
+                                    <td>Poste PT Y (Conteneurs)</td>
+                                    <td>Phases L1-L2</td>
+                                    <td><span class="badge bg-danger font-mono">54.0 %</span></td>
+                                    <td class="font-mono">124 V</td>
+                                    <td class="font-mono">320 ms</td>
+                                    <td><span class="badge bg-warning text-dark">Dépassement classe 2</span></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <!-- 10. ISO 50001 (SER / IPE) -->
-            <div id="panel-iso" class="tab-content-panel">
-                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-shield-check me-2"></i>Conformité ISO 50001 – SER & IPE</h3>
-                <div class="card border-0 shadow-sm p-3 mb-4">
-                    <h6 class="fw-bold text-dark mb-2">Suivi Mensuel de l'Indicateur IPE (kWh / tonne) vs SER de Référence</h6>
-                    <div style="height: 280px;"><canvas id="canvasIPE"></canvas></div>
+            <!-- ============================================================== -->
+            <!-- 4. 58 POINTS DE MESURE & TC (INVENTAIRE) -->
+            <!-- ============================================================== -->
+            <div id="panel-inventaire" class="tab-panel">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h4 class="fw-bold mb-1"><i class="bi bi-cpu-fill text-info me-2"></i>Inventaire des 58 Points de Comptage & TC</h4>
+                        <p class="text-muted small mb-0">Total : 46 neufs (20 classe 0.5S + 26 classe 0.2S) + 12 existants MEIER CMM61 (PT 1)</p>
+                    </div>
+                    <button class="btn btn-sm btn-info" onclick="exporterPointsCSV()"><i class="bi bi-filetype-csv me-1"></i> Exporter CSV</button>
+                </div>
+
+                <div class="scada-card mb-3">
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control form-control-sm bg-dark text-white border-secondary border-opacity-50" id="filter-search-point" placeholder="Rechercher par nom, poste, TC..." oninput="filtrerPoints()">
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select form-select-sm bg-dark text-white border-secondary border-opacity-50" id="filter-poste-point" onchange="filtrerPoints()">
+                                <option value="">Tous les postes (6)</option>
+                                <option value="PT_Y">Poste PT Y</option>
+                                <option value="PT_X">Poste PT X</option>
+                                <option value="PT_Z">Poste PT Z</option>
+                                <option value="PT_4">Poste PT 4</option>
+                                <option value="PT_1">Poste PT 1</option>
+                                <option value="PT_7">Poste PT 7</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select form-select-sm bg-dark text-white border-secondary border-opacity-50" id="filter-classe-point" onchange="filtrerPoints()">
+                                <option value="">Toutes les classes</option>
+                                <option value="0.2S">Classe 0.2S (Critique)</option>
+                                <option value="0.5S">Classe 0.5S (TGBT & Secondaire)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 text-end text-muted small font-mono">
+                            <span id="points-count-badge">58 / 58</span> points
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scada-card">
+                    <div class="table-responsive" style="max-height: 580px; overflow-y: auto;">
+                        <table class="scada-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Poste</th>
+                                    <th>Désignation Départ</th>
+                                    <th>Type</th>
+                                    <th>Calibre TC</th>
+                                    <th>Précision</th>
+                                    <th>Adresse IP Gateway</th>
+                                    <th>P Active (kW)</th>
+                                    <th>Statut Com</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-58-points-body">
+                                <!-- Généré dynamiquement -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <!-- 11. RAPPORTS -->
-            <div id="panel-rapports" class="tab-content-panel">
-                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-file-earmark-excel-fill text-success me-2"></i>Rapports Périodiques & Exports (Art. 47.3)</h3>
-                <div class="card border-0 shadow-sm p-4 mb-4">
-                    <h6 class="fw-bold text-dark mb-3">Télécharger un Rapport d'Exploitation Périodique (ISO 50001)</h6>
-                    <div class="row g-3">
-                        <div class="col-md-4">
-                            <button class="btn btn-outline-success w-100 py-3" onclick="telechargerFauxExcel('Quotidien')">
-                                <i class="bi bi-file-earmark-excel fs-3 d-block mb-1"></i><b>Rapport Quotidien (CSV)</b>
-                            </button>
+            <!-- ============================================================== -->
+            <!-- 5. MEIER CMM61 (PRIX N°2 DU CPS) -->
+            <!-- ============================================================== -->
+            <div id="panel-cmm61" class="tab-panel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="fw-bold mb-1"><i class="bi bi-hdd-network-fill text-purple me-2"></i>Vérification des 12 Compteurs Existants MEIER CMM61</h4>
+                        <p class="text-muted small mb-0">Spécification Prix n°2 du bordereau : Poste PT 1 (Intégration RS485 / Modbus TCP)</p>
+                    </div>
+                    <span class="badge bg-purple bg-opacity-25 text-purple border border-purple border-opacity-50 font-mono py-2 px-3">
+                        Prix n°2 Conforme
+                    </span>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <div class="scada-card">
+                            <div class="text-muted small">COMPTEURS DÉTECTÉS</div>
+                            <div class="kpi-value text-info">12 / 12</div>
+                            <div class="small text-success mt-2"><i class="bi bi-check-circle-fill"></i> Tous communicants</div>
                         </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-outline-primary w-100 py-3" onclick="telechargerFauxExcel('Mensuel')">
-                                <i class="bi bi-file-earmark-spreadsheet fs-3 d-block mb-1"></i><b>Revue Mensuelle ISO 50001</b>
-                            </button>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="scada-card">
+                            <div class="text-muted small">PASSERELLE RS485 / MODBUS TCP</div>
+                            <div class="kpi-value text-success font-mono">192.168.10.50</div>
+                            <div class="small text-muted mt-2">Baudrate: 9600 bps · 8N1 · Port 502</div>
                         </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-outline-dark w-100 py-3" onclick="telechargerFauxExcel('Annuel')">
-                                <i class="bi bi-archive fs-3 d-block mb-1"></i><b>Bilan Annuel Consolidé</b>
-                            </button>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="scada-card">
+                            <div class="text-muted small">CONTRÔLE MÉTROLOGIQUE</div>
+                            <div class="kpi-value text-warning">0.5S</div>
+                            <div class="small text-muted mt-2">Étalonnage vérifié conforme</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scada-card">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-list-check text-info me-2"></i>État Détaillé des 12 Compteurs MEIER CMM61 (Poste PT 1)</h6>
+                    <div class="table-responsive">
+                        <table class="scada-table">
+                            <thead>
+                                <tr>
+                                    <th>ID Départ</th>
+                                    <th>Affectation Départ</th>
+                                    <th>Esclave Modbus (ID)</th>
+                                    <th>Calibre TC</th>
+                                    <th>Tension Moyenne</th>
+                                    <th>Puissance P (kW)</th>
+                                    <th>Énergie Totale (kWh)</th>
+                                    <th>Statut RS485</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-cmm61-body">
+                                <!-- Généré dynamiquement -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- 6. CARTOGRAPHIE DES REGISTRES MODBUS -->
+            <!-- ============================================================== -->
+            <div id="panel-modbus" class="tab-panel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="fw-bold mb-1"><i class="bi bi-table text-info me-2"></i>Cartographie des Registres Modbus TCP/IP</h4>
+                        <p class="text-muted small mb-0">Conforme Article 51-1 du CPS · Adresses Holding Registers (Code fonction 0x03 / 0x04)</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-info" onclick="exporterRegistresCSV()"><i class="bi bi-download me-1"></i> Télécharger Mappage</button>
+                </div>
+
+                <div class="scada-card">
+                    <div class="table-responsive">
+                        <table class="scada-table">
+                            <thead>
+                                <tr>
+                                    <th>Adresse Registre</th>
+                                    <th>Nom Paramètre</th>
+                                    <th>Type de Donnée</th>
+                                    <th>Unité</th>
+                                    <th>Facteur Échelle</th>
+                                    <th>Accès</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="font-mono text-info">30001 - 30002</td><td>Tension simple Phase-Neutre V1</td><td>Float32</td><td>V</td><td>1.0</td><td>Read-Only</td><td>Tension efficace vraie RMS V1N</td></tr>
+                                <tr><td class="font-mono text-info">30003 - 30004</td><td>Tension simple Phase-Neutre V2</td><td>Float32</td><td>V</td><td>1.0</td><td>Read-Only</td><td>Tension efficace vraie RMS V2N</td></tr>
+                                <tr><td class="font-mono text-info">30005 - 30006</td><td>Tension simple Phase-Neutre V3</td><td>Float32</td><td>V</td><td>1.0</td><td>Read-Only</td><td>Tension efficace vraie RMS V3N</td></tr>
+                                <tr><td class="font-mono text-info">30007 - 30008</td><td>Tension composée U12</td><td>Float32</td><td>V</td><td>1.0</td><td>Read-Only</td><td>Tension phase-phase U12</td></tr>
+                                <tr><td class="font-mono text-info">30009 - 30010</td><td>Tension composée U23</td><td>Float32</td><td>V</td><td>1.0</td><td>Read-Only</td><td>Tension phase-phase U23</td></tr>
+                                <tr><td class="font-mono text-info">30011 - 30012</td><td>Tension composée U31</td><td>Float32</td><td>V</td><td>1.0</td><td>Read-Only</td><td>Tension phase-phase U31</td></tr>
+                                <tr><td class="font-mono text-warning">30013 - 30014</td><td>Courant Ligne I1</td><td>Float32</td><td>A</td><td>1.0</td><td>Read-Only</td><td>Courant RMS Phase 1</td></tr>
+                                <tr><td class="font-mono text-warning">30015 - 30016</td><td>Courant Ligne I2</td><td>Float32</td><td>A</td><td>1.0</td><td>Read-Only</td><td>Courant RMS Phase 2</td></tr>
+                                <tr><td class="font-mono text-warning">30017 - 30018</td><td>Courant Ligne I3</td><td>Float32</td><td>A</td><td>1.0</td><td>Read-Only</td><td>Courant RMS Phase 3</td></tr>
+                                <tr><td class="font-mono text-success">30019 - 30020</td><td>Puissance Active Triphasée Totale P</td><td>Float32</td><td>kW</td><td>1.0</td><td>Read-Only</td><td>Puissance active totale signée</td></tr>
+                                <tr><td class="font-mono text-info">30021 - 30022</td><td>Puissance Réactive Triphasée Totale Q</td><td>Float32</td><td>kvar</td><td>1.0</td><td>Read-Only</td><td>Puissance réactive inductive/capacitive</td></tr>
+                                <tr><td class="font-mono text-white">30023 - 30024</td><td>Puissance Apparente Triphasée S</td><td>Float32</td><td>kVA</td><td>1.0</td><td>Read-Only</td><td>Puissance apparente totale</td></tr>
+                                <tr><td class="font-mono text-purple">30025 - 30026</td><td>Facteur de Puissance Total (Cos φ)</td><td>Float32</td><td>-</td><td>1.0</td><td>Read-Only</td><td>Cos φ avec signe inductif/capacitif</td></tr>
+                                <tr><td class="font-mono text-info">30027 - 30028</td><td>Fréquence Réseau f</td><td>Float32</td><td>Hz</td><td>0.01</td><td>Read-Only</td><td>Fréquence 50.00 Hz (45 - 65 Hz)</td></tr>
+                                <tr><td class="font-mono text-warning">30029 - 30030</td><td>Énergie Active Importée Totale</td><td>Uint64</td><td>kWh</td><td>1.0</td><td>Read-Only</td><td>Index cumulé d'énergie active</td></tr>
+                                <tr><td class="font-mono text-danger">30031 - 30032</td><td>THD Tension Globale (THD-U)</td><td>Float32</td><td>%</td><td>0.1</td><td>Read-Only</td><td>Taux de distorsion harmonique U</td></tr>
+                                <tr><td class="font-mono text-danger">30033 - 30034</td><td>THD Courant Global (THD-I)</td><td>Float32</td><td>%</td><td>0.1</td><td>Read-Only</td><td>Taux de distorsion harmonique I</td></tr>
+                                <tr><td class="font-mono text-secondary">30035 - 30075</td><td>Harmoniques Rangs 3 à 40</td><td>Float32[40]</td><td>%</td><td>0.1</td><td>Read-Only</td><td>Harmoniques individuelles rang par rang</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- 7. ANALYSE SANKEY (FLUX D'ÉNERGIE) -->
+            <!-- ============================================================== -->
+            <div id="panel-sankey" class="tab-panel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="fw-bold mb-1"><i class="bi bi-bezier2 text-info me-2"></i>Diagramme de Sankey (Flux d'Énergie Portuaire)</h4>
+                        <p class="text-muted small mb-0">Répartition : Arrivée Réseau 22 kV → 6 Postes MT/BT → Usages Portuaires Finaux</p>
+                    </div>
+                    <span class="badge bg-primary bg-opacity-25 text-info font-mono py-2 px-3">Interactif Apache ECharts</span>
+                </div>
+
+                <div class="scada-card mb-4">
+                    <div id="echart-sankey" style="width: 100%; height: 580px;"></div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- 8. ANALYSE DE PARETO (80/20) -->
+            <!-- ============================================================== -->
+            <div id="panel-pareto" class="tab-panel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="fw-bold mb-1"><i class="bi bi-bar-chart-steps text-info me-2"></i>Analyse de Pareto (Loi 80/20 des Départs)</h4>
+                        <p class="text-muted small mb-0">Identification des Gros Consommateurs d'Énergie (GCE) selon ISO 50001</p>
+                    </div>
+                    <span class="badge bg-warning bg-opacity-25 text-warning font-mono py-2 px-3">Seuil 80% Tracé</span>
+                </div>
+
+                <div class="scada-card mb-4">
+                    <div id="echart-pareto" style="width: 100%; height: 480px;"></div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- 9. RÉGRESSION LINÉAIRE ISO 50001 -->
+            <!-- ============================================================== -->
+            <div id="panel-regression" class="tab-panel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="fw-bold mb-1"><i class="bi bi-graph-up-arrow text-info me-2"></i>Régression Linéaire & Normalisation ISO 50001</h4>
+                        <p class="text-muted small mb-0">Corrélation de la consommation électrique avec l'activité portuaire (Tonnage manutentionné)</p>
+                    </div>
+                    <span class="badge bg-success bg-opacity-25 text-success font-mono py-2 px-3">R² = 0.941</span>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <div class="scada-card">
+                            <div class="text-muted small">ÉQUATION DE RÉGRESSION</div>
+                            <div class="kpi-value text-info font-mono" style="font-size: 1.25rem;">y = 0.042·x + 185.3</div>
+                            <div class="small text-muted mt-2">y: Énergie (MWh) · x: Milliers de tonnes</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="scada-card">
+                            <div class="text-muted small">COEFFICIENT R²</div>
+                            <div class="kpi-value text-success font-mono">0.941</div>
+                            <div class="small text-success mt-2"><i class="bi bi-check-circle"></i> Forte corrélation statistique</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="scada-card">
+                            <div class="text-muted small">SIGNIFICATIVITÉ P-VALUE</div>
+                            <div class="kpi-value text-white font-mono">&lt; 0.001</div>
+                            <div class="small text-muted mt-2">Modèle de référence validé</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scada-card">
+                    <div id="echart-regression" style="width: 100%; height: 480px;"></div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- 10. CONFORMITÉ ISO 50001 (SER & IPE) -->
+            <!-- ============================================================== -->
+            <div id="panel-iso" class="tab-panel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="fw-bold mb-1"><i class="bi bi-shield-check text-success me-2"></i>Module ISO 50001:2018 · SER & IPE Cibles</h4>
+                        <p class="text-muted small mb-0">Situation Énergétique de Référence (SER) et Indicateurs de Performance Énergétique (IPE)</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-success" onclick="imprimerNoteISO()"><i class="bi bi-printer me-1"></i> Imprimer Note de Calcul</button>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <div class="scada-card border-success">
+                            <div class="text-muted small">OBJECTIF ÉCONOMIE D'ÉNERGIE</div>
+                            <div class="kpi-value text-success">- 5.0 %</div>
+                            <div class="small text-muted mt-2">Cible annuelle ISO 50001</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="scada-card">
+                            <div class="text-muted small">RÉALISÉ À DATE (AN N)</div>
+                            <div class="kpi-value text-info">- 4.82 %</div>
+                            <div class="small text-success mt-2"><i class="bi bi-check-circle"></i> En ligne avec l'objectif</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="scada-card">
+                            <div class="text-muted small">ÉCONOMIE FINANCIÈRE ESTIMÉE</div>
+                            <div class="kpi-value text-warning">428 500 <span class="kpi-unit">MAD</span></div>
+                            <div class="small text-muted mt-2">Sur base tarif MT ONEE</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scada-card">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-table text-info me-2"></i>Tableau de Bord des IPE par Poste et par Usage</h6>
+                    <div class="table-responsive">
+                        <table class="scada-table">
+                            <thead>
+                                <tr>
+                                    <th>Périmètre / Poste</th>
+                                    <th>Indicateur IPE</th>
+                                    <th>Unité</th>
+                                    <th>Valeur SER (Réf.)</th>
+                                    <th>Valeur Actuelle</th>
+                                    <th>Écart (%)</th>
+                                    <th>Statut ISO 50001</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Port Global (DEPA)</td><td>Consommation spécifique globale</td><td>kWh / Tonne</td><td>3.82</td><td>3.64</td><td class="text-success font-mono">- 4.71 %</td><td><span class="badge bg-success">Conforme Cible</span></td></tr>
+                                <tr><td>Poste PT Y (Conteneurs)</td><td>Énergie par boîte conteneur</td><td>kWh / EVP</td><td>14.8</td><td>13.9</td><td class="text-success font-mono">- 6.08 %</td><td><span class="badge bg-success">Cible Dépassée</span></td></tr>
+                                <tr><td>Poste PT 4 (Silos Vrac)</td><td>Énergie par tonne de céréale</td><td>kWh / Tonne</td><td>2.15</td><td>2.06</td><td class="text-success font-mono">- 4.18 %</td><td><span class="badge bg-success">Conforme Cible</span></td></tr>
+                                <tr><td>Poste PT 1 (Siège & Ateliers)</td><td>Consommation surfacique tertiaire</td><td>kWh / m² / an</td><td>98.5</td><td>93.2</td><td class="text-success font-mono">- 5.38 %</td><td><span class="badge bg-success">Conforme Cible</span></td></tr>
+                                <tr><td>Poste PT X (Terre-Plein)</td><td>Énergie éclairage nocturne</td><td>kWh / 1000m²</td><td>8.4</td><td>8.1</td><td class="text-success font-mono">- 3.57 %</td><td><span class="badge bg-info">En Progrès</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- 11. CENTRE D'ALERTES & SCÉNARIOS DÉMO -->
+            <!-- ============================================================== -->
+            <div id="panel-alertes" class="tab-panel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="fw-bold mb-1"><i class="bi bi-bell-fill text-danger me-2"></i>Gestion des Alertes & Notifications</h4>
+                        <p class="text-muted small mb-0">Paramétrage des seuils, acquittement d'alarmes et test de scénarios (Art. 47.3)</p>
+                    </div>
+                    <button class="btn btn-sm btn-danger" onclick="declencherScenarioAlerte()"><i class="bi bi-play-circle-fill me-1"></i> Tester un Scénario d'Alerte</button>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <div class="scada-card border-danger">
+                            <div class="text-muted small">ALERTE ACTIVE (NON ACQUITTÉE)</div>
+                            <div class="kpi-value text-danger" id="count-actives">1</div>
+                            <div class="small text-danger mt-2">Dépassement cos φ sur PT 4</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="scada-card">
+                            <div class="text-muted small">ALERTES ACQUITTÉES (24H)</div>
+                            <div class="kpi-value text-warning">3</div>
+                            <div class="small text-muted mt-2">Prises en charge par exploitant</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="scada-card">
+                            <div class="text-muted small">DISPONIBILITÉ COMMUNICATION</div>
+                            <div class="kpi-value text-success">100 %</div>
+                            <div class="small text-muted mt-2">58 centrales Modbus en ligne</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scada-card">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-shield-exclamation text-warning me-2"></i>Journal des Alertes & Événements</h6>
+                    <div class="table-responsive">
+                        <table class="scada-table">
+                            <thead>
+                                <tr>
+                                    <th>Horodatage</th>
+                                    <th>Gravité</th>
+                                    <th>Poste / Départ</th>
+                                    <th>Description du Défaut</th>
+                                    <th>Seuil / Valeur Mesurée</th>
+                                    <th>Statut</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-alertes-body">
+                                <tr>
+                                    <td class="font-mono text-muted">2026-11-02 01:45:10</td>
+                                    <td><span class="badge bg-danger">Critique</span></td>
+                                    <td>Poste PT 4 / Élévateur Principal</td>
+                                    <td>Facteur de puissance trop bas (pénalité ONEE)</td>
+                                    <td class="font-mono text-warning">Cos φ = 0.81 &lt; 0.90</td>
+                                    <td><span class="badge bg-danger">Active</span></td>
+                                    <td><button class="btn btn-xs btn-outline-light btn-sm" onclick="acquitterAlerte(this)"><i class="bi bi-check2"></i> Acquitter</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-mono text-muted">2026-11-01 22:15:00</td>
+                                    <td><span class="badge bg-warning text-dark">Majeure</span></td>
+                                    <td>Poste PT Y / Niche Reefers</td>
+                                    <td>Surcharge temporaire départ frigorifique</td>
+                                    <td class="font-mono text-warning">P = 148 kW &gt; 140 kW</td>
+                                    <td><span class="badge bg-secondary">Acquittée</span></td>
+                                    <td><span class="text-muted small">Par exploitant</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- 12. RAPPORTS AUTOMATIQUES -->
+            <!-- ============================================================== -->
+            <div id="panel-rapports" class="tab-panel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="fw-bold mb-1"><i class="bi bi-file-earmark-excel-fill text-success me-2"></i>Rapports Automatiques & Revue Énergétique</h4>
+                        <p class="text-muted small mb-0">Rapports quotidiens, hebdomadaires, mensuels et annuels exportables (Art. 47.3)</p>
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <div class="scada-card text-center p-3">
+                            <i class="bi bi-file-earmark-text text-info fs-1 mb-2"></i>
+                            <h6 class="fw-bold">Rapport Quotidien</h6>
+                            <p class="text-muted small">Synthèse de charge des dernières 24h</p>
+                            <button class="btn btn-sm btn-outline-info w-100" onclick="genererRapport('quotidien')"><i class="bi bi-download"></i> Télécharger CSV</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="scada-card text-center p-3">
+                            <i class="bi bi-calendar3-range text-warning fs-1 mb-2"></i>
+                            <h6 class="fw-bold">Rapport Hebdomadaire</h6>
+                            <p class="text-muted small">Analyse 7 jours et profils de semaine</p>
+                            <button class="btn btn-sm btn-outline-warning w-100" onclick="genererRapport('hebdo')"><i class="bi bi-download"></i> Télécharger CSV</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="scada-card text-center p-3">
+                            <i class="bi bi-calendar-month text-success fs-1 mb-2"></i>
+                            <h6 class="fw-bold">Rapport Mensuel</h6>
+                            <p class="text-muted small">Revue mensuelle & comparaison SER</p>
+                            <button class="btn btn-sm btn-outline-success w-100" onclick="genererRapport('mensuel')"><i class="bi bi-download"></i> Télécharger CSV</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="scada-card text-center p-3">
+                            <i class="bi bi-award text-purple fs-1 mb-2"></i>
+                            <h6 class="fw-bold">Bilan Annuel ISO</h6>
+                            <p class="text-muted small">Audit complet et certification 50001</p>
+                            <button class="btn btn-sm btn-outline-primary w-100" onclick="genererRapport('annuel')"><i class="bi bi-download"></i> Télécharger CSV</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 12. MAINTENANCE & PV -->
-            <div id="panel-maintenance" class="tab-content-panel">
-                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-calendar-check me-2"></i>Maintenance Préventive (4 Visites/An – Art. 49)</h3>
-                <div class="card border-0 shadow-sm p-3 mb-4">
-                    <table class="table table-hover align-middle small mb-0">
-                        <thead class="table-light"><tr><th>Trimestre</th><th>Poste</th><th>Date Planifiée</th><th>Statut</th><th>Procès-Verbal</th></tr></thead>
-                        <tbody>
-                            <tr><td><b>T1 2026</b></td><td>Poste PT Y</td><td>15/01/2026</td><td><span class="badge bg-success">Réalisé</span></td><td><button class="btn btn-sm btn-outline-primary py-0" onclick="alert('Téléchargement PV Visite T1 (Conforme)')"><i class="bi bi-file-pdf"></i> PV T1 Signé</button></td></tr>
-                            <tr><td><b>T2 2026</b></td><td>Poste PT X</td><td>15/04/2026</td><td><span class="badge bg-primary">Planifié</span></td><td><button class="btn btn-sm btn-outline-secondary py-0" onclick="alert('PV à générer après réalisation.')">Générer PV</button></td></tr>
-                            <tr><td><b>T3 2026</b></td><td>Poste PT Z</td><td>15/07/2026</td><td><span class="badge bg-primary">Planifié</span></td><td>-</td></tr>
-                            <tr><td><b>T4 2026</b></td><td>Poste PT 1</td><td>15/10/2026</td><td><span class="badge bg-primary">Planifié</span></td><td>-</td></tr>
-                        </tbody>
-                    </table>
+            <!-- ============================================================== -->
+            <!-- 13. MAINTENANCE 4 VISITES / AN -->
+            <!-- ============================================================== -->
+            <div id="panel-maintenance" class="tab-panel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="fw-bold mb-1"><i class="bi bi-calendar-check-fill text-info me-2"></i>Planning de Maintenance Préventive (4 Visites/An)</h4>
+                        <p class="text-muted small mb-0">Contrat de garantie et maintenance (Art. 49 & Prix n°4 du CPS)</p>
+                    </div>
+                    <span class="badge bg-success bg-opacity-25 text-success font-mono py-2 px-3">100% Réalisé</span>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <div class="scada-card border-success">
+                            <div class="badge bg-success mb-2">Trimestre 1 (Mars)</div>
+                            <h6 class="fw-bold">Visite Préventive V1</h6>
+                            <p class="text-muted small mb-1">Contrôle connexions, thermographie armoires</p>
+                            <span class="badge bg-success"><i class="bi bi-check-all"></i> Réalisée (PV V1 signé)</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="scada-card border-success">
+                            <div class="badge bg-success mb-2">Trimestre 2 (Juin)</div>
+                            <h6 class="fw-bold">Visite Préventive V2</h6>
+                            <p class="text-muted small mb-1">Vérification métrologique TC et dérives</p>
+                            <span class="badge bg-success"><i class="bi bi-check-all"></i> Réalisée (PV V2 signé)</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="scada-card border-success">
+                            <div class="badge bg-success mb-2">Trimestre 3 (Sept.)</div>
+                            <h6 class="fw-bold">Visite Préventive V3</h6>
+                            <p class="text-muted small mb-1">Audit réseau Modbus et passerelles TCP</p>
+                            <span class="badge bg-success"><i class="bi bi-check-all"></i> Réalisée (PV V3 signé)</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="scada-card border-primary">
+                            <div class="badge bg-primary mb-2">Trimestre 4 (Déc.)</div>
+                            <h6 class="fw-bold">Visite Préventive V4</h6>
+                            <p class="text-muted small mb-1">Bilan annuel et mise à jour firmware</p>
+                            <span class="badge bg-primary">Programmée</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Check-list Hardware & Software -->
+                <div class="scada-card">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-ui-checks text-info me-2"></i>Check-list de Contrôle Réglementaire</h6>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <h6 class="text-warning small text-uppercase fw-bold">Points de Contrôle Hardware</h6>
+                            <ul class="list-group list-group-flush bg-dark text-white">
+                                <li class="list-group-item bg-dark text-white border-secondary border-opacity-25 d-flex justify-content-between"><i class="bi bi-check-circle-fill text-success me-2"></i> Serrage des connexions électriques & TC <span class="badge bg-success">OK</span></li>
+                                <li class="list-group-item bg-dark text-white border-secondary border-opacity-25 d-flex justify-content-between"><i class="bi bi-check-circle-fill text-success me-2"></i> Inspection caméra thermique (Points chauds) <span class="badge bg-success">OK</span></li>
+                                <li class="list-group-item bg-dark text-white border-secondary border-opacity-25 d-flex justify-content-between"><i class="bi bi-check-circle-fill text-success me-2"></i> Étanchéité armoires IP65 et presse-étoupes <span class="badge bg-success">OK</span></li>
+                                <li class="list-group-item bg-dark text-white border-secondary border-opacity-25 d-flex justify-content-between"><i class="bi bi-check-circle-fill text-success me-2"></i> Mesure de terre et équipotentialité <span class="badge bg-success">&lt; 3 Ω (OK)</span></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-info small text-uppercase fw-bold">Points de Contrôle Software</h6>
+                            <ul class="list-group list-group-flush bg-dark text-white">
+                                <li class="list-group-item bg-dark text-white border-secondary border-opacity-25 d-flex justify-content-between"><i class="bi bi-check-circle-fill text-success me-2"></i> Synchronisation horloge NTP (&lt; 10 ms) <span class="badge bg-success">OK</span></li>
+                                <li class="list-group-item bg-dark text-white border-secondary border-opacity-25 d-flex justify-content-between"><i class="bi bi-check-circle-fill text-success me-2"></i> Sauvegarde automatique base de données <span class="badge bg-success">Quotidienne</span></li>
+                                <li class="list-group-item bg-dark text-white border-secondary border-opacity-25 d-flex justify-content-between"><i class="bi bi-check-circle-fill text-success me-2"></i> Test des alertes et envoi notifications <span class="badge bg-success">OK</span></li>
+                                <li class="list-group-item bg-dark text-white border-secondary border-opacity-25 d-flex justify-content-between"><i class="bi bi-check-circle-fill text-success me-2"></i> Cohérence calculs IPE / SER ISO 50001 <span class="badge bg-success">OK</span></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- 13. CORRECTIF SLA -->
-            <div id="panel-correctif" class="tab-content-panel">
-                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-tools text-danger me-2"></i>Délais Contractuels Correctifs (Art. 49)</h3>
+            <!-- ============================================================== -->
+            <!-- 14. DÉLAIS CORRECTIFS (SLA 48H / 7 JOURS) -->
+            <!-- ============================================================== -->
+            <div id="panel-correctif" class="tab-panel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="fw-bold mb-1"><i class="bi bi-clock-history text-warning me-2"></i>Interventions Correctives & Respect des Délais SLA</h4>
+                        <p class="text-muted small mb-0">Engagement contractuel : 48h (Défaut bloquant) et 7 jours (Défaut non-bloquant)</p>
+                    </div>
+                    <span class="badge bg-success bg-opacity-25 text-success font-mono py-2 px-3">Taux de respect SLA: 100%</span>
+                </div>
+
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
-                        <div class="card border-danger border-start border-4 p-3 shadow-sm">
-                            <h6 class="fw-bold text-danger">Défaut Bloquant : Délai 48h</h6>
-                            <p class="text-muted small mb-0">Perte totale de remontée d'un poste. Astreinte d'intervention immédiate.</p>
+                        <div class="scada-card border-danger">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-danger">Défaut Bloquant</span>
+                                <span class="font-mono text-warning">Délai Max: 48h</span>
+                            </div>
+                            <h5 class="fw-bold">Perte totale de remontée d'un poste</h5>
+                            <p class="text-muted small">Exemple : rupture passerelle TCP ou coupure bus principal. Intervention sur site immédiate sous 48h garantie.</p>
+                            <div class="d-flex justify-content-between text-muted small pt-2 border-top border-secondary border-opacity-25">
+                                <span>Moyenne constatée: <strong>6.5 heures</strong></span>
+                                <span class="text-success fw-bold"><i class="bi bi-check-circle"></i> Conforme</span>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="card border-warning border-start border-4 p-3 shadow-sm">
-                            <h6 class="fw-bold text-warning">Défaut Non-Bloquant : Délai 7 Jours</h6>
-                            <p class="text-muted small mb-0">Défaillance d'un départ secondaire ou dérive isolée.</p>
+                        <div class="scada-card border-info">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-info text-dark">Défaut Non-Bloquant</span>
+                                <span class="font-mono text-info">Délai Max: 7 Jours</span>
+                            </div>
+                            <h5 class="fw-bold">Défaut sur un départ secondaire isolé</h5>
+                            <p class="text-muted small">Exemple : dérive d'un TC ou remplacement d'un afficheur secondaire. Remplacement sous 7 jours calendaires.</p>
+                            <div class="d-flex justify-content-between text-muted small pt-2 border-top border-secondary border-opacity-25">
+                                <span>Moyenne constatée: <strong>1.8 jours</strong></span>
+                                <span class="text-success fw-bold"><i class="bi bi-check-circle"></i> Conforme</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 14. RÉCEPTION & PV OFFICIEL -->
-            <div id="panel-reception" class="tab-content-panel">
-                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-award-fill text-warning me-2"></i>Essais de Réception & PV Officiel (Art. 47.4, 50)</h3>
-                <div class="card border-0 shadow-sm p-4 mb-4">
-                    <h5 class="fw-bold text-dark mb-2">Commission Technique DEPA Marsa Maroc – Port d'Agadir</h5>
-                    <p class="text-muted small mb-3">Contrôle métrologique contradictoire avec appareil étalonné classe 0,1S &bull; 100% des 58 points validés.</p>
-                    <button class="btn btn-success btn-sm" onclick="alert('Procès-Verbal officiel de réception provisoire validé et contresigné.')">
-                        <i class="bi bi-file-earmark-pdf me-1"></i> Télécharger PV de Réception Provisoire Officiel
-                    </button>
+            <!-- ============================================================== -->
+            <!-- 15. ESSAIS DE RÉCEPTION & PV (ART. 47.4, 50) -->
+            <!-- ============================================================== -->
+            <div id="panel-reception" class="tab-panel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="fw-bold mb-1"><i class="bi bi-patch-check-fill text-success me-2"></i>Essais de Réception & Procès-Verbal (PV)</h4>
+                        <p class="text-muted small mb-0">Contrôle métrologique (Art. 47.4 & 50) et note d'écart 58 vs 59 départs</p>
+                    </div>
+                    <button class="btn btn-sm btn-outline-success" onclick="imprimerPV()"><i class="bi bi-printer-fill me-1"></i> Imprimer le PV Officiel</button>
+                </div>
+
+                <div class="alert alert-info bg-dark border border-info border-opacity-50 text-white mb-4">
+                    <h6 class="fw-bold text-info"><i class="bi bi-info-circle-fill me-2"></i>Note Technique Formelle : Périmètre Métrologique</h6>
+                    <p class="small mb-0">
+                        Le tableau récapitulatif du CPS mentionne 59 départs physiques, alors que l'article de spécification générale définit <strong>58 points de comptage actifs</strong>.
+                        Conformément aux instructions techniques, le système déploie <strong>58 points de comptage actifs</strong> (46 centrales neuves : 20 classe 0.5S et 26 classe 0.2S, plus 12 compteurs existants MEIER CMM61 intégrés sur le Poste PT 1).
+                    </p>
+                </div>
+
+                <div class="scada-card">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-clipboard-check text-success me-2"></i>PV de Contrôle Métrologique (Essais de Réception Provisoire)</h6>
+                    <div class="table-responsive">
+                        <table class="scada-table">
+                            <thead>
+                                <tr>
+                                    <th>Point Contrôlé</th>
+                                    <th>Valeur Étalon Référence (Cl. 0.1)</th>
+                                    <th>Valeur Centrale SME</th>
+                                    <th>Écart Mesuré</th>
+                                    <th>Tolérance Norme</th>
+                                    <th>Résultat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Tension U L1-L2 (PT Y)</td><td class="font-mono">400.25 V</td><td class="font-mono">400.40 V</td><td class="font-mono text-success">+ 0.037 %</td><td>± 0.2 %</td><td><span class="badge bg-success">Conforme</span></td></tr>
+                                <tr><td>Courant I1 (Portique PQ-01)</td><td class="font-mono">375.80 A</td><td class="font-mono">376.10 A</td><td class="font-mono text-success">+ 0.080 %</td><td>± 0.2 %</td><td><span class="badge bg-success">Conforme</span></td></tr>
+                                <tr><td>Puissance P (T1 PT 4 Silos)</td><td class="font-mono">384.70 kW</td><td class="font-mono">385.10 kW</td><td class="font-mono text-success">+ 0.104 %</td><td>± 0.5 %</td><td><span class="badge bg-success">Conforme</span></td></tr>
+                                <tr><td>Cos φ (T1 PT X Sud)</td><td class="font-mono">0.951</td><td class="font-mono">0.950</td><td class="font-mono text-success">- 0.001</td><td>± 0.005</td><td><span class="badge bg-success">Conforme</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <!-- 15. DOCUMENTATION -->
-            <div id="panel-doc" class="tab-content-panel">
-                <h3 class="fw-bold text-primary mb-3"><i class="bi bi-book-half me-2"></i>Documentation Technique & Manuels (Art. 50)</h3>
-                <div class="card border-0 shadow-sm p-4">
-                    <h6 class="fw-bold text-primary">Manuel Utilisateur & Exploitation</h6>
-                    <p class="text-muted small">Ce prototype répond aux clauses du marché AOO 12/DEPA/2026. L'architecture supporte Modbus TCP/IP, BACnet et M-Bus.</p>
+            <!-- ============================================================== -->
+            <!-- 16. DOCUMENTATION & MANUELS -->
+            <!-- ============================================================== -->
+            <div id="panel-doc" class="tab-panel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="fw-bold mb-1"><i class="bi bi-book-half text-info me-2"></i>Documentation Utilisateur & Exploitation</h4>
+                        <p class="text-muted small mb-0">Guide technique pour Marsa Maroc · Port d'Agadir</p>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="scada-card">
+                            <h6 class="fw-bold text-info"><i class="bi bi-person-badge me-2"></i>Guide de l'Exploitant</h6>
+                            <p class="small text-muted">Instructions pour la surveillance quotidienne, l'analyse des courbes de charge, l'acquittement des alarmes de dépassement de cos φ et l'extraction des données mensuelles.</p>
+                            <ol class="small text-muted ps-3">
+                                <li>Consulter le tableau de bord global pour repérer les anomalies de tension.</li>
+                                <li>Utiliser le synoptique unifilaire pour localiser les départs surchargés.</li>
+                                <li>Surveiller les harmoniques 3, 5 et 7 sur les quais à forte motorisation.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="scada-card">
+                            <h6 class="fw-bold text-warning"><i class="bi bi-gear-fill me-2"></i>Manuel Administrateur</h6>
+                            <p class="small text-muted">Gestion des 58 adresses IP, passerelles RS485/TCP, synchronisation horaire NTP, gestion des profils RBAC et archivage sécurisé des données énergétiques.</p>
+                            <ol class="small text-muted ps-3">
+                                <li>Les données brutes sont conservées sans compression pendant 24 mois.</li>
+                                <li>Les sauvegardes sont horodatées et chiffrées localement.</li>
+                                <li>L'audit trail enregistre chaque action utilisateur conformément à l'Art. 47.2.</li>
+                            </ol>
+                        </div>
+                    </div>
                 </div>
             </div>
 
         </main>
     </div>
 
+    <!-- Modal Détail d'un Départ (Forme d'onde & Spectre) -->
+    <div class="modal fade" id="modalDepart" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content bg-dark border-secondary">
+                <div class="modal-header border-secondary border-opacity-50">
+                    <h5 class="modal-title fw-bold text-info" id="modalDepartTitre">Détail du Départ</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3 mb-3">
+                        <div class="col-3 text-center">
+                            <div class="p-2 bg-dark rounded border border-secondary border-opacity-25">
+                                <div class="text-muted small">P ACTIVE</div>
+                                <div class="fw-bold font-mono text-warning fs-5" id="modal-p">-- kW</div>
+                            </div>
+                        </div>
+                        <div class="col-3 text-center">
+                            <div class="p-2 bg-dark rounded border border-secondary border-opacity-25">
+                                <div class="text-muted small">COURANT</div>
+                                <div class="fw-bold font-mono text-info fs-5" id="modal-i">-- A</div>
+                            </div>
+                        </div>
+                        <div class="col-3 text-center">
+                            <div class="p-2 bg-dark rounded border border-secondary border-opacity-25">
+                                <div class="text-muted small">TENSION</div>
+                                <div class="fw-bold font-mono text-success fs-5" id="modal-u">-- V</div>
+                            </div>
+                        </div>
+                        <div class="col-3 text-center">
+                            <div class="p-2 bg-dark rounded border border-secondary border-opacity-25">
+                                <div class="text-muted small">CALIBRE TC</div>
+                                <div class="fw-bold font-mono text-white fs-5" id="modal-tc">--</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h6 class="fw-bold small text-muted text-uppercase mb-2">Forme d'Onde Sinusoïdale Reconstituée (1 Période 20 ms)</h6>
+                    <div style="height: 180px;" class="mb-3">
+                        <canvas id="chart-modal-onde"></canvas>
+                    </div>
+
+                    <h6 class="fw-bold small text-muted text-uppercase mb-2">Spectre Harmonique du Départ</h6>
+                    <div style="height: 140px;">
+                        <canvas id="chart-modal-harmoniques"></canvas>
+                    </div>
+                </div>
+                <div class="modal-footer border-secondary border-opacity-50">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Script SPA & Simulateur JS en Direct -->
+    <!-- SCRIPT APPLICATION & SIMULATEUR JS -->
     <script>
-        const POSTES = [
-            { id: 1, code: "PT_Y", nom: "Poste PT Y", ip: "192.168.1.10", nb: 11, p: 620, e: 7440, statut: "OK" },
-            { id: 2, code: "PT_X", nom: "Poste PT X", ip: "192.168.1.30", nb: 11, p: 580, e: 6960, statut: "OK" },
-            { id: 3, code: "PT_Z", nom: "Poste PT Z", ip: "192.168.1.50", nb: 10, p: 490, e: 5880, statut: "OK" },
-            { id: 4, code: "PT_4", nom: "Poste PT 4", ip: "192.168.1.70", nb: 10, p: 440, e: 5280, statut: "OK" },
-            { id: 5, code: "PT_1", nom: "Poste PT 1", ip: "192.168.1.90", nb: 12, p: 590, e: 7080, statut: "OK" },
-            { id: 6, code: "PT_7", nom: "Poste PT 7", ip: "192.168.1.110", nb: 4, p: 120, e: 1480, statut: "OK" },
-        ];
+        // Données complètes des postes et départs
+        const DONNEES_POSTES = [{"id": "PT_Y", "nom": "Poste PT Y", "zone": "Quai Nord / Terminal Conteneurs", "description": "Alimentation portiques de quai et grues mobiles Nord", "transfos": "2x 1250 kVA (22 kV / 400 V)", "ip": "192.168.10.10", "puissance_max": 2000, "p_active": 845, "q_reactive": 263, "cos_phi": 0.95, "tension": 401, "courant": 1260, "departs": [{"id": "PT_Y_D1", "nom": "T1 - Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "2000/5A", "classe": "0.5S", "p": 435, "q": 135, "u": 401, "i": 648, "cos": 0.95, "statut": "OK"}, {"id": "PT_Y_D2", "nom": "T2 - Arrivée Transformateur 2", "usage": "TGBT T2", "tc": "2000/5A", "classe": "0.5S", "p": 410, "q": 128, "u": 400, "i": 612, "cos": 0.95, "statut": "OK"}, {"id": "PT_Y_D3", "nom": "Portique de Quai PQ-01", "usage": "Force motrice", "tc": "800/5A", "classe": "0.2S", "p": 245, "q": 85, "u": 399, "i": 376, "cos": 0.94, "statut": "OK"}, {"id": "PT_Y_D4", "nom": "Portique de Quai PQ-02", "usage": "Force motrice", "tc": "800/5A", "classe": "0.2S", "p": 218, "q": 76, "u": 399, "i": 334, "cos": 0.94, "statut": "OK"}, {"id": "PT_Y_D5", "nom": "Grue Mobile Gottwald GM-1", "usage": "Force motrice", "tc": "630/5A", "classe": "0.2S", "p": 175, "q": 62, "u": 400, "i": 268, "cos": 0.94, "statut": "OK"}, {"id": "PT_Y_D6", "nom": "Niche Reefers Nord (Frigo 40 prises)", "usage": "Frigorifique", "tc": "630/5A", "classe": "0.2S", "p": 138, "q": 42, "u": 401, "i": 208, "cos": 0.96, "statut": "OK"}, {"id": "PT_Y_D7", "nom": "Éclairage Mâts Haute Portée Nord", "usage": "Éclairage", "tc": "250/5A", "classe": "0.5S", "p": 44, "q": 12, "u": 402, "i": 66, "cos": 0.96, "statut": "OK"}, {"id": "PT_Y_D8", "nom": "Bâtiment Exploitation & TOS", "usage": "Tertiaire", "tc": "250/5A", "classe": "0.5S", "p": 36, "q": 9, "u": 401, "i": 54, "cos": 0.97, "statut": "OK"}, {"id": "PT_Y_D9", "nom": "Groupe Électrogène Secours Nord", "usage": "Secours", "tc": "630/5A", "classe": "0.5S", "p": 0, "q": 0, "u": 400, "i": 0, "cos": 1.0, "statut": "Veille"}, {"id": "PT_Y_D11", "nom": "Station Pompage Eaux Pluviales", "usage": "Auxiliaires", "tc": "160/5A", "classe": "0.5S", "p": 21, "q": 7, "u": 400, "i": 32, "cos": 0.95, "statut": "OK"}, {"id": "PT_Y_D12", "nom": "Atelier Maintenance Électrique", "usage": "Atelier", "tc": "250/5A", "classe": "0.5S", "p": 18, "q": 5, "u": 401, "i": 27, "cos": 0.96, "statut": "OK"}]}, {"id": "PT_X", "nom": "Poste PT X", "zone": "Quai Sud / Manutention Polyvalente", "description": "Grues mobiles Sud, trémies d'ensachage et terre-plein", "transfos": "2x 1000 kVA (22 kV / 400 V)", "ip": "192.168.10.20", "puissance_max": 1600, "p_active": 607, "q_reactive": 189, "cos_phi": 0.95, "tension": 400, "courant": 917, "departs": [{"id": "PT_X_D1", "nom": "T1 - Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "1600/5A", "classe": "0.5S", "p": 315, "q": 98, "u": 401, "i": 476, "cos": 0.95, "statut": "OK"}, {"id": "PT_X_D2", "nom": "T2 - Arrivée Transformateur 2", "usage": "TGBT T2", "tc": "1600/5A", "classe": "0.5S", "p": 292, "q": 91, "u": 400, "i": 441, "cos": 0.95, "statut": "OK"}, {"id": "PT_X_D3", "nom": "Grue Mobile Sud GM-2", "usage": "Force motrice", "tc": "630/5A", "classe": "0.2S", "p": 162, "q": 56, "u": 399, "i": 248, "cos": 0.94, "statut": "OK"}, {"id": "PT_X_D4", "nom": "Trémies Dépoussiérées 1 & 2", "usage": "Force motrice", "tc": "400/5A", "classe": "0.2S", "p": 96, "q": 32, "u": 400, "i": 146, "cos": 0.95, "statut": "OK"}, {"id": "PT_X_D5", "nom": "Bande Transporteuse Quai Sud", "usage": "Convoyage", "tc": "400/5A", "classe": "0.2S", "p": 86, "q": 28, "u": 400, "i": 131, "cos": 0.95, "statut": "OK"}, {"id": "PT_X_D6", "nom": "Niche Reefers Sud (20 prises)", "usage": "Frigorifique", "tc": "400/5A", "classe": "0.2S", "p": 74, "q": 22, "u": 401, "i": 111, "cos": 0.96, "statut": "OK"}, {"id": "PT_X_D7", "nom": "Éclairage Quai & Terre-Plein Sud", "usage": "Éclairage", "tc": "200/5A", "classe": "0.5S", "p": 33, "q": 9, "u": 402, "i": 49, "cos": 0.96, "statut": "OK"}, {"id": "PT_X_D8", "nom": "Poste Garde & Douane Sud", "usage": "Tertiaire", "tc": "100/5A", "classe": "0.5S", "p": 14, "q": 3, "u": 401, "i": 21, "cos": 0.98, "statut": "OK"}, {"id": "PT_X_D9", "nom": "Groupe Électrogène Secours PT X", "usage": "Secours", "tc": "400/5A", "classe": "0.5S", "p": 0, "q": 0, "u": 400, "i": 0, "cos": 1.0, "statut": "Veille"}, {"id": "PT_X_D10", "nom": "Pompe de Relevage Sud", "usage": "Auxiliaires", "tc": "100/5A", "classe": "0.5S", "p": 11, "q": 4, "u": 400, "i": 17, "cos": 0.94, "statut": "OK"}, {"id": "PT_X_D11", "nom": "Atelier Soudure & Mécanique X", "usage": "Atelier", "tc": "200/5A", "classe": "0.5S", "p": 25, "q": 8, "u": 401, "i": 38, "cos": 0.95, "statut": "OK"}]}, {"id": "PT_Z", "nom": "Poste PT Z", "zone": "Zone Outillage & Hangars", "description": "Ateliers centraux de maintenance, ponts roulants et hangars", "transfos": "2x 800 kVA (22 kV / 400 V)", "ip": "192.168.10.30", "puissance_max": 1280, "p_active": 365, "q_reactive": 112, "cos_phi": 0.96, "tension": 401, "courant": 552, "departs": [{"id": "PT_Z_D1", "nom": "T1 - Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "1250/5A", "classe": "0.5S", "p": 190, "q": 58, "u": 401, "i": 287, "cos": 0.96, "statut": "OK"}, {"id": "PT_Z_D2", "nom": "T2 - Arrivée Transformateur 2", "usage": "TGBT T2", "tc": "1250/5A", "classe": "0.5S", "p": 175, "q": 54, "u": 400, "i": 265, "cos": 0.95, "statut": "OK"}, {"id": "PT_Z_D3", "nom": "Hangar Stockage H1 (Engrais/Vrac)", "usage": "Stockage", "tc": "400/5A", "classe": "0.2S", "p": 66, "q": 20, "u": 400, "i": 100, "cos": 0.96, "statut": "OK"}, {"id": "PT_Z_D4", "nom": "Hangar Stockage H2 (Marchandises)", "usage": "Stockage", "tc": "400/5A", "classe": "0.2S", "p": 59, "q": 18, "u": 400, "i": 89, "cos": 0.96, "statut": "OK"}, {"id": "PT_Z_D5", "nom": "Pont Roulant Atelier Outillage", "usage": "Levage", "tc": "250/5A", "classe": "0.2S", "p": 44, "q": 15, "u": 399, "i": 68, "cos": 0.95, "statut": "OK"}, {"id": "PT_Z_D6", "nom": "Station Recharge Chariots", "usage": "Recharge", "tc": "400/5A", "classe": "0.2S", "p": 91, "q": 26, "u": 401, "i": 136, "cos": 0.96, "statut": "OK"}, {"id": "PT_Z_D7", "nom": "Compresseurs d'Air Atelier", "usage": "Pneumatique", "tc": "250/5A", "classe": "0.2S", "p": 37, "q": 12, "u": 400, "i": 56, "cos": 0.95, "statut": "OK"}, {"id": "PT_Z_D8", "nom": "Éclairage Voies de Circulation Z", "usage": "Éclairage", "tc": "160/5A", "classe": "0.5S", "p": 23, "q": 6, "u": 402, "i": 34, "cos": 0.97, "statut": "OK"}, {"id": "PT_Z_D9", "nom": "Bâtiment Maîtrise & Vestiaires", "usage": "Tertiaire", "tc": "100/5A", "classe": "0.5S", "p": 16, "q": 4, "u": 401, "i": 24, "cos": 0.97, "statut": "OK"}, {"id": "PT_Z_D10", "nom": "Groupe Électrogène Secours PT Z", "usage": "Secours", "tc": "315/5A", "classe": "0.5S", "p": 0, "q": 0, "u": 400, "i": 0, "cos": 1.0, "statut": "Veille"}]}, {"id": "PT_4", "nom": "Poste PT 4", "zone": "Terminal Vrac & Silos Portuaires", "description": "Élévateurs à godets, aspiration et tours d'ensachage de céréales", "transfos": "2x 1250 kVA (22 kV / 400 V)", "ip": "192.168.10.40", "puissance_max": 2000, "p_active": 750, "q_reactive": 234, "cos_phi": 0.95, "tension": 401, "courant": 1133, "departs": [{"id": "PT_4_D1", "nom": "T1 - Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "2000/5A", "classe": "0.5S", "p": 385, "q": 120, "u": 401, "i": 582, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D2", "nom": "T2 - Arrivée Transformateur 2", "usage": "TGBT T2", "tc": "2000/5A", "classe": "0.5S", "p": 365, "q": 114, "u": 400, "i": 551, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D3", "nom": "Élévateur Principal Silo Céréales", "usage": "Force motrice", "tc": "630/5A", "classe": "0.2S", "p": 218, "q": 74, "u": 399, "i": 334, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D4", "nom": "Ligne Convoyeur Bande Aérienne", "usage": "Convoyage", "tc": "500/5A", "classe": "0.2S", "p": 142, "q": 46, "u": 400, "i": 216, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D5", "nom": "Aspiration & Dépoussiérage Silos", "usage": "Aspiration", "tc": "400/5A", "classe": "0.2S", "p": 97, "q": 31, "u": 400, "i": 147, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D6", "nom": "Atelier Ensachage Automatique", "usage": "Conditionnement", "tc": "400/5A", "classe": "0.2S", "p": 84, "q": 26, "u": 401, "i": 127, "cos": 0.96, "statut": "OK"}, {"id": "PT_4_D7", "nom": "Station Pompage Hydrocarbures", "usage": "Pompage", "tc": "400/5A", "classe": "0.2S", "p": 69, "q": 22, "u": 400, "i": 105, "cos": 0.95, "statut": "OK"}, {"id": "PT_4_D8", "nom": "Éclairage Silos & Voies Ferrées", "usage": "Éclairage", "tc": "200/5A", "classe": "0.5S", "p": 29, "q": 7, "u": 402, "i": 43, "cos": 0.97, "statut": "OK"}, {"id": "PT_4_D9", "nom": "Bâtiment Bascule & Contrôle Silo", "usage": "Tertiaire", "tc": "125/5A", "classe": "0.5S", "p": 20, "q": 5, "u": 401, "i": 30, "cos": 0.97, "statut": "OK"}, {"id": "PT_4_D10", "nom": "Secours Groupe Électrogène PT 4", "usage": "Secours", "tc": "630/5A", "classe": "0.5S", "p": 0, "q": 0, "u": 400, "i": 0, "cos": 1.0, "statut": "Veille"}]}, {"id": "PT_1", "nom": "Poste PT 1", "zone": "Direction & Ateliers Principaux", "description": "Comprend les 12 compteurs existants MEIER CMM61 intégrés (Prix n°2)", "transfos": "2x 1000 kVA (22 kV / 400 V)", "ip": "192.168.10.50", "puissance_max": 1600, "p_active": 435, "q_reactive": 132, "cos_phi": 0.96, "tension": 401, "courant": 658, "cmm61_existant": true, "departs": [{"id": "PT_1_D1", "nom": "CMM61 - T1 Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "1600/5A", "classe": "0.5S", "p": 225, "q": 68, "u": 401, "i": 340, "cos": 0.96, "statut": "OK"}, {"id": "PT_1_D2", "nom": "CMM61 - T2 Arrivée Transformateur 2", "usage": "TGBT T2", "tc": "1600/5A", "classe": "0.5S", "p": 210, "q": 64, "u": 400, "i": 318, "cos": 0.96, "statut": "OK"}, {"id": "PT_1_D3", "nom": "CMM61 - Siège DEPA Marsa Maroc", "usage": "Bâtiment Administratif", "tc": "400/5A", "classe": "0.5S", "p": 79, "q": 20, "u": 401, "i": 118, "cos": 0.97, "statut": "OK"}, {"id": "PT_1_D4", "nom": "CMM61 - Centre Données & TOS", "usage": "Data Center", "tc": "250/5A", "classe": "0.5S", "p": 46, "q": 10, "u": 401, "i": 68, "cos": 0.98, "statut": "OK"}, {"id": "PT_1_D5", "nom": "CMM61 - Climatisation Centrale Siège", "usage": "CVC", "tc": "315/5A", "classe": "0.5S", "p": 64, "q": 19, "u": 400, "i": 97, "cos": 0.96, "statut": "OK"}, {"id": "PT_1_D6", "nom": "CMM61 - Atelier Chaudronnerie", "usage": "Atelier", "tc": "400/5A", "classe": "0.5S", "p": 55, "q": 16, "u": 400, "i": 83, "cos": 0.96, "statut": "OK"}, {"id": "PT_1_D7", "nom": "CMM61 - Magasin Central Pièces", "usage": "Logistique", "tc": "200/5A", "classe": "0.5S", "p": 26, "q": 7, "u": 401, "i": 39, "cos": 0.97, "statut": "OK"}, {"id": "PT_1_D8", "nom": "CMM61 - Éclairage Enceinte & Boulevard", "usage": "Éclairage", "tc": "250/5A", "classe": "0.5S", "p": 37, "q": 9, "u": 402, "i": 55, "cos": 0.97, "statut": "OK"}, {"id": "PT_1_D9", "nom": "CMM61 - Recharge Engins Électriques", "usage": "Recharge", "tc": "315/5A", "classe": "0.5S", "p": 49, "q": 14, "u": 401, "i": 74, "cos": 0.96, "statut": "OK"}, {"id": "PT_1_D10", "nom": "CMM61 - Poste Garde Principale", "usage": "Sécurité", "tc": "100/5A", "classe": "0.5S", "p": 13, "q": 3, "u": 401, "i": 19, "cos": 0.98, "statut": "OK"}, {"id": "PT_1_D11", "nom": "CMM61 - Cantine & Foyer", "usage": "Restauration", "tc": "160/5A", "classe": "0.5S", "p": 27, "q": 7, "u": 401, "i": 40, "cos": 0.97, "statut": "OK"}, {"id": "PT_1_D12", "nom": "CMM61 - Secours Ondulé Serveurs", "usage": "UPS", "tc": "200/5A", "classe": "0.5S", "p": 19, "q": 4, "u": 401, "i": 28, "cos": 0.98, "statut": "OK"}]}, {"id": "PT_7", "nom": "Poste PT 7", "zone": "Poste Ro-Ro / Quai de Pêche", "description": "Passerelle Ro-Ro hydraulique, niche multiprises et quai", "transfos": "1x 630 kVA (22 kV / 400 V)", "ip": "192.168.10.70", "puissance_max": 630, "p_active": 173, "q_reactive": 51, "cos_phi": 0.96, "tension": 401, "courant": 261, "departs": [{"id": "PT_7_D1", "nom": "T1 - Arrivée Transformateur 1", "usage": "TGBT T1", "tc": "1000/5A", "classe": "0.5S", "p": 142, "q": 42, "u": 401, "i": 214, "cos": 0.96, "statut": "OK"}, {"id": "PT_7_D2", "nom": "T2 - Arrivée Transformateur 2 (Réserve)", "usage": "TGBT T2", "tc": "1000/5A", "classe": "0.5S", "p": 31, "q": 9, "u": 400, "i": 47, "cos": 0.96, "statut": "OK"}, {"id": "PT_7_D3", "nom": "Rampe & Passerelle Ro-Ro Hydraulique", "usage": "Force motrice", "tc": "315/5A", "classe": "0.2S", "p": 57, "q": 18, "u": 399, "i": 87, "cos": 0.95, "statut": "OK"}, {"id": "PT_7_D4", "nom": "Éclairage Terre-Plein & Niche Multiprises", "usage": "Éclairage", "tc": "200/5A", "classe": "0.5S", "p": 25, "q": 7, "u": 402, "i": 37, "cos": 0.96, "statut": "OK"}]}];
 
-        let alertesList = [
-            { id: 1, horaire: "Aujourd'hui 08:30", poste: "PT Y", depart: "Portique Manutention 1", type: "THD_U_ELEVE", gravite: "ALERTE", message: "THD-U à 8.4% (> 8.0%)", statut: "ACTIVE" }
-        ];
+        let posteActifId = "PT_Y";
+        let modalChartOnde = null;
+        let modalChartHarm = null;
+        let chartChargeGlobale = null;
+        let chartHarmoniques40 = null;
+        let echartSankeyInstance = null;
+        let echartParetoInstance = null;
+        let echartRegressionInstance = null;
 
-        function basculerOnglet(nom) {
-            document.querySelectorAll('.tab-content-panel').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.sidebar .nav-link').forEach(l => l.classList.remove('active'));
-            const p = document.getElementById('panel-' + nom);
-            if (p) p.classList.add('active');
-
-            // Ajustement ECharts au changement d'onglet
+        // Navigation entre onglets
+        function ouvrirOnglet(idOnglet) {
+            // Masquer tous les panneaux
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            // Déselectionner tous les liens sidebar
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            
+            // Activer le panneau visé
+            const panneau = document.getElementById('panel-' + idOnglet);
+            if (panneau) {
+                panneau.classList.add('active');
+            }
+            
+            // Activer le lien sidebar correspondant
+            const lien = Array.from(document.querySelectorAll('.sidebar-link')).find(l => l.getAttribute('onclick') && l.getAttribute('onclick').includes(idOnglet));
+            if (lien) lien.classList.add('active');
+            
+            // Redimensionner les graphiques ECharts si nécessaire
             setTimeout(() => {
-                if (nom === 'qualite' && chartHarm) chartHarm.resize();
-                if (nom === 'sankey' && chartSankey) chartSankey.resize();
-                if (nom === 'pareto' && chartPareto) chartPareto.resize();
-                if (nom === 'regression' && chartReg) chartReg.resize();
-            }, 100);
+                if (idOnglet === 'sankey') initialiserSankey();
+                if (idOnglet === 'pareto') initialiserPareto();
+                if (idOnglet === 'regression') initialiserRegression();
+            }, 150);
         }
 
-        function changerRole(role) {
-            const span = document.getElementById('nom-utilisateur-courant');
-            if (role === 'admin') span.innerHTML = '<b>admin</b> (ADMINISTRATEUR)';
-            else if (role === 'exploitant') span.innerHTML = '<b>exploitant</b> (EXPLOITANT)';
-            else span.innerHTML = '<b>lecteur</b> (LECTEUR)';
+        // Profils RBAC
+        function definirProfil(role) {
+            const badge = document.getElementById('nom-role-actuel');
+            if (role === 'admin') badge.innerHTML = '<b>Noura LAAROUSSI</b> (Admin)';
+            else if (role === 'exploitant') badge.innerHTML = '<b>Opérateur DEPA</b> (Exploitant)';
+            else if (role === 'lecteur') badge.innerHTML = '<b>Visiteur / Auditeur</b> (Lecteur)';
         }
 
-        // Rendu des Cards de Postes
-        function afficherPostes() {
-            const grid = document.getElementById('cards-postes-grid');
+        // Initialisation de la vue globale
+        function initialiserVueGlobale() {
+            const grid = document.getElementById('postes-grid-global');
             grid.innerHTML = '';
-            POSTES.forEach(p => {
+            
+            DONNEES_POSTES.forEach(p => {
                 const col = document.createElement('div');
-                col.className = 'col-md-4 col-sm-6';
+                col.className = 'col-md-4';
                 col.innerHTML = `
-                    <div class="card border-0 shadow-sm h-100" style="border-left: 5px solid #16a34a !important;">
-                        <div class="card-body p-3">
-                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                <h6 class="fw-bold mb-0 text-dark">${p.nom}</h6>
-                                <span class="badge bg-success">NORMAL</span>
+                    <div class="scada-card h-100" style="cursor: pointer;" onclick="selectionnerPoste('${p.id}'); ouvrirOnglet('postes');">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <h6 class="fw-bold text-white mb-0">${p.nom}</h6>
+                                <span class="text-info small font-mono">${p.zone}</span>
                             </div>
-                            <div class="text-muted small mb-2"><i class="bi bi-hdd-network"></i> IP : ${p.ip} · ${p.nb} Départs</div>
-                            <div class="row g-1 text-center bg-light rounded p-2 mb-2">
-                                <div class="col-6 border-end">
-                                    <div class="text-muted small" style="font-size:0.75rem;">PUISSANCE</div>
-                                    <div class="fw-bold text-primary">${p.p} kW</div>
+                            <span class="badge bg-success bg-opacity-25 text-success font-mono"><span class="pulse-led me-1"></span> OK</span>
+                        </div>
+                        <div class="text-muted small mb-3">${p.description}</div>
+                        
+                        <div class="row g-2 mb-3 text-center">
+                            <div class="col-4">
+                                <div class="bg-dark p-2 rounded">
+                                    <div class="text-muted" style="font-size: 0.68rem;">P ACTIVE</div>
+                                    <div class="fw-bold font-mono text-warning">${p.p_active} kW</div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="text-muted small" style="font-size:0.75rem;">ÉNERGIE JOUR</div>
-                                    <div class="fw-bold text-success">${p.e} kWh</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="bg-dark p-2 rounded">
+                                    <div class="text-muted" style="font-size: 0.68rem;">TENSION</div>
+                                    <div class="fw-bold font-mono text-success">${p.tension} V</div>
                                 </div>
                             </div>
-                            <div class="text-end">
-                                <button class="btn btn-sm btn-outline-primary py-0" onclick="basculerOnglet('inventaire')">Voir Départs &rarr;</button>
+                            <div class="col-4">
+                                <div class="bg-dark p-2 rounded">
+                                    <div class="text-muted" style="font-size: 0.68rem;">DÉPARTS</div>
+                                    <div class="fw-bold font-mono text-white">${p.departs.length}</div>
+                                </div>
                             </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center text-muted small pt-2 border-top border-secondary border-opacity-25">
+                            <span class="font-mono">Capacité: ${p.puissance_max} kVA</span>
+                            <span class="text-info">Voir l'unifilaire <i class="bi bi-arrow-right"></i></span>
                         </div>
                     </div>
                 `;
                 grid.appendChild(col);
             });
-        }
 
-        // Courbe de Charge Globale Chart.js
-        let chartCourbe = null;
-        function initCourbe() {
-            const ctx = document.getElementById('canvasCourbeGlobale').getContext('2d');
-            const labels = ["00h", "02h", "04h", "06h", "08h", "10h", "12h", "14h", "16h", "18h", "20h", "22h"];
-            const data = [1200, 1050, 980, 1600, 2450, 2800, 2600, 2750, 2900, 2700, 2200, 1500];
+            // Courbe globale Chart.js
+            const ctx = document.getElementById('chart-charge-globale').getContext('2d');
+            const labels = [];
+            const dataActive = [];
+            for (let h = 0; h < 24; h++) {
+                for (let m = 0; m < 60; m += 30) {
+                    labels.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`);
+                    // Profil jour/nuit portuaire réaliste (pic à 11h et 16h)
+                    let base = 1800;
+                    if (h >= 8 && h <= 18) base += 900 + Math.sin(h / 3) * 200;
+                    if (h >= 19 && h <= 23) base += 500;
+                    base += (Math.random() - 0.5) * 80;
+                    dataActive.push(Math.round(base));
+                }
+            }
 
-            chartCourbe = new Chart(ctx, {
+            chartChargeGlobale = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Puissance Active Totale (kW)',
-                        data: data,
-                        borderColor: '#1a3a5c',
-                        backgroundColor: 'rgba(26, 58, 92, 0.1)',
+                        label: 'Puissance Active Globale Port d'Agadir (kW)',
+                        data: dataActive,
+                        borderColor: '#38bdf8',
+                        backgroundColor: 'rgba(56, 189, 248, 0.1)',
                         fill: true,
-                        tension: 0.3
+                        tension: 0.35,
+                        pointRadius: 0
                     }]
                 },
-                options: { responsive: true, maintainAspectRatio: false }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', maxTicksLimit: 12 } },
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                    },
+                    plugins: {
+                        legend: { labels: { color: '#f8fafc' } }
+                    }
+                }
             });
         }
 
-        // ECharts : Harmoniques 1 à 40
-        let chartHarm = null;
-        function initHarmoniques() {
-            chartHarm = echarts.init(document.getElementById('echart-harm-static'));
-            const rangs = Array.from({length: 40}, (_, i) => `H${i+1}`);
-            const tens = [100, 0.3, 2.5, 0.2, 3.8, 0.1, 2.9, 0.1, 0.8, 0.1, 1.8, 0.1, 1.5, 0.1, 0.4, 0.1, 0.9, 0.1, 0.7, 0.1, 0.2, 0.1, 0.5, 0.1, 0.4, 0.1, 0.2, 0.1, 0.3, 0.1, 0.2, 0.1, 0.2, 0.1, 0.2, 0.1, 0.1, 0.1, 0.1, 0.1];
-            const cour = [100, 0.5, 8.2, 0.3, 12.5, 0.2, 8.8, 0.2, 2.5, 0.2, 5.8, 0.2, 4.2, 0.2, 1.2, 0.2, 2.8, 0.2, 2.0, 0.2, 0.5, 0.2, 1.5, 0.2, 1.2, 0.2, 0.5, 0.2, 0.8, 0.2, 0.6, 0.2, 0.4, 0.2, 0.5, 0.2, 0.3, 0.2, 0.3, 0.2];
-
-            chartHarm.setOption({
-                tooltip: { trigger: 'axis' },
-                legend: { data: ['Tension U (%)', 'Courant I (%)'] },
-                xAxis: { type: 'category', data: rangs.slice(1), axisLabel: { interval: 1, rotate: 45, fontSize: 10 } },
-                yAxis: { type: 'value', name: '% Fondamentale' },
-                series: [
-                    { name: 'Tension U (%)', type: 'bar', data: tens.slice(1), itemStyle: { color: '#1a3a5c' } },
-                    { name: 'Courant I (%)', type: 'bar', data: cour.slice(1), itemStyle: { color: '#e8660d' } }
-                ]
+        // Sélection et affichage d'un poste
+        function initialiserSelecteurPostes() {
+            const cont = document.getElementById('selecteur-postes-container');
+            cont.innerHTML = '';
+            
+            DONNEES_POSTES.forEach(p => {
+                const btn = document.createElement('div');
+                btn.className = 'poste-pill' + (p.id === posteActifId ? ' active' : '');
+                btn.id = 'pill-' + p.id;
+                btn.onclick = () => selectionnerPoste(p.id);
+                btn.innerHTML = `
+                    <i class="bi bi-diagram-3"></i>
+                    <div>
+                        <div>${p.nom}</div>
+                        <div style="font-size: 0.7rem; opacity: 0.8;">${p.departs.length} départs</div>
+                    </div>
+                `;
+                cont.appendChild(btn);
             });
         }
 
-        // ECharts : Sankey
-        let chartSankey = null;
-        function initSankey() {
-            chartSankey = echarts.init(document.getElementById('echart-sankey-static'));
-            chartSankey.setOption({
-                tooltip: { trigger: 'item' },
-                series: [{
-                    type: 'sankey',
-                    data: [
-                        { name: 'Réseau HT ONEE' },
-                        { name: 'Poste PT Y' }, { name: 'Poste PT X' }, { name: 'Poste PT Z' },
-                        { name: 'Poste PT 4' }, { name: 'Poste PT 1' }, { name: 'Poste PT 7' },
-                        { name: 'Grues & Portiques' }, { name: 'Entrepôts Frigorifiques' }, { name: 'Niches Multiprises' }, { name: 'Éclairage & Bâtiments' }
-                    ],
-                    links: [
-                        { source: 'Réseau HT ONEE', target: 'Poste PT Y', value: 7440 },
-                        { source: 'Réseau HT ONEE', target: 'Poste PT X', value: 6960 },
-                        { source: 'Réseau HT ONEE', target: 'Poste PT Z', value: 5880 },
-                        { source: 'Réseau HT ONEE', target: 'Poste PT 4', value: 5280 },
-                        { source: 'Réseau HT ONEE', target: 'Poste PT 1', value: 7080 },
-                        { source: 'Réseau HT ONEE', target: 'Poste PT 7', value: 1480 },
-                        { source: 'Poste PT Y', target: 'Grues & Portiques', value: 4200 },
-                        { source: 'Poste PT 1', target: 'Grues & Portiques', value: 4800 },
-                        { source: 'Poste PT 4', target: 'Entrepôts Frigorifiques', value: 3600 },
-                        { source: 'Poste PT X', target: 'Niches Multiprises', value: 2400 },
-                        { source: 'Poste PT Z', target: 'Éclairage & Bâtiments', value: 2800 },
-                    ],
-                    lineStyle: { color: 'gradient', curveness: 0.5 }
-                }]
+        function selectionnerPoste(idPoste) {
+            posteActifId = idPoste;
+            const poste = DONNEES_POSTES.find(p => p.id === idPoste);
+            if (!poste) return;
+
+            // Mise à jour des pilules
+            document.querySelectorAll('.poste-pill').forEach(b => b.classList.remove('active'));
+            const activeBtn = document.getElementById('pill-' + idPoste);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            // Mise à jour de l'en-tête
+            document.getElementById('poste-sel-nom').innerText = poste.nom;
+            document.getElementById('poste-sel-zone').innerText = poste.zone;
+            document.getElementById('poste-sel-desc').innerText = poste.description;
+            document.getElementById('poste-sel-p').innerText = poste.p_active + ' kW';
+            document.getElementById('poste-sel-q').innerText = poste.q_reactive + ' kvar';
+            document.getElementById('poste-sel-u').innerText = poste.tension + ' V';
+            document.getElementById('poste-sel-cos').innerText = poste.cos_phi;
+            document.getElementById('poste-sel-count').innerText = poste.departs.length;
+
+            // Rendu du Schéma Unifilaire SVG Interactif
+            rendreSchemaUnifilaire(poste);
+
+            // Rendu de la Table des Départs
+            rendreTableDeparts(poste);
+        }
+
+        // Schéma unifilaire SVG dynamique
+        function rendreSchemaUnifilaire(poste) {
+            const unifilaire = document.getElementById('unifilaire-content');
+            const departs = poste.departs;
+            const nbDeparts = departs.length;
+            const largeurSvg = Math.max(900, nbDeparts * 125 + 160);
+
+            let departsSvg = '';
+            departs.forEach((d, idx) => {
+                const x = 140 + idx * 120;
+                const isSecours = d.statut === 'Veille' || d.usage.includes('Secours');
+                const strokeColor = isSecours ? '#94a3b8' : '#38bdf8';
+                const statusColor = isSecours ? '#94a3b8' : '#10b981';
+
+                departsSvg += `
+                    <!-- Ligne verticale vers le départ -->
+                    <line x1="${x}" y1="170" x2="${x}" y2="230" stroke="${strokeColor}" stroke-width="2.5" />
+                    <!-- Disjoncteur / Centrale de mesure -->
+                    <rect x="${x - 16}" y="230" width="32" height="36" rx="4" fill="#1e293b" stroke="${statusColor}" stroke-width="2" style="cursor: pointer;" onclick="ouvrirDetailDepart('${d.id}')" />
+                    <text x="${x}" y="252" font-size="10" fill="${statusColor}" font-family="JetBrains Mono" font-weight="bold" text-anchor="middle">TC</text>
+                    <!-- Ligne vers la charge -->
+                    <line x1="${x}" y1="266" x2="${x}" y2="300" stroke="${strokeColor}" stroke-width="2" />
+                    <circle cx="${x}" cy="305" r="5" fill="${strokeColor}" />
+                    <!-- Étiquette départ -->
+                    <text x="${x}" y="325" font-size="10" fill="#f8fafc" font-family="Inter" font-weight="600" text-anchor="middle">${d.id.split('_').slice(-2).join('_')}</text>
+                    <text x="${x}" y="340" font-size="9" fill="#94a3b8" font-family="Inter" text-anchor="middle">${d.usage.substring(0, 15)}</text>
+                    <text x="${x}" y="358" font-size="11" fill="#f59e0b" font-family="JetBrains Mono" font-weight="bold" text-anchor="middle">${d.p} kW</text>
+                `;
+            });
+
+            unifilaire.innerHTML = `
+                <svg width="${largeurSvg}" height="390" viewBox="0 0 ${largeurSvg} 390" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Arrivée MT 22 kV -->
+                    <text x="80" y="30" font-size="12" fill="#ef4444" font-family="JetBrains Mono" font-weight="bold">ARRIVÉE MT 22 kV</text>
+                    <line x1="80" y1="40" x2="80" y2="70" stroke="#ef4444" stroke-width="3" />
+                    
+                    <!-- Transfos T1 et T2 -->
+                    <circle cx="80" cy="85" r="16" fill="none" stroke="#38bdf8" stroke-width="2.5" />
+                    <circle cx="80" cy="105" r="16" fill="none" stroke="#38bdf8" stroke-width="2.5" />
+                    <text x="110" y="98" font-size="11" fill="#38bdf8" font-family="Inter">${poste.transfos}</text>
+
+                    <!-- Ligne vers jeu de barres -->
+                    <line x1="80" y1="121" x2="80" y2="170" stroke="#38bdf8" stroke-width="3" />
+
+                    <!-- Jeu de Barres TGBT 400 V Principal -->
+                    <rect x="50" y="166" width="${largeurSvg - 100}" height="8" rx="3" fill="#38bdf8" />
+                    <text x="${largeurSvg - 140}" y="160" font-size="11" fill="#38bdf8" font-family="JetBrains Mono" font-weight="bold">JEU DE BARRES TGBT 400 V</text>
+
+                    <!-- Tous les départs -->
+                    ${departsSvg}
+                </svg>
+            `;
+        }
+
+        // Rendu de la table des départs
+        function rendreTableDeparts(poste) {
+            const tbody = document.getElementById('poste-sel-table-departs');
+            tbody.innerHTML = '';
+
+            poste.departs.forEach(d => {
+                const tr = document.createElement('tr');
+                const badgeClasse = d.classe === '0.2S' ? 'badge-critique' : 'badge-ok';
+                const badgeStatut = d.statut === 'OK' ? 'badge-ok' : 'badge-alert';
+
+                tr.innerHTML = `
+                    <td class="font-mono fw-bold text-info">${d.id}</td>
+                    <td class="fw-semibold text-white">${d.nom}</td>
+                    <td><span class="text-muted small">${d.usage}</span></td>
+                    <td class="font-mono text-warning">${d.tc}</td>
+                    <td><span class="badge-sub ${badgeClasse}">${d.classe}</span></td>
+                    <td class="font-mono fw-bold text-warning">${d.p}</td>
+                    <td class="font-mono text-info">${d.q}</td>
+                    <td class="font-mono text-white">${d.i}</td>
+                    <td class="font-mono text-success">${d.cos}</td>
+                    <td><span class="badge-sub ${badgeStatut}">${d.statut}</span></td>
+                    <td>
+                        <button class="btn btn-xs btn-outline-info btn-sm" onclick="ouvrirDetailDepart('${d.id}')">
+                            <i class="bi bi-eye"></i> Détails
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
             });
         }
 
-        // ECharts : Pareto
-        let chartPareto = null;
-        function initPareto() {
-            chartPareto = echarts.init(document.getElementById('echart-pareto-static'));
-            chartPareto.setOption({
-                tooltip: { trigger: 'axis' },
-                legend: { data: ['Énergie (kWh)', '% Cumulé'] },
-                xAxis: [{ type: 'category', data: ['Portiques PT Y', 'Grues GP1 PT 1', 'Frigo PT 4', 'Convoyeur PT Z', 'GE Secours', 'Éclairage Quai', 'Ateliers'], axisLabel: { interval: 0, rotate: 20 } }],
-                yAxis: [{ type: 'value', name: 'kWh' }, { type: 'value', name: '%', max: 100, axisLabel: { formatter: '{value}%' } }],
-                series: [
-                    { name: 'Énergie (kWh)', type: 'bar', data: [9800, 8900, 6200, 4100, 2300, 1500, 1320], itemStyle: { color: '#1a3a5c' } },
-                    { name: '% Cumulé', type: 'line', yAxisIndex: 1, data: [28.7, 54.8, 73.0, 85.0, 91.7, 96.1, 100], itemStyle: { color: '#e8660d' }, markLine: { data: [{ yAxis: 80, name: 'Seuil 80% UES' }] } }
-                ]
+        // Modal détail d'un départ avec forme d'onde
+        function ouvrirDetailDepart(idDepart) {
+            let departTrouve = null;
+            let posteTrouve = null;
+            DONNEES_POSTES.forEach(p => {
+                p.departs.forEach(d => {
+                    if (d.id === idDepart) {
+                        departTrouve = d;
+                        posteTrouve = p;
+                    }
+                });
             });
-        }
 
-        // ECharts : Régression
-        let chartReg = null;
-        function initRegression() {
-            chartReg = echarts.init(document.getElementById('echart-regression-static'));
-            const pts = [[80000, 50800], [92000, 56400], [105000, 63100], [115000, 67900], [125000, 72500], [140000, 80100], [150000, 84700]];
-            chartReg.setOption({
-                tooltip: { trigger: 'item' },
-                legend: { data: ['Observations Réelles', 'Modèle Normalisé (Droite)'] },
-                xAxis: { type: 'value', name: 'Tonnage Manutentionné (t)', scale: true },
-                yAxis: { type: 'value', name: 'Énergie (kWh)', scale: true },
-                series: [
-                    { name: 'Observations Réelles', type: 'scatter', data: pts, symbolSize: 12, itemStyle: { color: '#1a3a5c' } },
-                    { name: 'Modèle Normalisé (Droite)', type: 'line', data: [[80000, 50960], [150000, 84700]], itemStyle: { color: '#e8660d' }, lineStyle: { width: 3 } }
-                ]
+            if (!departTrouve) return;
+
+            document.getElementById('modalDepartTitre').innerText = `${departTrouve.id} · ${departTrouve.nom} (${posteTrouve.nom})`;
+            document.getElementById('modal-p').innerText = departTrouve.p + ' kW';
+            document.getElementById('modal-i').innerText = departTrouve.i + ' A';
+            document.getElementById('modal-u').innerText = departTrouve.u + ' V';
+            document.getElementById('modal-tc').innerText = departTrouve.tc;
+
+            // Forme d'onde sinusoïdale 50 Hz avec harmoniques
+            const ctxOnde = document.getElementById('chart-modal-onde').getContext('2d');
+            if (modalChartOnde) modalChartOnde.destroy();
+
+            const pointsOnde = [];
+            const labelsOnde = [];
+            for (let t = 0; t <= 20; t += 0.5) {
+                labelsOnde.push(t + ' ms');
+                // V(t) = Vmax * sin(wt) + 3% H3 + 4% H5
+                const w = 2 * Math.PI * 50;
+                const sec = t / 1000;
+                const v = 325 * Math.sin(w * sec) + 12 * Math.sin(3 * w * sec) + 15 * Math.sin(5 * w * sec);
+                pointsOnde.push(v);
+            }
+
+            modalChartOnde = new Chart(ctxOnde, {
+                type: 'line',
+                data: {
+                    labels: labelsOnde,
+                    datasets: [{
+                        label: 'Tension Instantanée v(t) (V)',
+                        data: pointsOnde,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
             });
-        }
 
-        // Chart.js : IPE
-        let chartIPE = null;
-        function initIPE() {
-            const ctx = document.getElementById('canvasIPE').getContext('2d');
-            chartIPE = new Chart(ctx, {
+            // Spectre harmonique du départ
+            const ctxHarm = document.getElementById('chart-modal-harmoniques').getContext('2d');
+            if (modalChartHarm) modalChartHarm.destroy();
+
+            const rangs = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25];
+            const amplt = [100, 2.1, 4.3, 3.2, 0.8, 1.9, 1.4, 0.5, 0.9, 0.7, 0.3, 0.4, 0.2];
+
+            modalChartHarm = new Chart(ctxHarm, {
                 type: 'bar',
                 data: {
-                    labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'],
+                    labels: rangs.map(r => 'H' + r),
+                    datasets: [{
+                        label: 'Amplitude (% H1)',
+                        data: amplt,
+                        backgroundColor: rangs.map(r => r === 1 ? '#38bdf8' : (r === 5 || r === 7 ? '#f59e0b' : '#64748b'))
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                        y: { max: 10, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            const modal = new bootstrap.Modal(document.getElementById('modalDepart'));
+            modal.show();
+        }
+
+        // Initialisation du spectre 1 à 40
+        function initialiserHarmoniques40() {
+            const ctx = document.getElementById('chart-harmoniques-40').getContext('2d');
+            const labels = [];
+            const dataU = [];
+            const dataI = [];
+            const seuil = [];
+
+            for (let r = 1; r <= 40; r++) {
+                labels.push('H' + r);
+                seuil.push(5.0); // Limite norme
+                if (r === 1) {
+                    dataU.push(100);
+                    dataI.push(100);
+                } else if (r === 3) {
+                    dataU.push(1.4);
+                    dataI.push(2.8);
+                } else if (r === 5) {
+                    dataU.push(2.2);
+                    dataI.push(4.5);
+                } else if (r === 7) {
+                    dataU.push(1.8);
+                    dataI.push(3.6);
+                } else if (r === 11 || r === 13) {
+                    dataU.push(0.9);
+                    dataI.push(1.8);
+                } else if (r % 2 !== 0) {
+                    dataU.push(+(Math.random() * 0.4 + 0.1).toFixed(2));
+                    dataI.push(+(Math.random() * 0.8 + 0.2).toFixed(2));
+                } else {
+                    dataU.push(0.05);
+                    dataI.push(0.08);
+                }
+            }
+
+            chartHarmoniques40 = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
                     datasets: [
-                        { label: 'IPE Réel (kWh/t)', data: [0.53, 0.51, 0.49, 0.52, 0.50, 0.48, 0.47, 0.51, 0.49, 0.50, 0.48, 0.49], backgroundColor: '#1a3a5c' },
-                        { type: 'line', label: 'Cible SER (0.52 kWh/t)', data: Array(12).fill(0.52), borderColor: '#dc2626', borderDash: [5, 5], pointRadius: 0 }
+                        {
+                            label: 'Harmoniques Tension THD-U (%)',
+                            data: dataU.slice(1),
+                            backgroundColor: '#38bdf8'
+                        },
+                        {
+                            label: 'Harmoniques Courant THD-I (%)',
+                            data: dataI.slice(1),
+                            backgroundColor: '#f59e0b'
+                        },
+                        {
+                            type: 'line',
+                            label: 'Seuil Limite Norme (5%)',
+                            data: seuil.slice(1),
+                            borderColor: '#ef4444',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            pointRadius: 0,
+                            fill: false
+                        }
                     ]
                 },
-                options: { responsive: true, maintainAspectRatio: false }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 9 } } },
+                        y: { max: 8, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                    },
+                    plugins: {
+                        legend: { labels: { color: '#f8fafc' } }
+                    }
+                }
             });
         }
 
-        // Table 58 Points
-        function remplirInventaire() {
-            const tbody = document.getElementById('tbody-inventaire-static');
+        // Initialisation de la table des 58 points
+        function initialiserTable58Points() {
+            const tbody = document.getElementById('table-58-points-body');
             tbody.innerHTML = '';
-            for (let i = 1; i <= 58; i++) {
-                const tr = document.createElement('tr');
-                const isPT1 = i >= 43 && i <= 54;
-                const poste = i <= 11 ? "PT Y" : (i <= 22 ? "PT X" : (i <= 32 ? "PT Z" : (i <= 42 ? "PT 4" : (isPT1 ? "PT 1" : "PT 7"))));
-                const classe = isPT1 ? "0.5S" : (i % 2 === 0 ? "0.2S" : "0.5S");
-                const tc = i <= 2 ? 2000 : (i % 3 === 0 ? 630 : 250);
 
+            let compteur = 0;
+            DONNEES_POSTES.forEach(p => {
+                p.departs.forEach(d => {
+                    compteur++;
+                    const isExistant = d.type && d.type.includes('Existant');
+                    const badgeType = isExistant ? '<span class="badge-sub badge-cmm61">Existant (CMM61)</span>' : '<span class="badge-sub badge-critique">Neuf Modbus</span>';
+                    const badgeClasse = d.classe === '0.2S' ? 'badge-critique' : 'badge-ok';
+
+                    const tr = document.createElement('tr');
+                    tr.className = 'point-row';
+                    tr.dataset.poste = p.id;
+                    tr.dataset.classe = d.classe;
+                    tr.dataset.search = (d.id + ' ' + d.nom + ' ' + p.nom + ' ' + d.tc).toLowerCase();
+
+                    tr.innerHTML = `
+                        <td class="font-mono text-info fw-bold">${d.id}</td>
+                        <td>${p.nom}</td>
+                        <td class="fw-semibold text-white">${d.nom}</td>
+                        <td>${badgeType}</td>
+                        <td class="font-mono text-warning">${d.tc}</td>
+                        <td><span class="badge-sub ${badgeClasse}">${d.classe}</span></td>
+                        <td class="font-mono text-muted">${p.ip}</td>
+                        <td class="font-mono fw-bold text-warning">${d.p} kW</td>
+                        <td><span class="badge-sub badge-ok"><i class="bi bi-check2"></i> En Ligne (5s)</span></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            });
+        }
+
+        function filtrerPoints() {
+            const search = document.getElementById('filter-search-point').value.toLowerCase();
+            const poste = document.getElementById('filter-poste-point').value;
+            const classe = document.getElementById('filter-classe-point').value;
+
+            let visibleCount = 0;
+            document.querySelectorAll('.point-row').forEach(row => {
+                const matchSearch = !search || row.dataset.search.includes(search);
+                const matchPoste = !poste || row.dataset.poste === poste;
+                const matchClasse = !classe || row.dataset.classe === classe;
+
+                if (matchSearch && matchPoste && matchClasse) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            document.getElementById('points-count-badge').innerText = `${visibleCount} / 58`;
+        }
+
+        // Initialisation de la table CMM61 (PT 1)
+        function initialiserTableCMM61() {
+            const tbody = document.getElementById('table-cmm61-body');
+            tbody.innerHTML = '';
+
+            const pt1 = DONNEES_POSTES.find(p => p.id === 'PT_1');
+            if (!pt1) return;
+
+            pt1.departs.forEach((d, i) => {
+                const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${i}</td>
-                    <td><b>${poste}</b></td>
-                    <td>Départ #${i}</td>
-                    <td><span class="badge ${classe === '0.2S' ? 'bg-primary' : 'bg-light text-dark border'}">${classe}</span></td>
-                    <td><b>${tc} A</b></td>
-                    <td>${isPT1 ? 'MEIER CMM61' : 'Centrale Modbus'}</td>
-                    <td><span class="badge ${isPT1 ? 'bg-secondary' : 'bg-success'}">${isPT1 ? 'Existant PT1' : 'Neuf Fourni'}</span></td>
-                    <td><code>192.168.1.${10 + i}:502</code></td>
-                    <td><span class="badge bg-success">En Ligne</span></td>
+                    <td class="font-mono text-purple fw-bold">${d.id}</td>
+                    <td class="fw-semibold text-white">${d.nom}</td>
+                    <td class="font-mono text-info">Slave #${i + 1}</td>
+                    <td class="font-mono text-warning">${d.tc}</td>
+                    <td class="font-mono text-success">${d.u} V</td>
+                    <td class="font-mono fw-bold text-warning">${d.p} kW</td>
+                    <td class="font-mono text-white">${Math.round(d.p * 1420)} kWh</td>
+                    <td><span class="badge-sub badge-ok"><i class="bi bi-broadcast"></i> OK (15 ms)</span></td>
                 `;
                 tbody.appendChild(tr);
-            }
-
-            // Table CMM61
-            const tbodyCMM = document.getElementById('tbody-cmm61-static');
-            tbodyCMM.innerHTML = '';
-            for (let j = 1; j <= 12; j++) {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><b>${j}</b></td>
-                    <td><code>PT_1_D${j}</code></td>
-                    <td>Départ Principal Quai #${j}</td>
-                    <td><span class="badge bg-info text-dark">MEIER CMM61</span></td>
-                    <td><code>192.168.1.${90 + j}:502</code></td>
-                    <td>800 A</td>
-                    <td><span class="badge bg-success">Registres Validés</span></td>
-                    <td><span class="badge bg-success">100% OK</span></td>
-                `;
-                tbodyCMM.appendChild(tr);
-            }
-        }
-
-        // Table Alertes
-        function afficherAlertes() {
-            const tbody = document.getElementById('tbody-alertes-static');
-            tbody.innerHTML = '';
-            alertesList.forEach(a => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><code>${a.horaire}</code></td>
-                    <td><b>${a.poste}</b> &bull; ${a.depart}</td>
-                    <td><b>${a.type}</b></td>
-                    <td><span class="badge bg-danger">${a.gravite}</span></td>
-                    <td>${a.message}</td>
-                    <td><span class="badge ${a.statut === 'ACTIVE' ? 'bg-danger' : 'bg-secondary'}">${a.statut}</span></td>
-                    <td>${a.statut === 'ACTIVE' ? `<button class="btn btn-sm btn-outline-danger py-0" onclick="acquitterAlerte(${a.id})">Acquitter</button>` : '<span class="text-muted">Acquittée</span>'}</td>
-                `;
-                tbody.appendChild(tr);
             });
-            document.getElementById('badge-top-alertes').textContent = alertesList.filter(a => a.statut === 'ACTIVE').length;
-            document.getElementById('badge-side-alertes').textContent = alertesList.filter(a => a.statut === 'ACTIVE').length;
-            document.getElementById('live-nb-alarmes').textContent = alertesList.filter(a => a.statut === 'ACTIVE').length + ' active(s)';
         }
 
-        function acquitterAlerte(id) {
-            const al = alertesList.find(a => a.id === id);
-            if (al) {
-                al.statut = 'ACQUITTEE';
-                afficherAlertes();
-                alert(`Alerte #${id} acquittée avec succès par l'opérateur.`);
+        // Initialisation du Diagramme Sankey ECharts
+        function initialiserSankey() {
+            const dom = document.getElementById('echart-sankey');
+            if (!dom) return;
+            if (!echartSankeyInstance) {
+                echartSankeyInstance = echarts.init(dom, 'dark');
             }
+
+            const option = {
+                backgroundColor: 'transparent',
+                tooltip: { trigger: 'item', triggerOn: 'mousemove' },
+                series: [{
+                    type: 'sankey',
+                    layout: 'none',
+                    emphasis: { focus: 'adjacency' },
+                    nodeAlign: 'justify',
+                    lineStyle: { color: 'source', opacity: 0.45, curveness: 0.5 },
+                    data: [
+                        { name: 'Réseau 22 kV Agadir' },
+                        { name: 'Poste PT Y' },
+                        { name: 'Poste PT X' },
+                        { name: 'Poste PT Z' },
+                        { name: 'Poste PT 4' },
+                        { name: 'Poste PT 1' },
+                        { name: 'Poste PT 7' },
+                        { name: 'Portiques Quai PQ' },
+                        { name: 'Grues Mobiles Gottwald' },
+                        { name: 'Silos & Élévateurs' },
+                        { name: 'Reefers Frigorifiques' },
+                        { name: 'Ateliers & Pompage' },
+                        { name: 'Bâtiments & TOS' },
+                        { name: 'Éclairage Voies & Quais' }
+                    ],
+                    links: [
+                        { source: 'Réseau 22 kV Agadir', target: 'Poste PT Y', value: 845 },
+                        { source: 'Réseau 22 kV Agadir', target: 'Poste PT X', value: 607 },
+                        { source: 'Réseau 22 kV Agadir', target: 'Poste PT Z', value: 365 },
+                        { source: 'Réseau 22 kV Agadir', target: 'Poste PT 4', value: 750 },
+                        { source: 'Réseau 22 kV Agadir', target: 'Poste PT 1', value: 435 },
+                        { source: 'Réseau 22 kV Agadir', target: 'Poste PT 7', value: 173 },
+                        { source: 'Poste PT Y', target: 'Portiques Quai PQ', value: 463 },
+                        { source: 'Poste PT Y', target: 'Grues Mobiles Gottwald', value: 175 },
+                        { source: 'Poste PT Y', target: 'Reefers Frigorifiques', value: 138 },
+                        { source: 'Poste PT Y', target: 'Éclairage Voies & Quais', value: 44 },
+                        { source: 'Poste PT X', target: 'Grues Mobiles Gottwald', value: 162 },
+                        { source: 'Poste PT X', target: 'Silos & Élévateurs', value: 182 },
+                        { source: 'Poste PT X', target: 'Reefers Frigorifiques', value: 74 },
+                        { source: 'Poste PT X', target: 'Éclairage Voies & Quais', value: 33 },
+                        { source: 'Poste PT 4', target: 'Silos & Élévateurs', value: 444 },
+                        { source: 'Poste PT 4', target: 'Ateliers & Pompage', value: 166 },
+                        { source: 'Poste PT Z', target: 'Ateliers & Pompage', value: 238 },
+                        { source: 'Poste PT 1', target: 'Bâtiments & TOS', value: 189 },
+                        { source: 'Poste PT 1', target: 'Ateliers & Pompage', value: 125 },
+                        { source: 'Poste PT 7', target: 'Grues Mobiles Gottwald', value: 57 }
+                    ]
+                }]
+            };
+            echartSankeyInstance.setOption(option);
+            echartSankeyInstance.resize();
         }
 
-        function declencherAlerteTest() {
-            alertesList.unshift({
-                id: alertesList.length + 1,
-                horaire: "À l'instant",
-                poste: "PT Y",
-                depart: "TGBT T1",
-                type: "SURCHARGE",
-                gravite: "CRITIQUE",
-                message: "[TEST VALIDÉ] Surcharge simulée de 2 150A (> 2 000A) sur TGBT T1",
-                statut: "ACTIVE"
+        // Initialisation de Pareto
+        function initialiserPareto() {
+            const dom = document.getElementById('echart-pareto');
+            if (!dom) return;
+            if (!echartParetoInstance) {
+                echartParetoInstance = echarts.init(dom, 'dark');
+            }
+
+            const departsTries = [
+                { nom: 'Portique PQ-01', p: 245 },
+                { nom: 'T1 Arrivée PT Y', p: 235 },
+                { nom: 'Portique PQ-02', p: 218 },
+                { nom: 'Élévateur Silo PT 4', p: 218 },
+                { nom: 'Grue GM-1 Gottwald', p: 175 },
+                { nom: 'Grue GM-2 Sud', p: 162 },
+                { nom: 'Convoyeur PT 4', p: 142 },
+                { nom: 'Reefers Nord (Frigo)', p: 138 },
+                { nom: 'Trémies Sud', p: 96 },
+                { nom: 'Recharge Chariots PT Z', p: 91 },
+                { nom: 'Siège Administratif', p: 79 },
+                { nom: 'Reefers Sud', p: 74 }
+            ];
+
+            const total = departsTries.reduce((acc, cur) => acc + cur.p, 0);
+            let cumul = 0;
+            const cumuls = departsTries.map(d => {
+                cumul += d.p;
+                return +((cumul / total) * 100).toFixed(1);
             });
-            afficherAlertes();
-            alert("Scénario de test d'alerte déclenché avec succès !");
+
+            const option = {
+                backgroundColor: 'transparent',
+                tooltip: { trigger: 'axis' },
+                xAxis: [{
+                    type: 'category',
+                    data: departsTries.map(d => d.nom),
+                    axisLabel: { color: '#94a3b8', rotate: 25 }
+                }],
+                yAxis: [
+                    { type: 'value', name: 'Puissance (kW)', axisLabel: { color: '#94a3b8' } },
+                    { type: 'value', name: 'Cumul (%)', min: 0, max: 100, axisLabel: { color: '#f59e0b', formatter: '{value}%' } }
+                ],
+                series: [
+                    {
+                        name: 'Puissance Active',
+                        type: 'bar',
+                        data: departsTries.map(d => d.p),
+                        itemStyle: { color: '#38bdf8' }
+                    },
+                    {
+                        name: 'Courbe Cumulative 80/20',
+                        type: 'line',
+                        yAxisIndex: 1,
+                        data: cumuls,
+                        itemStyle: { color: '#f59e0b' },
+                        markLine: {
+                            data: [{ yAxis: 80, name: 'Seuil 80% Pareto', lineStyle: { color: '#ef4444', type: 'dashed' } }]
+                        }
+                    }
+                ]
+            };
+            echartParetoInstance.setOption(option);
+            echartParetoInstance.resize();
         }
 
-        function telechargerFauxExcel(type) {
-            const csv = `Rapport;${type};Marsa Maroc;Port d'Agadir;AOO 12/DEPA/2026\nPoste;Départ;Puissance_kW;Energie_kWh;Cos_Phi;THD_U\nPT Y;TGBT T1;620;7440;0.96;2.1\nPT X;TGBT T1;580;6960;0.95;2.3\nPT 1;Grue GP1;590;7080;0.94;2.8\nTOTAL;;2840;34120;0.95;2.4`;
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        // Initialisation de la régression linéaire
+        function initialiserRegression() {
+            const dom = document.getElementById('echart-regression');
+            if (!dom) return;
+            if (!echartRegressionInstance) {
+                echartRegressionInstance = echarts.init(dom, 'dark');
+            }
+
+            const rawData = [
+                [2200, 278], [2450, 290], [2600, 295], [3100, 315],
+                [3400, 328], [3750, 342], [4100, 358], [4500, 375],
+                [4900, 391], [5200, 404], [5600, 421], [6000, 437]
+            ];
+
+            const regressionLine = [
+                [2000, 0.042 * 2000 + 185.3],
+                [6200, 0.042 * 6200 + 185.3]
+            ];
+
+            const option = {
+                backgroundColor: 'transparent',
+                tooltip: { formatter: params => `Activité: ${params.data[0]} kTonnes<br>Énergie: ${params.data[1]} MWh` },
+                xAxis: { name: 'Tonnage Manutentionné (Milliers de Tonnes)', axisLabel: { color: '#94a3b8' } },
+                yAxis: { name: 'Consommation Électrique (MWh)', axisLabel: { color: '#94a3b8' } },
+                series: [
+                    {
+                        name: 'Historique Mensuel Réel',
+                        type: 'scatter',
+                        data: rawData,
+                        itemStyle: { color: '#38bdf8' }
+                    },
+                    {
+                        name: 'Droite SER (y = 0.042x + 185.3)',
+                        type: 'line',
+                        data: regressionLine,
+                        itemStyle: { color: '#10b981' },
+                        lineStyle: { width: 3 }
+                    }
+                ]
+            };
+            echartRegressionInstance.setOption(option);
+            echartRegressionInstance.resize();
+        }
+
+        // Déclencheur de scénario d'alerte pour le professeur
+        function declencherScenarioAlerte() {
+            const table = document.getElementById('table-alertes-body');
+            const now = new Date().toISOString().replace('T', ' ').substring(0, 19);
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="font-mono text-danger fw-bold">${now}</td>
+                <td><span class="badge bg-danger animate-pulse">URGENT</span></td>
+                <td>Poste PT Y / Portique PQ-01</td>
+                <td>Creux de tension sévère détecté (U &lt; 70% Unom)</td>
+                <td class="font-mono text-danger">U = 265 V (-33.7 %)</td>
+                <td><span class="badge bg-danger">Active (Live)</span></td>
+                <td><button class="btn btn-xs btn-outline-light btn-sm" onclick="acquitterAlerte(this)"><i class="bi bi-check2"></i> Acquitter</button></td>
+            `;
+            table.insertBefore(tr, table.firstChild);
+            
+            document.getElementById('side-alert-badge').innerText = '2';
+            document.getElementById('nav-alert-count').innerText = '2 Alertes actives';
+            document.getElementById('count-actives').innerText = '2';
+
+            alert("🚨 SCÉNARIO DÉMO DÉCLENCHÉ !
+
+Un creux de tension simulé à 265 V vient d'être injecté sur le Portique PQ-01.
+L'événement a été horodaté et consigné dans l'audit trail.");
+        }
+
+        function acquitterAlerte(btn) {
+            const row = btn.closest('tr');
+            row.querySelector('td:nth-child(6)').innerHTML = '<span class="badge bg-secondary">Acquittée</span>';
+            btn.parentElement.innerHTML = '<span class="text-muted small">Acquittée à l'instant</span>';
+            document.getElementById('side-alert-badge').innerText = '1';
+            document.getElementById('nav-alert-count').innerText = '1 Alerte active';
+            document.getElementById('count-actives').innerText = '1';
+        }
+
+        // Exports CSV
+        function exporterCSV(nomFichier, lignes) {
+            const contenu = "data:text/csv;charset=utf-8," + lignes.map(e => e.join(";")).join("
+");
+            const encodedUri = encodeURI(contenu);
             const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = `Rapport_${type}_MarsaMaroc_Agadir.csv`;
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", nomFichier);
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
         }
 
-        function exporterCSVModbus() {
-            telechargerFauxExcel('Cartographie_Modbus');
+        function exporterDepartsCSV() {
+            const poste = DONNEES_POSTES.find(p => p.id === posteActifId);
+            if (!poste) return;
+            const lignes = [["ID", "Nom", "Usage", "TC", "Classe", "P_Active_kW", "Q_kvar", "Courant_A", "CosPhi", "Statut"]];
+            poste.departs.forEach(d => lignes.push([d.id, d.nom, d.usage, d.tc, d.classe, d.p, d.q, d.i, d.cos, d.statut]));
+            exporterCSV(`Departs_${poste.id}_MarsaMaroc.csv`, lignes);
         }
 
-        // Initialisation de toute l'application
-        afficherPostes();
-        initCourbe();
-        initHarmoniques();
-        initSankey();
-        initPareto();
-        initRegression();
-        initIPE();
-        remplirInventaire();
-        afficherAlertes();
+        function exporterPointsCSV() {
+            const lignes = [["ID", "Poste", "Nom", "Usage", "TC", "Classe", "P_kW"]];
+            DONNEES_POSTES.forEach(p => p.departs.forEach(d => lignes.push([d.id, p.nom, d.nom, d.usage, d.tc, d.classe, d.p])));
+            exporterCSV(`Inventaire_58_Points_MarsaMaroc.csv`, lignes);
+        }
 
-        // Simulateur de variation temps réel toutes les 5 secondes
+        function exporterRegistresCSV() {
+            const lignes = [["Adresse_Registre", "Parametre", "Type", "Unite", "Facteur_Echelle"]];
+            lignes.push(["30001-30002", "Tension V1", "Float32", "V", "1.0"]);
+            lignes.push(["30007-30008", "Tension U12", "Float32", "V", "1.0"]);
+            lignes.push(["30013-30014", "Courant I1", "Float32", "A", "1.0"]);
+            lignes.push(["30019-30020", "Puissance P", "Float32", "kW", "1.0"]);
+            lignes.push(["30021-30022", "Puissance Q", "Float32", "kvar", "1.0"]);
+            lignes.push(["30025-30026", "Cos Phi", "Float32", "-", "1.0"]);
+            lignes.push(["30031-30032", "THD-U", "Float32", "%", "0.1"]);
+            exporterCSV("Cartographie_Registres_Modbus_MarsaMaroc.csv", lignes);
+        }
+
+        function genererRapport(periode) {
+            const lignes = [["Date", "P_Max_kW", "P_Moy_kW", "Energie_kWh", "Cos_Phi_Moy"]];
+            lignes.push(["2026-11-01", "2980", "2410", "57840", "0.95"]);
+            lignes.push(["2026-11-02", "3050", "2480", "59520", "0.96"]);
+            exporterCSV(`Rapport_${periode}_DEPA_MarsaMaroc.csv`, lignes);
+        }
+
+        function imprimerNoteISO() {
+            window.print();
+        }
+
+        function imprimerPV() {
+            window.print();
+        }
+
+        // Simulation en direct (boucle 3s)
         setInterval(() => {
-            const deltaP = Math.floor(Math.random() * 40 - 20);
-            const valP = 2840 + deltaP;
-            document.getElementById('live-puissance-totale').textContent = valP.toLocaleString('fr-FR') + " kW";
-        }, 5000);
+            let delta = (Math.random() - 0.5) * 20;
+            let val = parseInt(document.getElementById('nav-puissance-totale').innerText.replace(/\s/g, '')) + Math.round(delta);
+            document.getElementById('nav-puissance-totale').innerText = val.toLocaleString();
+            document.getElementById('kpi-ptotale').innerText = val.toLocaleString();
+        }, 3000);
+
+        // Lancement au chargement
+        window.onload = function() {
+            initialiserVueGlobale();
+            initialiserSelecteurPostes();
+            selectionnerPoste('PT_Y');
+            initialiserHarmoniques40();
+            initialiserTable58Points();
+            initialiserTableCMM61();
+        };
     </script>
 </body>
 </html>
-
